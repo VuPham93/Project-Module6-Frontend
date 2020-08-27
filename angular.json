@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "Casestudy-Frontend"
+    }
+  },
+  "defaultProject": "Casestudy-Frontend",
+  "cli": {
+    "analytics": false
+  }
 }

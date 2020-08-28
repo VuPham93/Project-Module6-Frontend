@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../service/signin-signup/auth.service';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 // @ts-ignore
 @Component({
@@ -22,7 +23,9 @@ export class LoginAndSignupComponent implements OnInit {
   isSignUpFailed = false;
   errorMessage2 = '';
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) {
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -41,7 +44,8 @@ export class LoginAndSignupComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
-        this.reloadPage();
+        // this.reloadPage();
+        this.router.navigate(['/home']);
       },
       err => {
         this.errorMessage = err.error.message;

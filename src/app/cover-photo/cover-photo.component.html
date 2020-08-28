@@ -5,7 +5,7 @@
       <i class="fa fa-camera-retro"></i>
       <label class="fileContainer">
         Edit Cover Photo
-        <input type="file"/>
+        <input type="file" id="coverPhoto" (change)="onFileSelected($event)"/>
       </label>
     </form>
     <div class="container-fluid">
@@ -13,7 +13,7 @@
         <div class="col-lg-2 col-sm-3">
           <div class="user-avatar">
             <figure>
-              <img src="assets/images/resources/user-avatar.jpg" alt="">
+              <img src="assets/images/resources/user-avatar.jpg" alt="">v
               <form class="edit-phto">
                 <i class="fa fa-camera-retro"></i>
                 <label class="fileContainer">

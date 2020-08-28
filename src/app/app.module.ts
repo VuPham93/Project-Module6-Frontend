@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import { UserInfoComponent } from './user-info/user-info.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -17,7 +16,9 @@ import { ChatComponent } from './chat/chat.component';
 import { CoverPhotoComponent } from './cover-photo/cover-photo.component';
 import { UserEditInfoComponent } from './user-edit-info/user-edit-info.component';
 import { UserEditPasswordComponent } from './user-edit-password/user-edit-password.component';
+import { FriendListBigComponent } from './friend-list-big/friend-list-big.component';
 import {LoginAndSignupComponent} from './login/login-and-signup.component';
+import {authInterceptorProviders} from './_helpers/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import {LoginAndSignupComponent} from './login/login-and-signup.component';
     CoverPhotoComponent,
     UserEditInfoComponent,
     UserEditPasswordComponent,
-
+    FriendListBigComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +44,7 @@ import {LoginAndSignupComponent} from './login/login-and-signup.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

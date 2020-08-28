@@ -55,7 +55,6 @@ export class LoginAndSignupComponent implements OnInit {
   }
 
   register(): void {
-
     this.authService.register(this.form2).subscribe(
       data => {
         console.log(data);
@@ -63,7 +62,7 @@ export class LoginAndSignupComponent implements OnInit {
         this.isSignUpFailed = false;
       },
       err => {
-        this.errorMessage = err.error.message;
+        this.errorMessage2 = err.error.message;
         this.isSignUpFailed = true;
       }
     );

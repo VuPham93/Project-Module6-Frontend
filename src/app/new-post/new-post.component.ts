@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControlName, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { PostService } from '../services/post.service';
+import { PostService } from '../service/post.service';
 
 
 @Component({

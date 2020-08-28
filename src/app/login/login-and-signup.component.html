@@ -72,13 +72,16 @@
               <div class="form-radio">
                 <div class="radio">
                   <label>
-                    <input type="radio" value="Male" name="sex" [(ngModel)]="form2.sex"/><i class="check-box"></i>Male
+                    <input type="radio" value="Male" name="sex" [(ngModel)]="form2.sex" #sex="ngModel" required="required"/><i class="check-box"></i>Male
                   </label>
                 </div>
                 <div class="radio">
                   <label>
-                    <input type="radio" value="Female" name="sex" [(ngModel)]="form2.sex"/><i class="check-box"></i>Female
+                    <input type="radio" value="Female" name="sex" [(ngModel)]="form2.sex" #sex="ngModel" required="required"/><i class="check-box"></i>Female
                   </label>
+                </div>
+                <div class="alert-danger" *ngIf="g.submitted && sex.invalid">
+                  <div *ngIf="sex.errors.required">Gender is required</div>
                 </div>
               </div>
 

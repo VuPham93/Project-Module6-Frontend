@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../service/signin-signup/auth.service';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 
+// @ts-ignore
 @Component({
   selector: 'app-login-and-signup',
   templateUrl: './login-and-signup.component.html',

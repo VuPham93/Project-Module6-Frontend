@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginAndSignupComponent } from './login-and-signup/login-and-signup.component';
+
 import { UserInfoComponent } from './user-info/user-info.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -17,6 +17,7 @@ import { ChatComponent } from './chat/chat.component';
 import { CoverPhotoComponent } from './cover-photo/cover-photo.component';
 import { UserEditInfoComponent } from './user-edit-info/user-edit-info.component';
 import { UserEditPasswordComponent } from './user-edit-password/user-edit-password.component';
+import {LoginAndSignupComponent} from './login/login-and-signup.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { UserEditPasswordComponent } from './user-edit-password/user-edit-passwo
     ChatComponent,
     CoverPhotoComponent,
     UserEditInfoComponent,
-    UserEditPasswordComponent
+    UserEditPasswordComponent,
+
   ],
   imports: [
     BrowserModule,

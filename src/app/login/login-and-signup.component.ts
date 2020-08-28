@@ -64,6 +64,9 @@ export class LoginAndSignupComponent implements OnInit {
         console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
+        setTimeout(()=>{
+          this.reloadPage();
+        },2000);
       },
       err => {
         this.errorMessage2 = err.error.message;

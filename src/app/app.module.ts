@@ -18,6 +18,7 @@ import { UserEditInfoComponent } from './user-edit-info/user-edit-info.component
 import { UserEditPasswordComponent } from './user-edit-password/user-edit-password.component';
 import { FriendListBigComponent } from './friend-list-big/friend-list-big.component';
 import {LoginAndSignupComponent} from './login/login-and-signup.component';
+import {authInterceptorProviders} from './_helpers/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import {LoginAndSignupComponent} from './login/login-and-signup.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

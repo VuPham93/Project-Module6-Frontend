@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UploadFileService} from '../services/upload-file.service';
+import {UploadFileService} from '../service/upload-file.service';
 import {HttpErrorResponse, HttpEventType} from '@angular/common/http';
 import {catchError} from 'rxjs/operators';
 import {of} from 'rxjs';

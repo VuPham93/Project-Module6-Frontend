@@ -17,6 +17,7 @@ import { ChatComponent } from './chat/chat.component';
 import { CoverPhotoComponent } from './cover-photo/cover-photo.component';
 import { UserEditInfoComponent } from './user-edit-info/user-edit-info.component';
 import { UserEditPasswordComponent } from './user-edit-password/user-edit-password.component';
+import { FriendListBigComponent } from './friend-list-big/friend-list-big.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { UserEditPasswordComponent } from './user-edit-password/user-edit-passwo
     ChatComponent,
     CoverPhotoComponent,
     UserEditInfoComponent,
-    UserEditPasswordComponent
+    UserEditPasswordComponent,
+    FriendListBigComponent
   ],
   imports: [
     BrowserModule,

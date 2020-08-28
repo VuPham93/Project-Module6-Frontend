@@ -14,6 +14,9 @@ import { NewPostComponent } from './new-post/new-post.component';
 import { FriendListComponent } from './friend-list/friend-list.component';
 import { ShortCutComponent } from './short-cut/short-cut.component';
 import { ChatComponent } from './chat/chat.component';
+import { CoverPhotoComponent } from './cover-photo/cover-photo.component';
+import { UserEditInfoComponent } from './user-edit-info/user-edit-info.component';
+import { UserEditPasswordComponent } from './user-edit-password/user-edit-password.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import { ChatComponent } from './chat/chat.component';
     NewPostComponent,
     FriendListComponent,
     ShortCutComponent,
-    ChatComponent
+    ChatComponent,
+    CoverPhotoComponent,
+    UserEditInfoComponent,
+    UserEditPasswordComponent
   ],
   imports: [
     BrowserModule,

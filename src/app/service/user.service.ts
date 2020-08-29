@@ -14,15 +14,17 @@ export class UserService {
   private userUrl = 'http://localhost:8080/user';
 
   user: {
-    userId: number,
-    userEmail: string,
-    userPassword: string,
-    userName: string,
-    userNickName: string,
-    userSex: string,
-    userAddress: string,
-    userAvatar: string,
-    userCoverPhoto: string
+    userId: '',
+    userName: '',
+    userEmail: '',
+    userPassword: '',
+    userSex: '',
+    dateOfBirth: null,
+    about: null,
+    userAddress: null,
+    userAvatar: null,
+    userCoverPhoto: null,
+    roles: []
   };
 
   setUser(user) {

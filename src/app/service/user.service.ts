@@ -1,49 +1,38 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {catchError, tap} from 'rxjs/operators';
-import {of} from 'rxjs';
+import {Observable, of} from 'rxjs';
+import {TokenStorageService} from './signin-signup/token-storage.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient, private router: Router) { }
+
+  constructor(private http: HttpClient, private router: Router,
+              private tokenStorage: TokenStorageService) { }
 
   private userUrl = 'http://localhost:8080/user';
+  user: any;
 
-  user: {
-    userId: '',
-    userName: '',
-    userEmail: '',
-    userPassword: '',
-    userSex: '',
-    dateOfBirth: null,
-    about: null,
-    userAddress: null,
-    userAvatar: null,
-    userCoverPhoto: null,
-    roles: []
-  };
-
-  setUser(user) {
-    this.user = user;
-  }
-
+  // @ts-ignore
   getUser() {
-    return this.user;
+    return this.findUserById(this.tokenStorage.getUser().id);
   }
 
-  findUserById(id: number) {
-    return this.http.get(this.userUrl + '/findUserById/' + id).pipe(
+  findUserById(id: number):Observable<any> {
+    // @ts-ignore
+    return this.http.get(this.userUrl + '/findUserById/' + id,{ responseType: 'text' }).pipe(
       tap(
         user => JSON.stringify(user)),
       catchError(err => of([]))
     )
   }
 
-  editUser(id: number, user: any) {
+  editUser(id: number, user: any):Observable<any> {
     return this.http.put(this.userUrl + '/update/' + id, user).pipe(
       tap(
         res =>  JSON.stringify(res)),

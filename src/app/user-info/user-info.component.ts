@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../service/user.service';
 import {Router} from '@angular/router';
+import {FriendService} from '../service/friend.service';
 
 @Component({
   selector: 'app-user-info',
@@ -8,15 +9,25 @@ import {Router} from '@angular/router';
   styleUrls: ['./user-info.component.css']
 })
 export class UserInfoComponent implements OnInit {
-
-  constructor(private userService: UserService, private router: Router) { }
+  user;
+  friendList:any;
+  constructor(private userService: UserService, private router: Router
+    ,private friendService: FriendService) { }
 
   ngOnInit(): void {
     this.userService.findUserById(1).subscribe(
       response => this.user = response,
       error => console.log(error)
     )
+    this.getFriendList();
   }
 
-  user;
+  getFriendList() {
+    this.friendService.getFriendList(1).subscribe(
+      response => {this.friendList = response},
+      error => console.error(error)
+    )
+  }
+
+
 }

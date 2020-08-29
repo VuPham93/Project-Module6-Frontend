@@ -14,7 +14,7 @@
                   <ul class="naves">
                     <li>
                       <i class="ti-info-alt"></i>
-                      <a title="" href="#">Personal info</a>
+                      <a title="" routerLink="/userEdit">Personal info</a>
                     </li>
                     <li>
                       <i class="ti-lock"></i>
@@ -143,41 +143,14 @@
                 <div class="widget stick-widget">
                   <h4 class="widget-title">Friends</h4>
                   <ul class="followers">
-                    <li>
+                    <li *ngFor="let friend of friendList; let i = index">
                       <figure><img src="assets/images/resources/friend-avatar2.jpg" alt=""></figure>
                       <div class="friend-meta">
-                        <h4><a href="#" title="">Kelly Bill</a></h4>
-                        <a href="#" title="" class="underline">Add Friend</a>
+                        <h4><a href="#" title="">{{friend.userName}}</a></h4>
+                        <a href="#" title="" class="underline"> Unfriend</a>
                       </div>
                     </li>
-                    <li>
-                      <figure><img src="assets/images/resources/friend-avatar4.jpg" alt=""></figure>
-                      <div class="friend-meta">
-                        <h4><a href="#" title="">Issabel</a></h4>
-                        <a href="#" title="" class="underline">Add Friend</a>
-                      </div>
-                    </li>
-                    <li>
-                      <figure><img src="assets/images/resources/friend-avatar6.jpg" alt=""></figure>
-                      <div class="friend-meta">
-                        <h4><a href="#" title="">Andrew</a></h4>
-                        <a href="#" title="" class="underline">Add Friend</a>
-                      </div>
-                    </li>
-                    <li>
-                      <figure><img src="assets/images/resources/friend-avatar8.jpg" alt=""></figure>
-                      <div class="friend-meta">
-                        <h4><a href="#" title="">Sophia</a></h4>
-                        <a href="#" title="" class="underline">Add Friend</a>
-                      </div>
-                    </li>
-                    <li>
-                      <figure><img src="assets/images/resources/friend-avatar3.jpg" alt=""></figure>
-                      <div class="friend-meta">
-                        <h4><a href="#" title="">Allen</a></h4>
-                        <a href="#" title="" class="underline">Add Friend</a>
-                      </div>
-                    </li>
+
                   </ul>
                 </div><!-- Friends -->
               </aside>

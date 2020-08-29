@@ -37,7 +37,7 @@ export class FriendService {
   }
 
   acceptInviteFriend(relatedId: number,statusId :number,user: any) {
-    return this.http.post(this.friendUrl + '/edit/' + relatedId+"/"+statusId,user).pipe(
+    return this.http.put(this.friendUrl + '/edit/' + relatedId+"/"+statusId,user).pipe(
       tap(
         receivedList => JSON.stringify(receivedList)),
       catchError(err => of([]))

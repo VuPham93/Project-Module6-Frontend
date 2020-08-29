@@ -30,16 +30,16 @@
 
         <div class="tab-pane fade" id="frends-req" >
           <ul class="nearby-contct">
-            <li>
+            <li *ngFor="let friend of pendingList; let i = index">
               <div class="nearly-pepls">
                 <figure>
                   <a href="#" title=""><img src="assets/images/resources/nearly5.jpg" alt=""></a>
                 </figure>
                 <div class="pepl-info">
-                  <h4><a href="#" title="">Amy watson</a></h4>
+                  <h4><a href="#" title="">{{friend.userName}}</a></h4>
                   <span>ftv model</span>
-                  <a href="#" title="" class="add-butn btn-danger more-action " data-ripple="">delete Request</a>
-                  <a href="#" title="" class="add-butn btn-primary" data-ripple="">Confirm</a>
+                  <button  title="" class="add-butn btn-danger more-action " (click)="acceptInviteFriend(friend.userId,3)" data-ripple="">Delete</button>
+                  <button title="" class="add-butn btn-primary" data-ripple="" (click)="acceptInviteFriend(friend.userId,2)">Confirm</button>
                 </div>
               </div>
             </li>

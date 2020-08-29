@@ -10,7 +10,9 @@ import {IUser} from '../model/IUser';
 })
 export class FriendListBigComponent implements OnInit {
   friendList:any;
+
   user:IUser;
+
   constructor(private userService: UserService,private friendService: FriendService) { }
 
   ngOnInit(): void {
@@ -25,12 +27,11 @@ export class FriendListBigComponent implements OnInit {
     )
   }
   getUser(){
-    // this.userService.getUser().subscribe(
-    //   response => { this.user=response;
-    //     console.log(this.user);
-    //   },
-    //   error => console.error(error)
-    // )
-
+    this.userService.getUser().subscribe(
+      response => { this.user = <IUser> response;
+        console.log(this.user);
+      },
+      error => console.error(error)
+    )
   }
 }

@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="col-lg-6">
   <div class="central-meta">
     <div class="frnds">
@@ -10,17 +11,19 @@
       <div class="tab-content">
         <div class="tab-pane active fade show " id="frends" >
           <ul class="nearby-contct">
-            <li>
+
+            <li *ngFor="let friend of friendList; let i = index">
               <div class="nearly-pepls">
                 <figure>
                   <a href="#" title=""><img src="assets/images/resources/friend-avatar9.jpg" alt=""></a>
                 </figure>
                 <div class="pepl-info">
-                  <h4><a href="#" title="">jhon kates</a></h4>
+                  <h4><a href="#" title="">{{friend.userName}}</a></h4>
                   <a href="#" title="" class="add-butn btn-danger" data-ripple="">unfriend</a>
                 </div>
               </div>
             </li>
+
           </ul>
           <div class="lodmore"><button class="btn-view btn-load-more"></button></div>
         </div>
@@ -46,4 +49,5 @@
       </div>
     </div>
   </div>
-</div><!-- centerl meta -->
+</div>
+<app-footer></app-footer>

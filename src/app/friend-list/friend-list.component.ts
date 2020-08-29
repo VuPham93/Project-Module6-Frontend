@@ -12,15 +12,18 @@ export class FriendListComponent implements OnInit {
   constructor(private userService: UserService,private friendService: FriendService) { }
 
   ngOnInit(): void {
+    this.getFriendList();
+
   }
 
-  friendList;
+  friendList:any;
 
   getFriendList() {
-    this.friendService.getFriendList(this.userService.getUser().userId).subscribe(
+    this.friendService.getFriendList(1).subscribe(
       response => {this.friendList = response},
       error => console.error(error)
     )
   }
+
 
 }

@@ -24,10 +24,7 @@ export class LoginAndSignupComponent implements OnInit {
   isSignUpFailed = false;
   errorMessage2 = '';
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private userService: UserService) {
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -74,6 +71,4 @@ export class LoginAndSignupComponent implements OnInit {
       }
     );
   }
-
-
 }

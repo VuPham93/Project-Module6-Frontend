@@ -18,9 +18,6 @@ export class FriendListBigComponent implements OnInit {
     this.getUser();
   }
 
-
-
-
   getFriendList() {
     this.friendService.getFriendList(1).subscribe(
       response => {this.friendList = response},
@@ -28,14 +25,12 @@ export class FriendListBigComponent implements OnInit {
     )
   }
   getUser(){
-    this.userService.getUser().subscribe(
-      response => { this.user=response;
-        console.log(this.user);
-      },
-      error => console.error(error)
-    )
+    // this.userService.getUser().subscribe(
+    //   response => { this.user=response;
+    //     console.log(this.user);
+    //   },
+    //   error => console.error(error)
+    // )
 
   }
-
-
 }

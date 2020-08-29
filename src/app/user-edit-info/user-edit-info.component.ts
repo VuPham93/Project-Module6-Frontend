@@ -13,25 +13,25 @@ export class UserEditInfoComponent implements OnInit {
   constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder) { }
 
   userEditForm: FormGroup;
-  user = this.userService.getUser();
+  // user = this.userService.getUser();
   message = null;
 
   ngOnInit(): void {
-    this.userEditForm = this.formBuilder.group({
-      userId: this.user.userId,
-      userName: this.user.userName,
-      userEmail: this.user.userEmail,
-      userSex: this.user.userSex,
-      dateOfBirth: null,
-      about: null,
-      userAddress: null,
-      userAvatar: null,
-      userCoverPhoto: null,
-      roles: []
-    })
+    // this.userEditForm = this.formBuilder.group({
+    //   userId: this.user.userId,
+    //   userName: this.user.userName,
+    //   userEmail: this.user.userEmail,
+    //   userSex: this.user.userSex,
+    //   dateOfBirth: null,
+    //   about: null,
+    //   userAddress: null,
+    //   userAvatar: null,
+    //   userCoverPhoto: null,
+    //   roles: []
+    // })
   }
 
   editUser() {
-    console.log(this.user.userName)
+    // console.log(this.user.userName)
   }
 }

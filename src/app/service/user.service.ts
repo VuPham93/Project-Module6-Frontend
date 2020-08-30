@@ -29,8 +29,13 @@ export class UserService {
     return this.http.put(this.userUrl + '/update/' + id, user)
   }
 
+  combinePassword(id: number, password: JSON) {
+    return this.http.post(this.userUrl + '/combinePassword/' + id, password)
+  }
+
   changePassword(id: number, newPassword: JSON) {
-    return this.http.post(this.userUrl + '/changePassword/' + id, newPassword)
+    return this.http.post(this.userUrl + '/changePassword/' + id, newPassword,
+      { responseType: 'text' as 'json' })
   }
 
   findUserByUsername(username: string) {

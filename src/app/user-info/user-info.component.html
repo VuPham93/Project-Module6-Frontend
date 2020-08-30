@@ -43,18 +43,18 @@
                 <div class="about">
                   <div class="personal">
                     <h5 class="f-title"><i class="ti-info-alt"></i> Personal Info</h5>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
+                    <h5>{{user.about}}</h5>
                   </div>
                   <div class="d-flex flex-row mt-2">
                     <div class="tab-content">
                       <div class="tab-pane fade show active" id="basic" >
                         <ul class="basics">
-                          <li><i class="ti-user"></i>{{user.userName}}</li>
-                          <li><i class="ti-map-alt"></i>{{user.userAddress}}</li>
-                          <li><i class="ti-mobile"></i>+1-234-345675</li>
-                          <li><i class="ti-email"></i>{{user.userEmail}}</li>
+                          <li><h5><i class="ti-user"></i>{{user.userName}}</h5></li>
+                          <li><h5><i class="ti-agenda"></i>{{user.userSex}}</h5></li>
+                          <li><h5><i class="ti-time"></i>{{user.dateOfBirth}}</h5></li>
+                          <li><h5><i class="ti-map"></i>{{user.userAddress}}</h5></li>
+                          <li><h5><i class="ti-mobile"></i>{{user.userPhoneNumber}}</h5></li>
+                          <li><h5><i class="ti-email"></i>{{user.userEmail}}</h5></li>
                         </ul>
                       </div>
                     </div>

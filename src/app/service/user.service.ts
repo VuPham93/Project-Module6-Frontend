@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {catchError, tap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
-import {Router} from '@angular/router';
 import {TokenStorageService} from './signin-signup/token-storage.service';
 
 @Injectable({
@@ -27,11 +26,11 @@ export class UserService {
   }
 
   editUser(id: number, user: any):Observable<any> {
-    return this.http.put(this.userUrl + '/update/' + id, user).pipe(
-      tap(
-        res =>  JSON.stringify(res)),
-      catchError(err => of([]))
-    )
+    return this.http.put(this.userUrl + '/update/' + id, user)
+  }
+
+  changePassword(id: number, newPassword: JSON) {
+    return this.http.post(this.userUrl + '/changePassword/' + id, newPassword)
   }
 
   findUserByUsername(username: string) {

@@ -32,4 +32,20 @@ export class UserService {
   changePassword(id: number, newPassword: JSON) {
     return this.http.post(this.userUrl + '/changePassword/' + id, newPassword)
   }
+
+  findUserByUsername(username: string) {
+    return this.http.get(this.userUrl + '/findUserByName/' + username).pipe(
+      tap(
+        users => JSON.stringify(users)),
+      catchError(err => of([]))
+    )
+  }
+
+  findAllUser() {
+    return this.http.get(this.userUrl + '/').pipe(
+      tap(
+        users => JSON.stringify(users)),
+      catchError(err => of([]))
+    )
+  }
 }

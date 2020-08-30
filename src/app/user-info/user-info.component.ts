@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../service/user.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FriendService} from '../service/friend.service';
 import {IUser} from '../model/iuser';
 
 @Component({
@@ -9,18 +10,47 @@ import {IUser} from '../model/iuser';
   styleUrls: ['./user-info.component.css']
 })
 export class UserInfoComponent implements OnInit {
-
-  constructor(private userService: UserService, private router: Router) { }
+  user: IUser;
+  userLogin: IUser;
+  friendList:any;
+  idUser : number;
+  idLogin: number;
+  isLogin: boolean = false;
+  constructor(private userService: UserService, private router: Router
+    ,private friendService: FriendService,
+               private actRoute: ActivatedRoute) {
+    console.log("contructor")
+    this.idUser = parseInt(this.actRoute.snapshot.params.id);
+  }
 
   ngOnInit(): void {
+    console.log("ngOninit")
+    this.userService.findUserById(this.idUser).subscribe(
+      response => this.user = <IUser>response,
+      error => console.log(error)
+    )
+    this.getFriendList();
     this.setUser();
   }
 
-  user: IUser;
+  getFriendList() {
+    this.friendService.getFriendList(this.idUser).subscribe(
+      response => {this.friendList = response},
+      error => console.error(error)
+    )
+
+  }
+
+
 
   setUser() {
     this.userService.getUser().subscribe(
-      response => {this.user = <IUser> response},
+      response => {this.userLogin = <IUser> response;
+      this.idLogin =this.userLogin.userId;
+      if(this.idLogin==this.idUser){
+        this.isLogin = true;
+      }
+        },
       error => console.error(error)
     );
   }

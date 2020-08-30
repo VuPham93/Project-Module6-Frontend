@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../services/user.service';
+import {UserService} from '../service/user.service';
 import {Router} from '@angular/router';
+import {IUser} from '../model/iuser';
 
 @Component({
   selector: 'app-user-info',
@@ -12,11 +13,15 @@ export class UserInfoComponent implements OnInit {
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    this.userService.findUserById(1).subscribe(
-      response => this.user = response,
-      error => console.log(error)
-    )
+    this.setUser();
   }
 
-  user;
+  user: IUser;
+
+  setUser() {
+    this.userService.getUser().subscribe(
+      response => {this.user = <IUser> response},
+      error => console.error(error)
+    );
+  }
 }

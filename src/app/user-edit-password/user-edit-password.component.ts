@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import {UserService} from '../service/user.service';
+function comparePassword(c: AbstractControl) {
+  const v = c.value;
+  return (v.newPassword === v.confirmPassword) ? null : {
+    passwordNotMatch: true
+  };
+}
 
 @Component({
   selector: 'app-user-edit-password',
@@ -15,25 +21,29 @@ export class UserEditPasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.changePasswordForm = this.formBuilder.group({
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
-    })
+      newPassword: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required]]
+    }, {validator: comparePassword})
   }
 
   changePasswordForm: FormGroup;
 
+  get f(){
+    return this.changePasswordForm.controls;
+  }
+
   currentPassword;
   continue: boolean = false
-  newPassword: any;
 
   checkPassword() {
-    if(this.currentPassword == 123123) {
-      this.continue = true;
-    }
+    this.userService.combinePassword(this.tokenStorage.getUser().id, this.currentPassword).subscribe(
+      res => this.continue = true,
+      error => this.continue = false
+    )
   }
 
   changePassword() {
-    this.userService.changePassword(this.tokenStorage.getUser().id, this.newPassword).subscribe(
+    this.userService.changePassword(this.tokenStorage.getUser().id, this.changePasswordForm.value.newPassword).subscribe(
       res => {
         window.alert(res)
       }

@@ -7,6 +7,7 @@ export interface IUser {
   dateOfBirth : string,
   about : string,
   userAddress: string,
+  userPhoneNumber: string,
   userAvatar: string,
   userCoverPhoto: string
   roles:string[]

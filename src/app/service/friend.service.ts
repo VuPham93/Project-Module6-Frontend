@@ -43,4 +43,12 @@ export class FriendService {
       catchError(err => of([]))
     )
   }
+
+  unFriend(relatedId: number,statusId :number,user: any) {
+    return this.http.put(this.friendUrl + '/unfriend/' + relatedId+"/"+statusId,user).pipe(
+      tap(
+        receivedList => JSON.stringify(receivedList)),
+      catchError(err => of([]))
+    )
+  }
 }

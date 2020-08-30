@@ -3,8 +3,8 @@
   <div class="central-meta">
     <div class="frnds">
       <ul class="nav nav-tabs">
-        <li class="nav-item"><a class="active" href="#frends" data-toggle="tab">My Friends</a> <span>55</span></li>
-        <li class="nav-item"><a class="" href="#frends-req" data-toggle="tab">Friend Requests</a><span>60</span></li>
+        <li class="nav-item"><a class="active" href="#frends" data-toggle="tab">My Friends</a> <span>{{sumListFriend}}</span></li>
+        <li class="nav-item"><a class="" href="#frends-req" data-toggle="tab">Friend Requests</a><span>{{sumListPending}}</span></li>
       </ul>
 
       <!-- Tab panes -->
@@ -19,7 +19,7 @@
                 </figure>
                 <div class="pepl-info">
                   <h4><a href="#" title="">{{friend.userName}}</a></h4>
-                  <a href="#" title="" class="add-butn btn-danger" data-ripple="">unfriend</a>
+                  <a  title="" class="add-butn btn-danger" data-ripple="" (click)="unFriend(friend.userId,3,i)">unfriend</a>
                 </div>
               </div>
             </li>
@@ -38,8 +38,8 @@
                 <div class="pepl-info">
                   <h4><a href="#" title="">{{friend.userName}}</a></h4>
                   <span>ftv model</span>
-                  <button  title="" class="add-butn btn-danger more-action " (click)="acceptInviteFriend(friend.userId,3)" data-ripple="">Delete</button>
-                  <button title="" class="add-butn btn-primary" data-ripple="" (click)="acceptInviteFriend(friend.userId,2)">Confirm</button>
+                  <a  title="" class="add-butn btn-outline-danger more-action " (click)="acceptInviteFriend(friend.userId,3,i)" data-ripple="">Delete</a>
+                  <a title="" class="add-butn btn-outline-success" data-ripple="" (click)="acceptInviteFriend(friend.userId,2,i)">Confirm</a>
                 </div>
               </div>
             </li>

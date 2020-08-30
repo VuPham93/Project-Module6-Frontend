@@ -6,6 +6,7 @@ import {UserEditPasswordComponent} from './user-edit-password/user-edit-password
 import {NewsFeedComponent} from './news-feed/news-feed.component';
 import {LoginAndSignupComponent} from './login/login-and-signup.component';
 import {FriendListBigComponent} from './friend-list-big/friend-list-big.component';
+import {SearchUserComponent} from './search-user/search-user.component';
 
 // @ts-ignore
 const routes: Routes = [
@@ -24,7 +25,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'userInfor',
+    path: 'userInfor/:id',
     component: UserInfoComponent,
     data: {
       title: 'userInfor'
@@ -49,6 +50,13 @@ const routes: Routes = [
     component: NewsFeedComponent,
     data: {
       title: 'Home'
+    }
+  },
+  {
+    path: 'searchUser',
+    component: SearchUserComponent,
+    data: {
+      title: 'searchUser'
     }
   }
 ];

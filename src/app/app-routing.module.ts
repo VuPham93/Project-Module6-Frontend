@@ -8,6 +8,8 @@ import {LoginAndSignupComponent} from './login/login-and-signup.component';
 import {FriendListBigComponent} from './friend-list-big/friend-list-big.component';
 import {SearchUserComponent} from './search-user/search-user.component';
 import {NewPostComponent} from './new-post/new-post.component';
+import {MyWallComponent} from './my-wall/my-wall.component';
+import {StatusComponent} from './status/status.component';
 
 const routes: Routes = [
   {
@@ -71,6 +73,20 @@ const routes: Routes = [
     component: NewsFeedComponent,
     data: {
       title: 'newFeed'
+    }
+  },
+  {
+    path: 'myWall',
+    component: MyWallComponent,
+    data: {
+      title: 'myWall'
+    }
+  },
+  {
+    path: 'status/:id',
+    component: StatusComponent,
+    data: {
+      title: 'status'
     }
   },
 ];

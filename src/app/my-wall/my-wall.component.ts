@@ -1,31 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import {PostService} from '../service/post.service';
-import {IPost} from '../model/IPost';
 import {UserService} from '../service/user.service';
-import {IUser} from '../model/iuser';
+import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
+import {IPost} from '../model/IPost';
+import {IUser} from '../model/iuser';
 import {IComment} from '../model/IComment';
-import {FormBuilder} from '@angular/forms';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 
 @Component({
-  selector: 'app-news-feed',
-  templateUrl: './news-feed.component.html',
-  styleUrls: ['./news-feed.component.css']
+  selector: 'app-my-wall',
+  templateUrl: './my-wall.component.html',
+  styleUrls: ['./my-wall.component.css']
 })
-export class NewsFeedComponent implements OnInit {
+export class MyWallComponent implements OnInit {
 
   constructor(private userService: UserService, private postService: PostService, private commentService: CommentService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
-    this.getAllPostByUserId()
+    this.getAllPost()
   }
 
   post: IPost;
   allPost;
 
-  getAllPostByUserId() {
-    this.postService.getAllPost().subscribe(
+  getAllPost() {
+    this.postService.getAllPostByUserId(this.tokenStorage.getUser().id).subscribe(
       postList => {
         this.allPost = <IPost[]> postList;
         for (let i = 0; i < this.allPost.length; i++) {
@@ -59,6 +58,24 @@ export class NewsFeedComponent implements OnInit {
       resPost => {
         this.post = <IPost> resPost;
         this.post.postLike++;
+      }
+    )
+  }
+
+  deletePost(postId: any) {
+    this.commentService.getCommentByPostId(postId).subscribe(
+      commentList => {
+           let comments = <IComment[]> commentList;
+               for (let i = 0; i < comments.length; i++) {
+          this.commentService.deleteComment(comments[i].commentId).subscribe(
+            res => console.log("comment deleted")
+          )
+        }
+      }
+    )
+    this.postService.deletePost(postId).subscribe(
+      res => {
+        window.alert("Post deleted");
       }
     )
   }

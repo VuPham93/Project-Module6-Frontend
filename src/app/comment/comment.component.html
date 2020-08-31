@@ -1,0 +1,9 @@
+<div class="comet-avatar">
+  <img src="assets/images/resources/{{user.userAvatar}}" alt="">
+</div>
+<div class="post-comt-box">
+  <form [formGroup]="addCommentForm" (ngSubmit)="addComment()">
+    <textarea (keydown.enter)="$event.preventDefault()" formControlName="content" placeholder="Post your comment"></textarea>
+    <button class="btn btn-primary" type="submit">Comment</button>
+  </form>
+</div>

@@ -20,6 +20,7 @@ import { FriendListBigComponent } from './friend-list-big/friend-list-big.compon
 import {LoginAndSignupComponent} from './login/login-and-signup.component';
 import {authInterceptorProviders} from './_helpers/auth.interceptor';
 import { SearchUserComponent } from './search-user/search-user.component';
+import { CommentComponent } from './comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { SearchUserComponent } from './search-user/search-user.component';
     UserEditInfoComponent,
     UserEditPasswordComponent,
     FriendListBigComponent,
-    SearchUserComponent
+    SearchUserComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,

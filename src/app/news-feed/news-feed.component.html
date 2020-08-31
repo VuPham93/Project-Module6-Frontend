@@ -66,29 +66,22 @@
 
                     <div class="coment-area">
                       <ul class="we-comet">
-                        <li>
+                        <li *ngFor="let comment of post.commentList">
                           <div class="comet-avatar">
-                            <img src="images/resources/comet-1.jpg" alt="">
+                            <img style="width: 45px; height: 45px" src="assets/images/resources/{{comment.commenterAvatar}}" alt="">
                           </div>
                           <div class="we-comment">
                             <div class="coment-head">
-                              <h5><a href="time-line.html" title="">Jason borne</a></h5>
-                              <span>1 year ago</span>
+                              <h5><a href="#" title="">{{comment.commenterName}}</a></h5>
+                              <span>{{comment.commentTime}}</span>
                               <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
                             </div>
-                            <p>we are working for the dance and sing songs. this car is very awesome for the youngster. please vote this car and like our post</p>
+                            <p>{{comment.content}}</p>
                           </div>
                         </li>
+
                         <li class="post-comment">
-                          <div class="comet-avatar">
-                            <img src="images/resources/comet-1.jpg" alt="">
-                          </div>
-                          <div class="post-comt-box">
-                            <form method="post">
-                              <textarea placeholder="Post your comment"></textarea>
-                              <button type="submit"></button>
-                            </form>
-                          </div>
+                          <app-comment [postId]="post.postId"></app-comment>
                         </li>
                       </ul>
                     </div>

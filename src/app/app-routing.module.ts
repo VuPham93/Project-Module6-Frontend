@@ -7,8 +7,8 @@ import {NewsFeedComponent} from './news-feed/news-feed.component';
 import {LoginAndSignupComponent} from './login/login-and-signup.component';
 import {FriendListBigComponent} from './friend-list-big/friend-list-big.component';
 import {SearchUserComponent} from './search-user/search-user.component';
+import {NewPostComponent} from './new-post/new-post.component';
 
-// @ts-ignore
 const routes: Routes = [
   {
     path: '',
@@ -58,7 +58,21 @@ const routes: Routes = [
     data: {
       title: 'searchUser'
     }
-  }
+  },
+  {
+    path: 'postStatus',
+    component: NewPostComponent,
+    data: {
+      title: 'postStatus'
+    }
+  },
+  {
+    path: 'newFeed',
+    component: NewsFeedComponent,
+    data: {
+      title: 'newFeed'
+    }
+  },
 ];
 
 @NgModule({

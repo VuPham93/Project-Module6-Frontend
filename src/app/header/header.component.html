@@ -251,7 +251,7 @@
           </div>
         </li>
         <li>
-          <a href="#" title="Messages" data-ripple=""><i class="ti-comment"></i><span></span></a>
+          <a href="#" title="Messages" data-ripple=""><i class="ti-comment"></i><span>12</span></a>
           <div class="dropdowns">
             <span>5 New Messages</span>
             <ul class="drops-menu">
@@ -316,9 +316,12 @@
         </li>
       </ul>
       <div class="user-img">
-
         <img src="assets/images/resources/admin.jpg" alt="">
-        <a [routerLink]="'/userInfor/'+ user.userId" title=""><span style="font-family: 'Segoe Ui';font-size: 16px">{{user.userName}}</span></a>
+        <div class="user-setting">
+          <a  routerLink="/userInfor" title=""><i class="ti-user"></i> view profile</a>
+          <a routerLink="/userEdit" title=""><i class="ti-pencil-alt"></i>edit profile</a>
+          <a href="#" title=""><i class="ti-power-off"></i>log out</a>
+        </div>
       </div>
     </div>
   </div>

@@ -106,7 +106,7 @@
               </div>
 
               <div class="form-group">
-                <input type="password" name="confirmPassword" [(ngModel)]="form2.confirmPassword"  #confirmPassword="ngModel" required="required" pattern="{{ password.value }}"/>
+                <input type="password" name="confirmPassword" [(ngModel)]="form2.confirmPassword" #confirmPassword="ngModel" required="required" pattern="{{ password.value }}"/>
                 <label class="control-label" for="confirmPassword">Confirm password</label><i class="mtrl-select"></i>
                 <div class="alert-danger" *ngIf="g.submitted && confirmPassword.invalid">
                   <div *ngIf="confirmPassword.errors.required">Confirm password is required</div>

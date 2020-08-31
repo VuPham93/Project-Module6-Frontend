@@ -30,4 +30,8 @@ export class AuthService {
       password: user.password
     }, httpOptions);
   }
+
+  logOut(RefreshToken):Observable<any> {
+    return this.http.post(AUTH_API + 'logout', RefreshToken, httpOptions)
+  }
 }

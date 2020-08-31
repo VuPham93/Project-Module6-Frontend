@@ -1,5 +1,5 @@
 <app-header></app-header>
-<app-cover-photo></app-cover-photo>
+<app-cover-photo [relatingId]="idLogin" [relatedId]="idUser"></app-cover-photo>
 <section>
   <div class="gap gray-bg">
     <div class="container-fluid">
@@ -18,7 +18,7 @@
                     </li>
                     <li>
                       <i class="ti-lock"></i>
-                      <a title="" href="#">change password</a>
+                      <a title="" routerLink="/userEditPass">change password</a>
                     </li>
                   </ul>
                 </div>
@@ -146,7 +146,7 @@
                     <li *ngFor="let friend of friendList; let i = index">
                       <figure><img src="assets/images/resources/friend-avatar2.jpg" alt=""></figure>
                       <div class="friend-meta">
-                        <h4><a href="#" title="">{{friend.userName}}</a></h4>
+                        <h4><a [routerLink]="'/userInfor/'+friend.userId" title="">{{friend.userName}}</a></h4>
 <!--                        <a href="#" title="" class="underline"> Unfriend</a>-->
                       </div>
                     </li>

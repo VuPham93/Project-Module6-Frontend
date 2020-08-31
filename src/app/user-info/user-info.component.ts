@@ -19,12 +19,12 @@ export class UserInfoComponent implements OnInit {
   constructor(private userService: UserService, private router: Router
     ,private friendService: FriendService,
                private actRoute: ActivatedRoute) {
-    console.log("contructor")
     this.idUser = parseInt(this.actRoute.snapshot.params.id);
+
+
   }
 
   ngOnInit(): void {
-    console.log("ngOninit")
     this.userService.findUserById(this.idUser).subscribe(
       response => this.user = <IUser>response,
       error => console.log(error)
@@ -47,6 +47,7 @@ export class UserInfoComponent implements OnInit {
     this.userService.getUser().subscribe(
       response => {this.userLogin = <IUser> response;
       this.idLogin =this.userLogin.userId;
+      console.log(this.idLogin)
       if(this.idLogin==this.idUser){
         this.isLogin = true;
       }

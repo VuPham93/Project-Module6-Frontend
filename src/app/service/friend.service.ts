@@ -29,7 +29,7 @@ export class FriendService {
   }
 
   addInviteFriend(relatingId: number,user: any) {
-    return this.http.put(this.friendUrl + '/create/' + relatingId,user).pipe(
+    return this.http.post(this.friendUrl + '/create/' + relatingId,user).pipe(
       tap(
         receivedList => JSON.stringify(receivedList)),
       catchError(err => of([]))

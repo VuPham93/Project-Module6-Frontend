@@ -21,4 +21,8 @@ export class CommentService {
   getCommentByPostId(postId: number) {
     return this.http.get(this.API_URL + 'findCommentsByPostId/' + postId)
   }
+
+  deleteComment(commentId: number) {
+    return this.http.delete(this.API_URL + 'delete/' + commentId)
+  }
 }

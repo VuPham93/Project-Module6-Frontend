@@ -21,6 +21,8 @@ import {LoginAndSignupComponent} from './login/login-and-signup.component';
 import {authInterceptorProviders} from './_helpers/auth.interceptor';
 import { SearchUserComponent } from './search-user/search-user.component';
 import { CommentComponent } from './comment/comment.component';
+import { MyWallComponent } from './my-wall/my-wall.component';
+import { StatusComponent } from './status/status.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { CommentComponent } from './comment/comment.component';
     UserEditPasswordComponent,
     FriendListBigComponent,
     SearchUserComponent,
-    CommentComponent
+    CommentComponent,
+    MyWallComponent,
+    StatusComponent
   ],
   imports: [
     BrowserModule,

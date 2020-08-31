@@ -21,4 +21,12 @@ export class PostService {
   getPostById(id: number) {
     return this.http.get(this.API_URL + 'findPostById/' + id)
   }
+
+  getAllPostByUserId(userId: number) {
+    return this.http.get(this.API_URL + 'findPostByPosterId/' + userId)
+  }
+
+  deletePost(postId: number) {
+    return this.http.delete(this.API_URL + 'delete/' + postId)
+  }
 }

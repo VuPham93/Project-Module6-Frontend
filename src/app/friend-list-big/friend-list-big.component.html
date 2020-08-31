@@ -15,10 +15,10 @@
             <li *ngFor="let friend of friendList; let i = index">
               <div class="nearly-pepls">
                 <figure>
-                  <a href="#" title=""><img src="assets/images/resources/friend-avatar9.jpg" alt=""></a>
+                  <a [routerLink]="'/userInfor/'+friend.userId"><img src="assets/images/resources/friend-avatar9.jpg" alt=""></a>
                 </figure>
                 <div class="pepl-info">
-                  <h4><a href="#" title="">{{friend.userName}}</a></h4>
+                  <h4><a [routerLink]="'/userInfor/'+friend.userId" title="">{{friend.userName}}</a></h4>
                   <a  title="" class="add-butn btn-danger" data-ripple="" (click)="unFriend(friend.userId,3,i)">unfriend</a>
                 </div>
               </div>
@@ -33,10 +33,10 @@
             <li *ngFor="let friend of pendingList; let i = index">
               <div class="nearly-pepls">
                 <figure>
-                  <a href="#" title=""><img src="assets/images/resources/nearly5.jpg" alt=""></a>
+                  <a [routerLink]="'/userInfor/'+friend.userId" title=""><img src="assets/images/resources/nearly5.jpg" alt=""></a>
                 </figure>
                 <div class="pepl-info">
-                  <h4><a href="#" title="">{{friend.userName}}</a></h4>
+                  <h4><a [routerLink]="'/userInfor/'+friend.userId" title="">{{friend.userName}}</a></h4>
                   <span>ftv model</span>
                   <a  title="" class="add-butn btn-outline-danger more-action " (click)="acceptInviteFriend(friend.userId,3,i)" data-ripple="">Delete</a>
                   <a title="" class="add-butn btn-outline-success" data-ripple="" (click)="acceptInviteFriend(friend.userId,2,i)">Confirm</a>

@@ -11,8 +11,8 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
-  // creatNewPost(): Observable<any>{
-  //     return this.http.post(API_URL + 'all',)
-  // }
+  creatNewPost(post): Observable<any>{
+      return this.http.post(API_URL,post)
+  }
 
 }

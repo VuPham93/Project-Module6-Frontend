@@ -11,23 +11,26 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
 
   RefreshToken = {
-    refreshToken:''
-  }
+    token: ''
+  };
 
-  constructor(private authService: AuthService,private tokenStorageService: TokenStorageService,private router: Router) { }
+  constructor(private authService: AuthService, private tokenStorageService: TokenStorageService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   logout(): void{
-    this.RefreshToken.refreshToken = this.tokenStorageService.getToken();
+    this.RefreshToken.token = String(this.tokenStorageService.getToken());
+    console.log(this.RefreshToken);
     this.authService.logOut(this.RefreshToken).subscribe(
-      res =>{
+      res => {
         console.log(res);
         this.tokenStorageService.signOut();
         this.router.navigateByUrl('/');
+      },
+      error => {
+        console.log(error);
       }
     );
-
   }
 }

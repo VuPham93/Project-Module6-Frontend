@@ -1,3 +1,5 @@
+import {IComment} from './IComment';
+
 export interface IPost {
   postId: number,
   posterId: number,
@@ -10,4 +12,5 @@ export interface IPost {
   postTime: string,
   postLike: number,
   postDislike: number
+  commentList: IComment[]
 }

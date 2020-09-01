@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import {UserService} from '../service/user.service';
+import {IUser} from '../model/iuser';
 function comparePassword(c: AbstractControl) {
   const v = c.value;
   return (v.newPassword === v.confirmPassword) ? null : {
@@ -26,6 +27,7 @@ export class UserEditPasswordComponent implements OnInit {
     }, {validator: comparePassword})
   }
 
+  userId = this.tokenStorage.getUser().id
   changePasswordForm: FormGroup;
 
   get f(){

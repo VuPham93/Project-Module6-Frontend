@@ -23,6 +23,7 @@ import { SearchUserComponent } from './search-user/search-user.component';
 import { CommentComponent } from './comment/comment.component';
 import { MyWallComponent } from './my-wall/my-wall.component';
 import { StatusComponent } from './status/status.component';
+import { YourPageComponent } from './your-page/your-page.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { StatusComponent } from './status/status.component';
     SearchUserComponent,
     CommentComponent,
     MyWallComponent,
-    StatusComponent
+    StatusComponent,
+    YourPageComponent
   ],
   imports: [
     BrowserModule,

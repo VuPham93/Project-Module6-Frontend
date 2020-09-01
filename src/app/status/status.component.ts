@@ -57,7 +57,7 @@ export class StatusComponent implements OnInit {
 
   deleteComment(commentId: number) {
     this.commentService.deleteComment(commentId).subscribe(
-      res => window.alert("comment deleted")
+      res => this.showPost()
     )
   }
 

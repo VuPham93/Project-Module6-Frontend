@@ -4,7 +4,7 @@
 			<span class="mh-btns-left">
 				<a class="" href="#menu"><i class="fa fa-align-justify"></i></a>
 			</span>
-      <span class="mh-text" style="height: 50px">
+      <span class="mh-text">
 				<a routerLink="/home" title=""><img src="assets/images/logo.png" alt=""></a>
 			</span>
     </div>
@@ -317,11 +317,10 @@
       </ul>
       <div class="user-img">
         <img src="assets/images/resources/admin.jpg" alt="">
-        <div class="user-setting">
-          <a  routerLink="/userInfor" title=""><i class="ti-user"></i> view profile</a>
-          <a routerLink="/userEdit" title=""><i class="ti-pencil-alt"></i>edit profile</a>
-          <a (click)="logout()" title=""><i class="ti-power-off"></i>log out</a>
-        </div>
+        <a [routerLink]="'/userInfor/'+ user.userId" title=""><span style="font-family: 'Segoe Ui';font-size: 16px">{{user.userName}}</span></a>
+        <a (click)="logout()" title=""><i class="ti-power-off"  style="left: 20px"></i></a>
+
+
       </div>
     </div>
   </div>

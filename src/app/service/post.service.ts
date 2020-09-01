@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
@@ -28,5 +28,9 @@ export class PostService {
 
   deletePost(postId: number) {
     return this.http.delete(this.API_URL + 'delete/' + postId)
+  }
+
+  updatePost(postId: number,post) {
+    return this.http.put(this.API_URL + 'update/' + postId,post)
   }
 }

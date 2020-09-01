@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import {CommentService} from '../service/comment.service';
@@ -12,6 +12,7 @@ import {UserService} from '../service/user.service';
 })
 export class CommentComponent implements OnInit {
   addCommentForm: FormGroup;
+  @Output() newComment = new EventEmitter();
   @Input() postId;
   user: IUser;
 
@@ -31,9 +32,10 @@ export class CommentComponent implements OnInit {
 
   addComment(){
     let comment = this.addCommentForm.value;
+    this.newComment.emit(this.addCommentForm.value);
     this.commentService.addNewComment(comment).subscribe(
       res => {
-        window.alert("Comment successfully");
+        // window.alert("Comment successfully");
       }
     )
   }

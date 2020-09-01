@@ -3,7 +3,8 @@
 </div>
 <div class="post-comt-box">
   <form [formGroup]="addCommentForm" (ngSubmit)="addComment()">
-    <textarea (keydown.enter)="$event.preventDefault()" formControlName="content" placeholder="Post your comment"></textarea>
-    <button class="btn btn-primary" type="submit">Comment</button>
+    <input class="form-control bg-light border-0" type="text" formControlName="content" placeholder="Post your comment" aria-label="Search">
+    <input type="submit" style="display: none" />
   </form>
 </div>
+

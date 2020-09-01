@@ -95,4 +95,8 @@ export class NewsFeedComponent implements OnInit {
   addNewPost(value) {
     this.getAllPostByUserId()
   }
+
+  addNewComment(value) {
+    this.getAllPostByUserId()
+  }
 }

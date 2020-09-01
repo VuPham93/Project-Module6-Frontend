@@ -15,7 +15,6 @@ import { TokenStorageService } from '../service/signin-signup/token-storage.serv
 export class HeaderComponent implements OnInit {
   user: IUser;
 
-
   RefreshToken = {
     token: ''
   };

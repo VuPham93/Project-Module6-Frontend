@@ -19,6 +19,11 @@ import { UserEditPasswordComponent } from './user-edit-password/user-edit-passwo
 import { FriendListBigComponent } from './friend-list-big/friend-list-big.component';
 import {LoginAndSignupComponent} from './login/login-and-signup.component';
 import {authInterceptorProviders} from './_helpers/auth.interceptor';
+import { SearchUserComponent } from './search-user/search-user.component';
+import { CommentComponent } from './comment/comment.component';
+import { MyWallComponent } from './my-wall/my-wall.component';
+import { StatusComponent } from './status/status.component';
+import { YourPageComponent } from './your-page/your-page.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +40,12 @@ import {authInterceptorProviders} from './_helpers/auth.interceptor';
     CoverPhotoComponent,
     UserEditInfoComponent,
     UserEditPasswordComponent,
-    FriendListBigComponent
+    FriendListBigComponent,
+    SearchUserComponent,
+    CommentComponent,
+    MyWallComponent,
+    StatusComponent,
+    YourPageComponent
   ],
   imports: [
     BrowserModule,

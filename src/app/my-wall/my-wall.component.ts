@@ -1,34 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import {PostService} from '../service/post.service';
-import {IPost} from '../model/IPost';
 import {UserService} from '../service/user.service';
-import {IUser} from '../model/iuser';
+import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
+import {IPost} from '../model/IPost';
+import {IUser} from '../model/iuser';
 import {IComment} from '../model/IComment';
-import {FormBuilder, NgForm} from '@angular/forms';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
-import {interval} from 'rxjs';
 
 @Component({
-  selector: 'app-news-feed',
-  templateUrl: './news-feed.component.html',
-  styleUrls: ['./news-feed.component.css']
+  selector: 'app-my-wall',
+  templateUrl: './my-wall.component.html',
+  styleUrls: ['./my-wall.component.css']
 })
-export class NewsFeedComponent implements OnInit {
+export class MyWallComponent implements OnInit {
 
   constructor(private userService: UserService, private postService: PostService, private commentService: CommentService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
-    this.getAllPostByUserId()  ;
+    this.getAllPost()
   }
 
   post: IPost;
-  allPost:IPost[] ;
-  idPostEdit:number;
-  indexEdit: number;
+  allPost;
 
-  getAllPostByUserId() {
-    this.postService.getAllPost().subscribe(
+  getAllPost() {
+    this.postService.getAllPostByUserId(this.tokenStorage.getUser().id).subscribe(
       postList => {
         this.allPost = <IPost[]> postList;
         for (let i = 0; i < this.allPost.length; i++) {
@@ -38,8 +34,6 @@ export class NewsFeedComponent implements OnInit {
               this.allPost[i].posterName = user.userName;
               this.allPost[i].posterAvatar = user.userAvatar;
 
-
-              // @ts-ignore
               this.allPost[i].commentList = this.commentService.getCommentByPostId(this.allPost[i].postId).subscribe(
                 commentList => {
                   this.allPost[i].commentList = <IComment[]> commentList;
@@ -67,32 +61,22 @@ export class NewsFeedComponent implements OnInit {
       }
     )
   }
-  getIdPost(idPost:number,index: number){
-    this.idPostEdit = idPost;
-    this.indexEdit = index;
-  }
-  onSubmit(form:NgForm){
-    this.postService.getPostById(this.idPostEdit).subscribe(
-      resPost => {
-        this.post = <IPost> resPost;
-        this.post.textPost=form.value.content;
-        this.postService.updatePost(this.idPostEdit,this.post).subscribe(
-          resPost => {
-            for (let i = 0 ; i< this.allPost.length;i++){
-              if (i == this.indexEdit){
-                this.allPost[i].textPost = form.value.content;
-              }
-            }
 
-
-          }
-        )
+  deletePost(postId: any) {
+    this.commentService.getCommentByPostId(postId).subscribe(
+      commentList => {
+           let comments = <IComment[]> commentList;
+               for (let i = 0; i < comments.length; i++) {
+          this.commentService.deleteComment(comments[i].commentId).subscribe(
+            res => console.log("comment deleted")
+          )
+        }
       }
     )
-
-  }
-
-  addNewPost(value) {
-    this.getAllPostByUserId()
+    this.postService.deletePost(postId).subscribe(
+      res => {
+        window.alert("Post deleted");
+      }
+    )
   }
 }

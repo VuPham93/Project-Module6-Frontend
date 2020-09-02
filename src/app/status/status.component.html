@@ -1,0 +1,80 @@
+<app-header></app-header>
+<div class="central-meta item">
+  <div class="user-post">
+    <div class="friend-info">
+      <figure>
+        <img src="assets/images/resources/{{post.posterAvatar}}" alt="">
+      </figure>
+      <div class="friend-name">
+        <ins><a href="#" title="">{{post.posterName}}</a></ins>
+        <span>published: {{post.postTime}}</span>
+      </div>
+      <div class="post-meta">
+        <div class="description">
+          <p>{{post.textPost}}</p>
+        </div>
+        <div class="we-video-info">
+          <ul>
+            <li><span class="comment" data-toggle="tooltip" title="Comments"><i class="fa fa-comments-o"></i><ins>52</ins></span></li>
+            <li><span class="like" data-toggle="tooltip" title="like"><i class="ti-heart"></i><ins>{{post.postLike}}</ins></span></li>
+            <li><span class="dislike" data-toggle="tooltip" title="dislike"><i class="ti-heart-broken"></i><ins>{{post.postDislike}}</ins></span></li>
+            <li class="social-media">
+              <div class="menu">
+                <div class="btn trigger"><i class="fa fa-share-alt"></i></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="coment-area">
+    <ul class="we-comet">
+      <li *ngFor="let comment of post.commentList; let i = index">
+        <div class="comet-avatar">
+          <img style="width: 45px; height: 45px" src="assets/images/resources/{{comment.commenterAvatar}}" alt="">
+        </div>
+        <div class="we-comment">
+          <div class="coment-head">
+            <h5><a href="#" title="">{{comment.commenterName}}</a></h5>
+            <span>{{comment.commentTime}}</span>
+            <a class="btn trigger" data-toggle="modal" data-target="#form"><i class="fa fa-reply" (click)="getIdComment(comment.commentId,i)"></i></a>
+          </div>
+          <p>{{comment.content}}</p>
+        </div>
+        <button class="d-flex btn btn-danger" (click)="deleteComment(comment.commentId)">x</button>
+      </li>
+
+      <li class="post-comment">
+        <app-comment [postId]="post.postId"></app-comment>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Comment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <div class="modal-body">
+          <div class="form-group">
+            <textarea class="form-control" rows="4" cols="50" id="content" name="content" placeholder="Enter text" ngModel></textarea>
+          </div>
+          <!--          <div class="form-group">-->
+          <!--            <input type=”hidden” class="form-control" rows="4" cols="50" id="postId" name="postId" [value]="post.postId" >-->
+          <!--          </div>-->
+        </div>
+        <div class="modal-footer border-top-0 d-flex justify-content-center">
+          <button type="submit" class="btn btn-success" >Edit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

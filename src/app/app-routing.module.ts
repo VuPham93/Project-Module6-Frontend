@@ -6,8 +6,11 @@ import {UserEditPasswordComponent} from './user-edit-password/user-edit-password
 import {NewsFeedComponent} from './news-feed/news-feed.component';
 import {LoginAndSignupComponent} from './login/login-and-signup.component';
 import {FriendListBigComponent} from './friend-list-big/friend-list-big.component';
+import {SearchUserComponent} from './search-user/search-user.component';
+import {NewPostComponent} from './new-post/new-post.component';
+import {MyWallComponent} from './my-wall/my-wall.component';
+import {StatusComponent} from './status/status.component';
 
-// @ts-ignore
 const routes: Routes = [
   {
     path: '',
@@ -24,7 +27,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'userInfor',
+    path: 'userInfor/:id',
     component: UserInfoComponent,
     data: {
       title: 'userInfor'
@@ -50,11 +53,46 @@ const routes: Routes = [
     data: {
       title: 'Home'
     }
-  }
+  },
+  {
+    path: 'searchUser',
+    component: SearchUserComponent,
+    data: {
+      title: 'searchUser'
+    }
+  },
+  {
+    path: 'postStatus',
+    component: NewPostComponent,
+    data: {
+      title: 'postStatus'
+    }
+  },
+  {
+    path: 'newFeed',
+    component: NewsFeedComponent,
+    data: {
+      title: 'newFeed'
+    }
+  },
+  {
+    path: 'myWall',
+    component: MyWallComponent,
+    data: {
+      title: 'myWall'
+    }
+  },
+  {
+    path: 'status/:id',
+    component: StatusComponent,
+    data: {
+      title: 'status'
+    }
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

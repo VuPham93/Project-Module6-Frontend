@@ -29,7 +29,7 @@ export class FriendService {
   }
 
   addInviteFriend(relatingId: number,user: any) {
-    return this.http.put(this.friendUrl + '/create/' + relatingId,user).pipe(
+    return this.http.post(this.friendUrl + '/create/' + relatingId,user).pipe(
       tap(
         receivedList => JSON.stringify(receivedList)),
       catchError(err => of([]))
@@ -37,7 +37,15 @@ export class FriendService {
   }
 
   acceptInviteFriend(relatedId: number,statusId :number,user: any) {
-    return this.http.post(this.friendUrl + '/edit/' + relatedId+"/"+statusId,user).pipe(
+    return this.http.put(this.friendUrl + '/edit/' + relatedId+"/"+statusId,user).pipe(
+      tap(
+        receivedList => JSON.stringify(receivedList)),
+      catchError(err => of([]))
+    )
+  }
+
+  unFriend(relatedId: number,statusId :number,user: any) {
+    return this.http.put(this.friendUrl + '/unfriend/' + relatedId+"/"+statusId,user).pipe(
       tap(
         receivedList => JSON.stringify(receivedList)),
       catchError(err => of([]))

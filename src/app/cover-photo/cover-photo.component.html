@@ -1,6 +1,13 @@
 <section>
   <div class="feature-photo">
     <figure><img src="assets/images/resources/timeline-1.jpg" alt=""></figure>
+    <div *ngIf="relatedId===relatingId; else noTitle">
+    </div>
+    <ng-template #noTitle>
+      <div class="add-btn">
+        <button class="mtr-btn" (click)="addFriend()"><span>Add Friend</span></button>
+      </div>
+    </ng-template>
     <form class="edit-phto">
       <i class="fa fa-camera-retro"></i>
       <label class="fileContainer">
@@ -13,7 +20,7 @@
         <div class="col-lg-2 col-sm-3">
           <div class="user-avatar">
             <figure>
-              <img src="assets/images/resources/user-avatar.jpg" alt="">v
+              <img src="assets/images/resources/{{user.userAvatar}}" alt="">
               <form class="edit-phto">
                 <i class="fa fa-camera-retro"></i>
                 <label class="fileContainer">
@@ -28,13 +35,13 @@
           <div class="timeline-info">
             <ul>
               <li class="admin-name">
-                <h5>Janice Griffith</h5>
+                <h5>{{user.userName}}</h5>
               </li>
               <li>
-                <a class="" href="#" title="" data-ripple="">time line</a>
+                <a class="" routerLink="/myWall" title="" data-ripple="">time line</a>
                 <a class="" href="#" title="" data-ripple="">Photos</a>
                 <a class="" href="#" title="" data-ripple="">Videos</a>
-                <a class="" href="#" title="" data-ripple="">Friends</a>
+                <a class="" routerLink="/listFriend" title="" data-ripple="">Friends</a>
                 <a class="" href="#" title="" data-ripple="">Groups</a>
                 <a class="active" href="#" title="" data-ripple="">about</a>
               </li>

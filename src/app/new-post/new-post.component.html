@@ -1,11 +1,10 @@
 <div class="central-meta">
   <div class="new-postbox">
     <figure>
-      <img src="assets/images/resources/admin2.jpg" alt="">
+      <img src="assets/images/resources/{{user.userAvatar}}" alt="">
     </figure>
     <div class="newpst-input">
       <form [formGroup]="creatPostForm" (ngSubmit)="creatPost()">
-
         <textarea formControlName="textPost" rows="2" placeholder="write something"></textarea>
         <div class="attachments">
           <ul>

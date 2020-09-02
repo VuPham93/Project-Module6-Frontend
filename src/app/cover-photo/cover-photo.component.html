@@ -3,9 +3,11 @@
     <figure><img src="assets/images/resources/timeline-1.jpg" alt=""></figure>
     <div *ngIf="relatedId===relatingId; else noTitle">
     </div>
-    <ng-template #noTitle> <div class="add-btn">
-      <a   title="" data-ripple="" (click)="addFriend()">Add Friend</a>
-    </div></ng-template>
+    <ng-template #noTitle>
+      <div class="add-btn">
+        <button class="mtr-btn" (click)="addFriend()"><span>Add Friend</span></button>
+      </div>
+    </ng-template>
     <form class="edit-phto">
       <i class="fa fa-camera-retro"></i>
       <label class="fileContainer">

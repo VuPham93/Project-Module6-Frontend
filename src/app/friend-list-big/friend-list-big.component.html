@@ -65,7 +65,7 @@
                           <li *ngFor="let friend of pendingList; let i = index">
                             <div class="nearly-pepls">
                               <figure>
-                                <a [routerLink]="'/userInfor/'+friend.userId" title=""><img src="assets/images/resources/{{friend.userAvatar}}" alt=""></a>
+                                <a [routerLink]="'/userInfor/'+friend.userId" title=""><img src="{{friend.userAvatar}}" alt=""></a>
                               </figure>
                               <div class="pepl-info">
                                 <h4><a [routerLink]="'/userInfor/'+friend.userId" title=""> {{friend.userName}}</a></h4>

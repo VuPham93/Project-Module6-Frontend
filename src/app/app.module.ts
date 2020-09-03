@@ -24,6 +24,10 @@ import { CommentComponent } from './comment/comment.component';
 import { MyWallComponent } from './my-wall/my-wall.component';
 import { StatusComponent } from './status/status.component';
 import { YourPageComponent } from './your-page/your-page.component';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -52,9 +56,11 @@ import { YourPageComponent } from './your-page/your-page.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders, AngularFirestoreModule, AngularFireStorage],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

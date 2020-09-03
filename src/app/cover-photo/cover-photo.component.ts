@@ -1,12 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UploadFileService} from '../service/upload-file.service';
-import {HttpErrorResponse, HttpEventType} from '@angular/common/http';
-import {catchError, filter} from 'rxjs/operators';
-import {of} from 'rxjs';
 import {UserService} from '../service/user.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {FriendService} from '../service/friend.service';
 import {IUser} from '../model/iuser';
+import { AngularFireStorage } from '@angular/fire/storage';
+import {finalize} from 'rxjs/operators';
+import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 
 @Component({
   selector: 'app-cover-photo',
@@ -21,9 +21,11 @@ export class CoverPhotoComponent implements OnInit {
   @Input() relatedId:number;
 
   constructor(private uploadService: UploadFileService,
-              private userService: UserService, private router: Router
-    ,private friendService: FriendService,
-              private actRoute: ActivatedRoute) { }
+              private userService: UserService,
+              private router: Router,
+              private friendService: FriendService,
+              private storage: AngularFireStorage,
+              private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
     this.userService.findUserById(this.relatedId).subscribe(
@@ -34,7 +36,6 @@ export class CoverPhotoComponent implements OnInit {
 
   selectedFile = null;
   addFriend(){
-
     this.userService.findUserById(this.relatedId).subscribe(
       response => {this.user = <IUser>response
       this.friendService.addInviteFriend(this.relatingId,{
@@ -49,19 +50,48 @@ export class CoverPhotoComponent implements OnInit {
         "userAvatar": null,
         "userCoverPhoto": null,
         "roles":null
-      }).subscribe(
-
-
-      )
+      }).subscribe()
       },
       error => console.log(error)
-
     )
-}
+  }
 
-  onFileSelected(event) {
-    this.selectedFile = event.target.files[0];
-    this.uploadService.uploadFile(this.selectedFile)
+  uploadFile(event, option: number) {
+    let file = event.target.files[0];
+    let filePath = file.name;
+    let fileRef = this.storage.ref(filePath);
+    let task = this.storage.upload(filePath, file);
+
+    task.snapshotChanges().pipe(
+      finalize(() => fileRef.getDownloadURL().subscribe(
+        url => {
+          if (option === 1) {
+            this.updateCoverPhoto(url);
+          } else
+            this.updateAvatar(url);
+        }))
+    )
+      .subscribe();
+  }
+
+  updateCoverPhoto(imgLink: string) {
+    this.userService.findUserById(this.relatedId).subscribe(
+      response => {
+          this.user = <IUser>response;
+          this.user.userCoverPhoto = imgLink;
+          this.userService.editUser(this.user.userId, this.user).subscribe()
+        },
+      error => console.log(error))
+  }
+
+  updateAvatar(avatarLink: string) {
+    this.userService.findUserById(this.relatedId).subscribe(
+      response => {
+        this.user = <IUser>response;
+        this.user.userAvatar = avatarLink;
+        this.userService.editUser(this.user.userId, this.user).subscribe()
+      },
+      error => console.log(error))
   }
   checkFriend(){
     this.userService.getUser().subscribe(

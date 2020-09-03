@@ -72,7 +72,7 @@
                   <h4 class="widget-title">Friends</h4>
                   <ul class="followers">
                     <li *ngFor="let friend of friendList; let i = index">
-                      <figure><img src="assets/images/resources/friend-avatar2.jpg" alt=""></figure>
+                      <figure><img src="{{friend.userAvatar}}" alt=""></figure>
                       <div class="friend-meta">
                         <h4><a [routerLink]="'/userInfor/'+friend.userId" title="">{{friend.userName}}</a></h4>
                       </div>
@@ -82,7 +82,7 @@
                     <h4 class="widget-title">Mutual Friends</h4>
                     <ul class="followers">
                       <li *ngFor="let friend of mutualFriendList; let i = index">
-                        <figure><img src="assets/images/resources/friend-avatar2.jpg" alt=""></figure>
+                        <figure><img src="{{friend.userAvatar}}" alt=""></figure>
                         <div class="friend-meta">
                           <h4><a [routerLink]="'/userInfor/'+friend.userId" title="">{{friend.userName}}</a></h4>
                         </div>

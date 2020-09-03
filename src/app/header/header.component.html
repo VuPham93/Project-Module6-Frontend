@@ -313,7 +313,7 @@
         </li>
       </ul>
       <div class="user-img">
-        <img  style="width: 50px; height: 50px" src="assets/images/resources/{{user.userAvatar}}" alt="" [routerLink]="'/userInfor/'+ user.userId">
+        <img  style="width: 50px; height: 50px" src="{{user.userAvatar}}" alt="" [routerLink]="'/userInfor/'+ user.userId">
         <a [routerLink]="'/userInfor/'+ user.userId" title=""><span style="font-family: 'Segoe Ui';font-size: 16px">{{user.userName}} </span></a>
       </div>
     </div>

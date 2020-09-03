@@ -33,4 +33,8 @@ export class PostService {
   updatePost(postId: number,post) {
     return this.http.put(this.API_URL + 'update/' + postId,post)
   }
+
+  searchPostByIdAndTextPost(userId: number, textPost:string) {
+    return this.http.get(this.API_URL + 'searchPost/' + userId +"/"+textPost)
+  }
 }

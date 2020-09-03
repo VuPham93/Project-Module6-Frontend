@@ -33,7 +33,11 @@ export class SearchUserComponent implements OnInit {
           error => console.error(error)
         )
       }
-   form.reset();
+   form.reset(
+     {
+       username:""
+     }
+   );
   }
 
 }

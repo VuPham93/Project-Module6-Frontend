@@ -29,7 +29,8 @@ export class NewPostComponent implements OnInit {
       linkPost: '',
       postDate: '',
       postLike: 0,
-      postDislike: 0
+      postDislike: 0,
+      status:3
     })
   }
 
@@ -53,7 +54,9 @@ export class NewPostComponent implements OnInit {
             linkPost: '',
             postDate: '',
             postLike: 0,
-            postDislike: 0}
+            postDislike: 0,
+            status:3
+          }
         );
         // this.creatPostForm.value.posterId=this.tokenStorage.getUser().id;
       }

@@ -76,7 +76,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'myWall',
+    path: 'myWall/:id',
     component: MyWallComponent,
     data: {
       title: 'myWall'

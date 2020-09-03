@@ -21,6 +21,7 @@ export class CommentComponent implements OnInit {
   isFriend: boolean =false;
   userLogin: IUser;
   post : IPost;
+  isMe:boolean = false;
 
   constructor(private commentService: CommentService, private fb:FormBuilder, private tokenStorage: TokenStorageService, private userService: UserService
   ,private postService: PostService,
@@ -40,7 +41,7 @@ export class CommentComponent implements OnInit {
   }
 
   addComment(){
-    if (this.isFriend){
+    if (this.isFriend||this.isMe){
       let comment = this.addCommentForm.value;
       this.newComment.emit(this.addCommentForm.value);
       this.commentService.addNewComment(comment).subscribe(
@@ -81,6 +82,9 @@ export class CommentComponent implements OnInit {
                     this.isFriend = false;
                     break;
                 };
+                if (this.userLogin.userId==this.post.posterId){
+                  this.isMe = true;
+                }
               },
               error => console.log(error)
             )

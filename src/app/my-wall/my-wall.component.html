@@ -14,7 +14,8 @@
                   <app-short-cut></app-short-cut>
                   <div class="widget">
                     <div class="banner medium-opacity bluesh">
-                      <div class="bg-image" style="background-image: url(assets/images/resources/baner-widgetbg.jpg)"></div>
+                      <div class="bg-image"
+                           style="background-image: url(assets/images/resources/baner-widgetbg.jpg)"></div>
                       <div class="baner-top">
                         <span><img alt="" src="assets/images/book-icon.png"></span>
                         <i class="fa fa-ellipsis-h"></i>
@@ -33,66 +34,86 @@
               <div class="col-lg-6">
 
                 <!-- add post new box -->
+
+                <form class="input-group mb-3" style="top: 10px" #f="ngForm" (ngSubmit)="searchPost(f)">
+                  <input type="text" class="form-control" placeholder="Search Post" aria-label="Recipient's username" aria-describedby="basic-addon2" name="postname" ngModel>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                  </div>
+                </form>
+
                 <app-new-post></app-new-post>
+
+
                 <div class="loadMore">
-                  <div class="central-meta item" *ngFor="let post of allPost">
-                    <div class="user-post">
+                  <div *ngFor="let post of allPost">
 
-                      <div class="friend-info">
-                        <figure>
-                          <img src="{{post.posterAvatar}}" alt="">
-                        </figure>
-                        <div class="friend-name">
-                          <ins><a href="#" title="">{{post.posterName}}</a></ins>
-                          <span>published: {{post.postTime}}</span>
-                        </div>
-                        <div class="post-meta">
-                          <div class="description">
-                            <p>{{post.textPost}}</p>
+                    <div *ngIf="(post.status===1&&idUser===userLogin.userId)||(post.status===2&&isFriend)||(post.status===2&&idUser===userLogin.userId)||(post.status===3)">
+                      <div class="central-meta item" >
+                      <div class="user-post">
+
+                        <div class="friend-info">
+                          <figure>
+                            <img src="{{post.posterAvatar}}" alt="">
+                          </figure>
+                          <div class="friend-name">
+                            <ins><a href="#" title="">{{post.posterName}}</a></ins>
+                            <span>published: {{post.postTime}}</span>
                           </div>
-                          <div class="we-video-info">
-                            <ul>
-                              <li><span class="comment" data-toggle="tooltip" title="Comments"><i class="fa fa-comments-o"></i><ins>52</ins></span></li>
-                              <li><span class="like" data-toggle="tooltip" title="like"><i class="ti-heart"></i><ins>{{post.postLike}}</ins></span></li>
-                              <li><span class="dislike" data-toggle="tooltip" title="dislike"><i class="ti-heart-broken"></i><ins>{{post.postDislike}}</ins></span></li>
-                              <li class="social-media">
-                                <div class="menu">
-                                  <div class="btn trigger"><i class="fa fa-share-alt"></i></div>
+                          <div class="post-meta">
+                            <div class="description">
+                              <p>{{post.textPost}}</p>
+                            </div>
+                            <div class="we-video-info">
+                              <ul>
+                                <li><span class="comment" data-toggle="tooltip" title="Comments"><i
+                                  class="fa fa-comments-o"></i><ins>52</ins></span></li>
+                                <li><span class="like" data-toggle="tooltip" title="like"><i class="ti-heart"></i><ins>{{post.postLike}}</ins></span>
+                                </li>
+                                <li><span class="dislike" data-toggle="tooltip" title="dislike"><i
+                                  class="ti-heart-broken"></i><ins>{{post.postDislike}}</ins></span></li>
+                                <li class="social-media">
+                                  <div class="menu">
+                                    <div class="btn trigger"><i class="fa fa-share-alt"></i></div>
 
-                                </div>
-                              </li>
-                              <li class="social-media">
-                                <div class="menu">
-                                  <div class="btn trigger"><i class="fa fa-trash-o" (click)="deletePost(post.postId)"></i></div>
-                                </div>
-                              </li>
-                            </ul>
+                                  </div>
+                                </li>
+                                <li class="social-media">
+                                  <div class="menu">
+                                    <div class="btn trigger"><i class="fa fa-trash-o"
+                                                                (click)="deletePost(post.postId)"></i></div>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div class="coment-area">
-                      <ul class="we-comet">
-                        <li *ngFor="let comment of post.commentList">
-                          <div class="comet-avatar">
-                            <img style="width: 45px; height: 45px" src="{{comment.commenterAvatar}}" alt="">
-                          </div>
-                          <div class="we-comment">
-                            <div class="coment-head">
-                              <h5><a href="#" title="">{{comment.commenterName}}</a></h5>
-                              <span>{{comment.commentTime}}</span>
-                              <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
+
+                      <div class="coment-area">
+                        <ul class="we-comet">
+                          <li *ngFor="let comment of post.commentList">
+                            <div class="comet-avatar">
+                              <img style="width: 45px; height: 45px" src="{{comment.commenterAvatar}}" alt="">
                             </div>
-                            <p>{{comment.content}}</p>
-                          </div>
-                        </li>
+                            <div class="we-comment">
+                              <div class="coment-head">
+                                <h5><a href="#" title="">{{comment.commenterName}}</a></h5>
+                                <span>{{comment.commentTime}}</span>
+                                <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
+                              </div>
+                              <p>{{comment.content}}</p>
+                            </div>
+                          </li>
 
-                        <li class="post-comment">
-                          <app-comment [postId]="post.postId"></app-comment>
-                        </li>
-                      </ul>
+                          <li class="post-comment">
+                            <app-comment [postId]="post.postId"></app-comment>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
+                  </div>
                   </div>
                 </div>
               </div><!-- centerl meta -->
@@ -117,7 +138,7 @@
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content">
-                          <div class="tab-pane active fade show " id="link1" >
+                          <div class="tab-pane active fade show " id="link1">
                             <span><i class="ti-heart"></i>884</span>
                             <a href="#" title="weekly-likes">35 new likes this week</a>
                             <div class="users-thumb-list">
@@ -144,7 +165,7 @@
                               </a>
                             </div>
                           </div>
-                          <div class="tab-pane fade" id="link2" >
+                          <div class="tab-pane fade" id="link2">
                             <span><i class="ti-eye"></i>440</span>
                             <a href="#" title="weekly-likes">440 new views this week</a>
                             <div class="users-thumb-list">

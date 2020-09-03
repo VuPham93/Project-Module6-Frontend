@@ -3,7 +3,7 @@
   <div class="user-post">
     <div class="friend-info">
       <figure>
-        <img src="assets/images/resources/{{post.posterAvatar}}" alt="">
+        <img src="{{post.posterAvatar}}" alt="">
       </figure>
       <div class="friend-name">
         <ins><a href="#" title="">{{post.posterName}}</a></ins>
@@ -33,7 +33,7 @@
     <ul class="we-comet">
       <li *ngFor="let comment of post.commentList; let i = index">
         <div class="comet-avatar">
-          <img style="width: 45px; height: 45px" src="assets/images/resources/{{comment.commenterAvatar}}" alt="">
+          <img style="width: 45px; height: 45px" src="{{comment.commenterAvatar}}" alt="">
         </div>
         <div class="we-comment">
           <div class="coment-head">

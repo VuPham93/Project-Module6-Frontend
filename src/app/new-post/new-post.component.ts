@@ -12,7 +12,7 @@ export class NewPostComponent implements OnInit {
   creatPostForm: FormGroup;
   idPoster: any;
 
-  constructor(private postService: PostService,private fb:FormBuilder, private tokenStorage: TokenStorageService) { }
+  constructor(private postService: PostService, private fb:FormBuilder, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
     this.idPoster = this.tokenStorage.getUser().id
@@ -25,11 +25,11 @@ export class NewPostComponent implements OnInit {
       postDate: '',
       postLike: 0,
       postDislike: 0
-    })
+    });
   }
 
+  // tslint:disable-next-line:typedef
   creatPost(){
-
     let post = this.creatPostForm.value;
     this.postService.creatNewPost(post).subscribe(
       res => {

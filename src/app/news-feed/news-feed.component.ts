@@ -13,36 +13,36 @@ export class NewsFeedComponent implements OnInit {
 
   constructor(private userService: UserService, private postService: PostService) { }
 
-  ngOnInit(): void {
-    this.getAllPost()
-  }
-
   post: IPost;
   allPost;
+
+  ngOnInit(): void {
+    this.getAllPost();
+  }
 
   getAllPost() {
     this.postService.getAllPost().subscribe(
       postList => {
-        this.allPost = <IPost[]> postList;
+        this.allPost = (postList as IPost[]);
         for (let i = 0; i < this.allPost.length; i++) {
           this.userService.findUserById(this.allPost[i].posterId).subscribe(
             res => {
-              let user = <IUser> res;
+              const user = res as IUser;
               this.allPost[i].posterName = user.userName;
               this.allPost[i].posterAvatar = user.userAvatar;
-            })
+            });
         }
       }
-    )
+    );
   }
 
   like(id: number) {
     this.postService.getPostById(id).subscribe(
       resPost => {
-        this.post = <IPost> resPost;
+        this.post = (resPost as IPost);
         this.post.postLike++;
       }
-    )
+    );
   }
 
 }

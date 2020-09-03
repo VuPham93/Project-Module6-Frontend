@@ -24,8 +24,7 @@ export class CoverPhotoComponent implements OnInit {
               private userService: UserService,
               private router: Router,
               private friendService: FriendService,
-              private storage: AngularFireStorage,
-              private tokenStorage: TokenStorageService) { }
+              private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
     this.userService.findUserById(this.relatedId).subscribe(
@@ -34,7 +33,6 @@ export class CoverPhotoComponent implements OnInit {
     this.checkFriend();
   }
 
-  selectedFile = null;
   addFriend(){
     this.userService.findUserById(this.relatedId).subscribe(
       response => {this.user = <IUser>response
@@ -112,15 +110,13 @@ export class CoverPhotoComponent implements OnInit {
               case 3:
                 this.isFriend = false;
                 break;
-            };
+            }
           },
           error => console.log(error)
         )
       },
       error => console.error(error)
     );
-
-
   }
 
   unFriend(relatedId:number,statusId:number){
@@ -146,16 +142,12 @@ export class CoverPhotoComponent implements OnInit {
                 this.isFriend=false;
               },
               error => console.error(error)
-
             )
           },
           error => console.error(error)
         )
-
-
       },
       error => console.error(error)
-
     )
   }
 }

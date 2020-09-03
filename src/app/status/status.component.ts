@@ -7,6 +7,8 @@ import {IUser} from '../model/iuser';
 import {IComment} from '../model/IComment';
 import {ActivatedRoute} from '@angular/router';
 import {NgForm} from '@angular/forms';
+import {finalize} from 'rxjs/operators';
+import {AngularFireStorage} from '@angular/fire/storage';
 
 @Component({
   selector: 'app-status',
@@ -14,17 +16,19 @@ import {NgForm} from '@angular/forms';
   styleUrls: ['./status.component.css']
 })
 export class StatusComponent implements OnInit {
-  idCommentEdit:number;
-  indexEdit: number;
-  comment: IComment;
-  comments;
-  constructor(private userService: UserService, private postService: PostService, private commentService: CommentService, private actRoute: ActivatedRoute) { }
+
+  constructor(private userService: UserService,
+              private postService: PostService,
+              private commentService: CommentService,
+              private actRoute: ActivatedRoute,
+              private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
     this.showPost()
   }
 
   post: IPost;
+  comments;
 
   showPost() {
     this.postService.getPostById(parseInt(this.actRoute.snapshot.params.id)).subscribe(
@@ -61,28 +65,45 @@ export class StatusComponent implements OnInit {
     )
   }
 
-  onSubmit(form: NgForm) {
-    this.commentService.getCommentById(this.idCommentEdit).subscribe(
+  idPostEdit:number;
+
+  getIdPost(idPost:number){
+    this.idPostEdit = idPost;
+  }
+
+  deleteImage() {
+    this.post.imagePost = '';
+  }
+
+  onSubmit(form:NgForm){
+    this.postService.getPostById(this.idPostEdit).subscribe(
       resPost => {
-        this.comment = <IComment> resPost;
-        this.comment.content=form.value.content;
-        this.commentService.updateComment(this.idCommentEdit,this.comment).subscribe(
+        this.post = <IPost> resPost;
+        this.post.textPost = form.value.textPost;
+        this.post.imagePost = form.value.imagePost;
+        this.postService.updatePost(this.idPostEdit,this.post).subscribe(
           resPost => {
-            for (let i = 0 ; i<= this.comments.length;i++){
-              if (i == this.indexEdit){
-                this.comments[i].content = form.value.content;
-              }
-            }
-
-
+            this.showPost();
           }
         )
       }
     )
   }
 
-  getIdComment(commentId: number, i: number) {
-    this.idCommentEdit= commentId;
-    this.indexEdit=i;
+  newImage() {
+    window.alert("hello")
+  }
+
+  uploadFile(event) {
+    let file = event.target.files[0];
+    let filePath = file.name;
+    let fileRef = this.storage.ref(filePath);
+    let task = this.storage.upload(filePath, file);
+
+    task.snapshotChanges().pipe(
+      finalize(() => fileRef.getDownloadURL().subscribe(
+        url => this.post.imagePost = url))
+    )
+      .subscribe();
   }
 }

@@ -80,7 +80,7 @@ export class CommentComponent implements OnInit {
                   case 3:
                     this.isFriend = false;
                     break;
-                };
+                }
               },
               error => console.log(error)
             )
@@ -89,8 +89,5 @@ export class CommentComponent implements OnInit {
         );
       }
     )
-
-
-
   }
 }

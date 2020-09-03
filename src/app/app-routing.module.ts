@@ -10,6 +10,7 @@ import {SearchUserComponent} from './search-user/search-user.component';
 import {NewPostComponent} from './new-post/new-post.component';
 import {MyWallComponent} from './my-wall/my-wall.component';
 import {StatusComponent} from './status/status.component';
+import {CommentListComponent} from './comment-list/comment-list.component';
 
 const routes: Routes = [
   {
@@ -87,6 +88,13 @@ const routes: Routes = [
     component: StatusComponent,
     data: {
       title: 'status'
+    }
+  },
+  {
+    path: 'commentList',
+    component: CommentListComponent,
+    data: {
+      title: 'commentList'
     }
   },
 ];

@@ -93,8 +93,5 @@ export class CommentComponent implements OnInit {
         );
       }
     )
-
-
-
   }
 }

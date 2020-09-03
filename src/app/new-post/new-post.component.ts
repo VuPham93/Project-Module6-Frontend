@@ -5,6 +5,9 @@ import {TokenStorageService} from '../service/signin-signup/token-storage.servic
 import {IUser} from '../model/iuser';
 import {UserService} from '../service/user.service';
 import {IPost} from '../model/IPost';
+import {finalize} from 'rxjs/operators';
+import {FriendService} from '../service/friend.service';
+import {AngularFireStorage} from '@angular/fire/storage';
 
 @Component({
   selector: 'app-new-post',
@@ -17,7 +20,11 @@ export class NewPostComponent implements OnInit {
   user: IUser;
   post : IPost;
 
-  constructor(private postService: PostService,private fb:FormBuilder, private tokenStorage: TokenStorageService, private userService: UserService) { }
+  constructor(private postService: PostService,
+              private fb:FormBuilder,
+              private tokenStorage: TokenStorageService,
+              private userService: UserService,
+              private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
     this.getUser();
@@ -44,10 +51,10 @@ export class NewPostComponent implements OnInit {
     this.post = this.creatPostForm.value;
     this.postService.creatNewPost(this.post).subscribe(
       res => {
-        // window.alert("Posted successfully")
         this.newPost.emit(this.post);
         this.creatPostForm.reset(
-          { posterId: this.tokenStorage.getUser().id,
+          {
+            posterId: this.tokenStorage.getUser().id,
             textPost: '',
             imagePost: '',
             videoPost: '',
@@ -58,8 +65,31 @@ export class NewPostComponent implements OnInit {
             status:3
           }
         );
-        // this.creatPostForm.value.posterId=this.tokenStorage.getUser().id;
+        this.downloadURL = '';
       }
     )
+  }
+
+  downloadURL: string = '';
+
+  uploadFile(event) {
+    let file = event.target.files[0];
+    let filePath = file.name;
+    let fileRef = this.storage.ref(filePath);
+    let task = this.storage.upload(filePath, file);
+
+    task.snapshotChanges().pipe(
+      finalize(() => fileRef.getDownloadURL().subscribe(
+        url => {
+          this.downloadURL = url;
+          this.creatPostForm.value.imagePost = url;
+        }))
+    )
+      .subscribe();
+  }
+
+  cancelPostImg() {
+    this.creatPostForm.value.imagePost = '';
+    this.downloadURL = '';
   }
 }

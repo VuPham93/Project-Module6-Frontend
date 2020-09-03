@@ -1,6 +1,8 @@
 <section>
   <div class="feature-photo">
-    <figure><img src="assets/images/resources/timeline-1.jpg" alt=""></figure>
+    <figure>
+      <img style="max-height: 400px; object-fit: cover" src="{{user.userCoverPhoto}}" alt="">
+    </figure>
     <div *ngIf="relatedId===relatingId; else noTitle">
     </div>
     <ng-template #noTitle>
@@ -8,24 +10,24 @@
         <button class="mtr-btn" (click)="addFriend()"><span>Add Friend</span></button>
       </div>
     </ng-template>
-    <form class="edit-phto">
+    <form class="edit-phto" *ngIf="relatedId===loggerUser.userId">
       <i class="fa fa-camera-retro"></i>
       <label class="fileContainer">
         Edit Cover Photo
-        <input type="file" id="coverPhoto" (change)="onFileSelected($event)"/>
+        <input type="file" id="coverPhoto" (change)="uploadFile($event, 1)"/>
       </label>
     </form>
     <div class="container-fluid">
       <div class="row merged">
         <div class="col-lg-2 col-sm-3">
-          <div class="user-avatar">
+          <div class="user-avatar boxed" style="width: 15vw">
             <figure>
-              <img src="assets/images/resources/{{user.userAvatar}}" alt="">
-              <form class="edit-phto">
+              <img style="height: 15vw; object-fit: cover" src="{{user.userAvatar}}" alt="">
+              <form class="edit-phto" *ngIf="relatedId===loggerUser.userId">
                 <i class="fa fa-camera-retro"></i>
                 <label class="fileContainer">
                   Edit Display Photo
-                  <input type="file"/>
+                  <input type="file" (change)="uploadFile($event, 2)"/>
                 </label>
               </form>
             </figure>

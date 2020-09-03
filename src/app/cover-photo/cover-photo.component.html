@@ -4,9 +4,17 @@
     <div *ngIf="relatedId===relatingId; else noTitle">
     </div>
     <ng-template #noTitle>
-      <div class="add-btn">
-        <button class="mtr-btn" (click)="addFriend()"><span>Add Friend</span></button>
+
+      <div *ngIf="isFriend; else notFriend">
+        <div class="add-btn">
+          <button class="mtr-btn" (click)="unFriend(relatedId,3)"><span>Unfriend</span></button>
+        </div>
       </div>
+      <ng-template #notFriend>
+        <div class="add-btn">
+          <button class="mtr-btn" (click)="addFriend()"><span>Add Friend</span></button>
+        </div>
+      </ng-template>
     </ng-template>
     <form class="edit-phto">
       <i class="fa fa-camera-retro"></i>
@@ -52,3 +60,4 @@
     </div>
   </div>
 </section><!-- top area -->
+

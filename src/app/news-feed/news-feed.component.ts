@@ -20,8 +20,16 @@ export class NewsFeedComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllPostByUserId()  ;
+    this.userService.getUser().subscribe(
+      response => {
+        this.user = <IUser>response;
+        this.idLogin = this.user.userId;
+      },
+      error => console.log(error)
+    )
   }
-
+  user: IUser;
+  idLogin:number;
   post: IPost;
   allPost:IPost[] ;
   idPostEdit:number;

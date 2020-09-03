@@ -51,4 +51,12 @@ export class FriendService {
       catchError(err => of([]))
     )
   }
+
+  checkFriend(relatingId: number,relatedId :number) {
+    return this.http.get(this.friendUrl + '/checkFriend/' + relatingId+"/"+relatedId).pipe(
+      tap(
+        receivedList => JSON.stringify(receivedList)),
+      catchError(err => of([]))
+    )
+  }
 }

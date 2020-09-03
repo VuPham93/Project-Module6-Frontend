@@ -49,6 +49,7 @@ export class NewPostComponent implements OnInit {
 
   creatPost(){
     this.post = this.creatPostForm.value;
+    this.post.imagePost= this.downloadURL;
     this.postService.creatNewPost(this.post).subscribe(
       res => {
         this.newPost.emit(this.post);

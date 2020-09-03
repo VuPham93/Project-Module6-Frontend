@@ -43,16 +43,15 @@ export class CommentComponent implements OnInit {
   addComment(){
     if (this.isFriend||this.isMe){
       let comment = this.addCommentForm.value;
-      this.newComment.emit(this.addCommentForm.value);
+
       this.commentService.addNewComment(comment).subscribe(
         res => {
-          // window.alert("Comment successfully");
+          this.newComment.emit(this.addCommentForm.value);
         }
       )
     } else{ alert("You are not friend!");
+  }
     this.addCommentForm.reset();
-    }
-
   }
 
   getUser() {

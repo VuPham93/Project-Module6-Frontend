@@ -43,15 +43,6 @@ export class StatusComponent implements OnInit {
             this.commentService.getCommentByPostId(this.post.postId).subscribe(
               commentList => {
                 this.post.commentList = <IComment[]> commentList;
-                this.comments = <IComment[]> commentList;
-                for (let j = 0; j < this.post.commentList.length; j++) {
-                  this.userService.findUserById(this.post.commentList[j].commenterId).subscribe(
-                    res => {
-                      let commenter = <IUser> res;
-                      this.post.commentList[j].commenterName = commenter.userName;
-                      this.post.commentList[j].commenterAvatar = commenter.userAvatar;
-                    })
-                }
               }
             )
           })
@@ -106,4 +97,5 @@ export class StatusComponent implements OnInit {
     )
       .subscribe();
   }
+
 }

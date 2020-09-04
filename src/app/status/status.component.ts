@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {UserService} from '../service/user.service';
 import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
@@ -6,9 +6,9 @@ import {IPost} from '../model/IPost';
 import {IUser} from '../model/iuser';
 import {IComment} from '../model/IComment';
 import {ActivatedRoute} from '@angular/router';
-import {NgForm} from '@angular/forms';
-import {finalize} from 'rxjs/operators';
-import {AngularFireStorage} from '@angular/fire/storage';
+import {LikePostService} from '../service/like-post.service';
+import {ILikePost} from '../model/ILikePost';
+import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 
 @Component({
   selector: 'app-status',
@@ -20,24 +20,33 @@ export class StatusComponent implements OnInit {
   constructor(private userService: UserService,
               private postService: PostService,
               private commentService: CommentService,
-              private actRoute: ActivatedRoute,
-              private storage: AngularFireStorage) { }
+              private likePostService: LikePostService,
+              private tokenStorage: TokenStorageService,
+              private actRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.showPost()
+    this.showPost();
+    this.checkLikedStatus();
   }
 
-  post: IPost;
-  comments;
+  @Input() post: IPost;
+  postList: IPost[];
+  editPost: IPost;
+  editPostId: number;
 
   showPost() {
-    this.postService.getPostById(parseInt(this.actRoute.snapshot.params.id)).subscribe(
+    let id: number;
+    if (this.actRoute.snapshot.params.id == null) {
+      id = this.post.postId;
+    } else
+      id = parseInt(this.actRoute.snapshot.params.id);
+
+    this.postService.getPostById(id).subscribe(
       post => {
         this.post = <IPost> post
         this.userService.findUserById(this.post.posterId).subscribe(
           res => {
             let user = <IUser> res;
-            console.log(user)
             this.post.posterName = user.userName;
             this.post.posterAvatar = user.userAvatar;
             this.commentService.getCommentByPostId(this.post.postId).subscribe(
@@ -45,57 +54,70 @@ export class StatusComponent implements OnInit {
                 this.post.commentList = <IComment[]> commentList;
               }
             )
-          })
-      }
-    )
-  }
-
-  deleteComment(commentId: number) {
-    this.commentService.deleteComment(commentId).subscribe(
-      res => this.showPost()
-    )
-  }
-
-  idPostEdit:number;
-
-  getIdPost(idPost:number){
-    this.idPostEdit = idPost;
-  }
-
-  deleteImage() {
-    this.post.imagePost = '';
-  }
-
-  onSubmit(form:NgForm){
-    this.postService.getPostById(this.idPostEdit).subscribe(
-      resPost => {
-        this.post = <IPost> resPost;
-        this.post.textPost = form.value.textPost;
-        this.post.imagePost = form.value.imagePost;
-        this.postService.updatePost(this.idPostEdit,this.post).subscribe(
-          resPost => {
-            this.showPost();
           }
         )
       }
     )
   }
 
-  newImage() {
-    window.alert("hello")
-  }
-
-  uploadFile(event) {
-    let file = event.target.files[0];
-    let filePath = file.name;
-    let fileRef = this.storage.ref(filePath);
-    let task = this.storage.upload(filePath, file);
-
-    task.snapshotChanges().pipe(
-      finalize(() => fileRef.getDownloadURL().subscribe(
-        url => this.post.imagePost = url))
+  showEditPost(postId: number) {
+    this.postService.getPostById(postId).subscribe(
+      post => {
+        this.editPost = <IPost> post;
+        this.editPostId = postId;
+      }
     )
-      .subscribe();
   }
 
+  likePost = {
+    id: null,
+    postId: null,
+    likerId: null,
+  };
+
+  liked: boolean;
+  likeList: ILikePost[];
+
+  likeAPost() {
+    this.likePost.postId = this.post.postId;
+    this.likePost.likerId = this.tokenStorage.getUser().id;
+    this.likePostService.newLikePost(this.likePost).subscribe(
+      res => {
+        this.checkLikedStatus();
+      }
+    );
+  }
+
+  unLikeAPost() {
+    this.likePostService.findAllLikePost().subscribe(
+      res => {
+        this.likeList = <ILikePost[]> res;
+        for (let i = 0; i < this.likeList.length; i++) {
+          if (this.likeList[i].likerId === this.tokenStorage.getUser().id && this.likeList[i].postId === this.post.postId) {
+            this.likePostService.unLikeAPost(this.likeList[i].id).subscribe();
+          }
+        }
+        this.post.postLike--;
+        this.liked = false;
+      }
+    )
+  }
+
+  checkLikedStatus() {
+    this.post.postLike = 0;
+    this.liked = false;
+    this.likePostService.findAllLikePost().subscribe(
+      res => {
+        this.likeList = <ILikePost[]> res;
+        for (let i = 0; i < this.likeList.length; i++) {
+          if (this.likeList[i].postId === this.post.postId) {
+            this.post.postLike++;
+            if (this.likeList[i].likerId === this.tokenStorage.getUser().id) {
+              this.liked = true;
+            }
+          }
+        }
+      }
+    )
+  }
 }

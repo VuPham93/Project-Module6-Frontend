@@ -31,6 +31,7 @@ import { environment } from '../environments/environment';
 import { CommentListComponent } from './comment-list/comment-list.component';
 import {SocketService} from './service/socket.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { StatusEditComponent } from './status-edit/status-edit.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     StatusComponent,
     YourPageComponent,
     CommentListComponent,
+    StatusEditComponent
   ],
   imports: [
     BrowserModule,

@@ -1,12 +1,11 @@
 import {Component, OnInit, Output,EventEmitter} from '@angular/core';
-import { FormControlName, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { PostService } from '../service/post.service';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import {IUser} from '../model/iuser';
 import {UserService} from '../service/user.service';
 import {IPost} from '../model/IPost';
 import {finalize} from 'rxjs/operators';
-import {FriendService} from '../service/friend.service';
 import {AngularFireStorage} from '@angular/fire/storage';
 
 @Component({
@@ -49,7 +48,7 @@ export class NewPostComponent implements OnInit {
 
   creatPost(){
     this.post = this.creatPostForm.value;
-    this.post.imagePost= this.downloadURL;
+    this.post.imagePost = this.downloadURL;
     this.postService.creatNewPost(this.post).subscribe(
       res => {
         this.newPost.emit(this.post);

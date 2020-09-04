@@ -21,4 +21,8 @@ export class LikePostService {
   unLikeAPost(id) {
     return this.http.delete(this.API_URL + 'delete/' + id)
   }
+
+  findLikerByPostId(postId) {
+    return this.http.get(this.API_URL + 'findLikerByPostId/' + postId)
+  }
 }

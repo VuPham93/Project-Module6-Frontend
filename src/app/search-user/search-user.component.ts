@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, NgForm} from '@angular/forms';
-import {IUser} from '../model/iuser';
-import {UserService} from '../service/user.service';
-import {FriendService} from '../service/friend.service';
+import {IUser} from '../container/model/iuser';
+import {UserService} from '../container/service/user.service';
+import {FriendService} from '../container/service/friend.service';
 
 @Component({
   selector: 'app-search-user',
@@ -10,7 +10,7 @@ import {FriendService} from '../service/friend.service';
   styleUrls: ['./search-user.component.css']
 })
 export class SearchUserComponent implements OnInit {
-  users:IUser[];
+  users: IUser[];
   sumUsers:number=0;
 
   constructor(private userService: UserService,private friendService: FriendService) { }

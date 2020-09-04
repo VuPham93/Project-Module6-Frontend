@@ -1,0 +1,103 @@
+<!--<app-header></app-header>-->
+<!--<app-cover-photo [relatingId]="idLogin" [relatedId]="idUser"></app-cover-photo>-->
+<section>
+  <div class="gap gray-bg">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row" id="page-contents">
+            <div class="col-lg-3">
+
+              <aside class="sidebar static">
+<!--                <app-short-cut></app-short-cut>-->
+                <div class="widget">
+                  <h4 class="widget-title">Edit information</h4>
+                  <ul class="naves">
+                    <li>
+                      <i class="ti-info-alt"></i>
+                      <a title="" routerLink="/userEdit">Personal info</a>
+                    </li>
+                    <li>
+                      <i class="ti-lock"></i>
+                      <a title="" routerLink="/userEditPass">change password</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="widget">
+                  <h4 class="widget-title">Socials</h4>
+                  <ul class="socials">
+                    <li class="facebook">
+                      <a title="" href="#"><i class="fa fa-facebook"></i> <span>facebook</span></a>
+                    </li>
+                    <li class="twitter">
+                      <a title="" href="#"><i class="fa fa-twitter"></i> <span>twitter</span></a>
+                    </li>
+                    <li class="google">
+                      <a title="" href="#"><i class="fa fa-google"></i> <span>google</span></a>
+                    </li>
+                  </ul>
+                </div>
+              </aside>
+            </div><!-- sidebar -->
+            <div class="col-lg-6">
+              <div class="central-meta">
+                <div class="about">
+                  <div class="personal">
+                    <h5 class="f-title"><i class="ti-info-alt"></i> Personal Info</h5>
+                    <h5>{{user.about}}</h5>
+                  </div>
+                  <div class="d-flex flex-row mt-2">
+                    <div class="tab-content">
+                      <div class="tab-pane fade show active" id="basic" >
+                        <ul class="basics">
+                          <li><h5><i class="ti-user"></i>{{user.userName}}</h5></li>
+                          <li><h5><i class="ti-agenda"></i>{{user.userSex}}</h5></li>
+                          <li><h5><i class="ti-time"></i>{{user.dateOfBirth}}</h5></li>
+                          <li><h5><i class="ti-map"></i>{{user.userAddress}}</h5></li>
+                          <li><h5><i class="ti-mobile"></i>{{user.userPhoneNumber}}</h5></li>
+                          <li><h5><i class="ti-email"></i>{{user.userEmail}}</h5></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- centerl meta -->
+            <div class="col-lg-3">
+              <aside class="sidebar static">
+<!--                <app-your-page></app-your-page>-->
+                <div class="widget stick-widget">
+
+                  <div *ngIf="isFriend||idUser===idLogin">
+                  <h4 class="widget-title">Friends</h4>
+                  <ul class="followers">
+                    <li *ngFor="let friend of friendList; let i = index">
+                      <figure><img src="{{friend.userAvatar}}" alt=""></figure>
+                      <div class="friend-meta">
+                        <h4><a [routerLink]="'/userInfor/'+friend.userId" title="">{{friend.userName}}</a></h4>
+                      </div>
+                    </li>
+                  </ul>
+                    <div *ngIf="!isLogin">
+                    <h4 class="widget-title">Mutual Friends</h4>
+                    <ul class="followers">
+                      <li *ngFor="let friend of mutualFriendList; let i = index">
+                        <figure><img src="{{friend.userAvatar}}" alt=""></figure>
+                        <div class="friend-meta">
+                          <h4><a [routerLink]="'/userInfor/'+friend.userId" title="">{{friend.userName}}</a></h4>
+                        </div>
+                      </li>
+                    </ul>
+                    </div>
+                  </div>
+
+                </div><!-- Friends -->
+              </aside>
+            </div><!-- sidebar -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--<app-footer></app-footer>-->

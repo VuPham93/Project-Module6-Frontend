@@ -1,7 +1,7 @@
-<div class="central-meta">
+<div class="central-meta" *ngIf="user">
   <div class="new-postbox">
     <figure>
-      <img style="height: 80px; width: 80px; object-fit: cover" src="{{user.userAvatar}}" alt="">
+      <img style="height: 4.8vw; width: 4.8vw; object-fit: cover" src="{{user.userAvatar}}" alt="">
     </figure>
     <div class="newpst-input">
       <form [formGroup]="creatPostForm" (ngSubmit)="creatPost()">

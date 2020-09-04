@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {UserService} from '../service/user.service';
 import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
@@ -6,8 +6,6 @@ import {IPost} from '../model/IPost';
 import {IUser} from '../model/iuser';
 import {IComment} from '../model/IComment';
 import {ActivatedRoute} from '@angular/router';
-import {NgForm} from '@angular/forms';
-import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
 
 @Component({
@@ -27,83 +25,43 @@ export class StatusComponent implements OnInit {
     this.showPost()
   }
 
-  post: IPost;
-  comments;
+  @Input() post: IPost;
+  postList: IPost[];
+  editPost: IPost;
+  editPostId: number;
 
   showPost() {
-    this.postService.getPostById(parseInt(this.actRoute.snapshot.params.id)).subscribe(
+    let id: number;
+    if (this.actRoute.snapshot.params.id == null) {
+      id = this.post.postId;
+    } else
+      id = parseInt(this.actRoute.snapshot.params.id);
+
+    this.postService.getPostById(id).subscribe(
       post => {
         this.post = <IPost> post
         this.userService.findUserById(this.post.posterId).subscribe(
           res => {
             let user = <IUser> res;
-            console.log(user)
             this.post.posterName = user.userName;
             this.post.posterAvatar = user.userAvatar;
             this.commentService.getCommentByPostId(this.post.postId).subscribe(
               commentList => {
                 this.post.commentList = <IComment[]> commentList;
-                this.comments = <IComment[]> commentList;
-                for (let j = 0; j < this.post.commentList.length; j++) {
-                  this.userService.findUserById(this.post.commentList[j].commenterId).subscribe(
-                    res => {
-                      let commenter = <IUser> res;
-                      this.post.commentList[j].commenterName = commenter.userName;
-                      this.post.commentList[j].commenterAvatar = commenter.userAvatar;
-                    })
-                }
               }
             )
-          })
-      }
-    )
-  }
-
-  deleteComment(commentId: number) {
-    this.commentService.deleteComment(commentId).subscribe(
-      res => this.showPost()
-    )
-  }
-
-  idPostEdit:number;
-
-  getIdPost(idPost:number){
-    this.idPostEdit = idPost;
-  }
-
-  deleteImage() {
-    this.post.imagePost = '';
-  }
-
-  onSubmit(form:NgForm){
-    this.postService.getPostById(this.idPostEdit).subscribe(
-      resPost => {
-        this.post = <IPost> resPost;
-        this.post.textPost = form.value.textPost;
-        this.post.imagePost = form.value.imagePost;
-        this.postService.updatePost(this.idPostEdit,this.post).subscribe(
-          resPost => {
-            this.showPost();
           }
         )
       }
     )
   }
 
-  newImage() {
-    window.alert("hello")
-  }
-
-  uploadFile(event) {
-    let file = event.target.files[0];
-    let filePath = file.name;
-    let fileRef = this.storage.ref(filePath);
-    let task = this.storage.upload(filePath, file);
-
-    task.snapshotChanges().pipe(
-      finalize(() => fileRef.getDownloadURL().subscribe(
-        url => this.post.imagePost = url))
+  showEditPost(postId: number) {
+    this.postService.getPostById(postId).subscribe(
+      post => {
+        this.editPost = <IPost> post;
+        this.editPostId = postId;
+      }
     )
-      .subscribe();
   }
 }

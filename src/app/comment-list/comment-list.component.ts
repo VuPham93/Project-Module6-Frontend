@@ -10,6 +10,7 @@ import {LikePostService} from '../service/like-post.service';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import {LikeCommentService} from '../service/like-comment.service';
 import {ILikeComment} from '../model/ILikeComment';
+import {IPost} from '../model/IPost';
 
 @Component({
   selector: 'app-comment-list',
@@ -25,11 +26,24 @@ export class CommentListComponent implements OnInit {
               private commentService: CommentService) { }
 
   ngOnInit(): void {
-    this.getCommentList()
+    this.getCommentList();
+    this.userService.getUser().subscribe(
+      res=>{
+        this.userLogin = <IUser>res;
+      }
+    )
+    this.postService.getPostById(this.postId).subscribe(
+      res=>{
+        this.post = <IPost>res;
+      }
+    )
   }
-
+  @Output() newComment = new EventEmitter();
+  @Output() delComment = new EventEmitter();
   @Input() postId;
   commentList: IComment[];
+  userLogin: IUser;
+  post : IPost;
 
   getCommentList() {
     this.commentService.getCommentByPostId(this.postId).subscribe(
@@ -47,9 +61,12 @@ export class CommentListComponent implements OnInit {
     )
   }
 
-  deleteComment(commentId: number) {
+  deleteComment(commentId: number,index : number) {
     this.commentService.deleteComment(commentId).subscribe(
-      res => this.getCommentList()
+      res => {this.getCommentList();
+        this.delComment.emit(index);
+
+      }
     )
   }
 
@@ -81,6 +98,7 @@ export class CommentListComponent implements OnInit {
   }
 
   addNewComment(value) {
+    this.newComment.emit(value);
     this.getCommentList();
   }
 

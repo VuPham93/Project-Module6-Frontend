@@ -29,15 +29,17 @@
                 <ins *ngIf="post.commentList">{{post.commentList.length}}</ins>
               </span>
             </li>
+            <ng-template [ngIf]="userLogin.userId==post.posterId">
             <li class="editing-info" data-toggle="tooltip" title="Edit" (click)="showEditPost(post.postId)">
-                <span data-toggle="modal" data-target="#modal"><i class="fa fa-pencil-square-o"></i></span>
+              <span data-toggle="modal" data-target="#modal"><i class="fa fa-pencil-square-o"></i></span>
             </li>
+          </ng-template>
           </ul>
         </div>
       </div>
     </div>
   </div>
-  <app-comment-list [postId]="post.postId"></app-comment-list>
+  <app-comment-list [postId]="post.postId" (newComment)="addNewComment($event)" (delComment)="delComment($event)"></app-comment-list>
 </div>
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="post">
   <app-status-edit [post]="post"></app-status-edit>

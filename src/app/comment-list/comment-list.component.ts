@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UserService} from '../service/user.service';
 import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
@@ -71,5 +71,9 @@ export class CommentListComponent implements OnInit {
         )
       }
     )
+  }
+
+  addNewComment(value) {
+    this.getCommentList();
   }
 }

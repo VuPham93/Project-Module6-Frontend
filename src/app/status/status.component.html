@@ -1,4 +1,4 @@
-<div class="central-meta item" *ngIf="post">
+<div class="central-meta item">
   <div class="user-post">
     <div class="friend-info">
       <figure>
@@ -35,11 +35,7 @@
     </div>
   </div>
   <app-comment-list [postId]="post.postId"></app-comment-list>
-
 </div>
-
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="post">
   <app-status-edit [post]="post"></app-status-edit>
 </div>
-
-

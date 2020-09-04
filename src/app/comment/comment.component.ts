@@ -21,6 +21,7 @@ export class CommentComponent implements OnInit {
   isFriend: boolean =false;
   userLogin: IUser;
   post : IPost;
+  isMe:boolean = false;
 
   constructor(private commentService: CommentService, private fb:FormBuilder, private tokenStorage: TokenStorageService, private userService: UserService
   ,private postService: PostService,
@@ -40,18 +41,17 @@ export class CommentComponent implements OnInit {
   }
 
   addComment(){
-    if (this.isFriend){
+    if (this.isFriend||this.isMe){
       let comment = this.addCommentForm.value;
-      this.newComment.emit(this.addCommentForm.value);
+
       this.commentService.addNewComment(comment).subscribe(
         res => {
-          // window.alert("Comment successfully");
+          this.newComment.emit(this.addCommentForm.value);
         }
       )
     } else{ alert("You are not friend!");
+  }
     this.addCommentForm.reset();
-    }
-
   }
 
   getUser() {
@@ -80,6 +80,9 @@ export class CommentComponent implements OnInit {
                   case 3:
                     this.isFriend = false;
                     break;
+                };
+                if (this.userLogin.userId==this.post.posterId){
+                  this.isMe = true;
                 }
               },
               error => console.log(error)

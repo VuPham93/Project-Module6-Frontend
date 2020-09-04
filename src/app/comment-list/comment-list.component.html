@@ -18,7 +18,7 @@
       </div>
     </li>
     <li class="post-comment">
-      <app-comment [postId]="postId"></app-comment>
+      <app-comment [postId]="postId" (newComment)="addNewComment($event)"></app-comment>
     </li>
   </ul>
 </div>

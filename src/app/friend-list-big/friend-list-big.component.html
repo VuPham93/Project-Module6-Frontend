@@ -47,7 +47,7 @@
                           <li *ngFor="let friend of friendList; let i = index">
                             <div class="nearly-pepls">
                               <figure>
-                                <a [routerLink]="'/userInfor/'+friend.userId"><img src="assets/images/resources/{{friend.userAvatar}}" alt=""></a>
+                                <a [routerLink]="'/userInfor/'+friend.userId"><img src="{{friend.userAvatar}}" alt=""></a>
                               </figure>
                               <div class="pepl-info pl-4">
                                 <h4><a [routerLink]="'/userInfor/'+friend.userId" title="">{{friend.userName}}</a></h4>

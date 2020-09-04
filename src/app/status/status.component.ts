@@ -64,15 +64,6 @@ export class StatusComponent implements OnInit {
     )
   }
 
-  showEditPost(postId: number) {
-    this.postService.getPostById(postId).subscribe(
-      post => {
-        this.editPost = <IPost> post;
-        this.editPostId = postId;
-      }
-    )
-  }
-
   likePost = {
     id: null,
     postId: null,
@@ -101,23 +92,28 @@ export class StatusComponent implements OnInit {
             this.likePostService.unLikeAPost(this.likeList[i].id).subscribe();
           }
         }
-        this.post.postLike--;
         this.liked = false;
       }
     )
   }
 
   checkLikedStatus() {
-    this.post.postLike = 0;
     this.liked = false;
     this.likePostService.findAllLikePost().subscribe(
       res => {
         this.likeList = <ILikePost[]> res;
         for (let i = 0; i < this.likeList.length; i++) {
-          if (this.likeList[i].postId === this.post.postId) {
-            this.post.postLike++;
-            if (this.likeList[i].likerId === this.tokenStorage.getUser().id) {
-              this.liked = true;
+          if (this.actRoute.snapshot.params.id == null) {
+            if (this.likeList[i].postId === this.post.postId) {
+              if (this.likeList[i].likerId === this.tokenStorage.getUser().id) {
+                this.liked = true;
+              }
+            }
+          } else {
+            if (this.likeList[i].postId === parseInt(this.actRoute.snapshot.params.id)) {
+              if (this.likeList[i].likerId === this.tokenStorage.getUser().id) {
+                this.liked = true;
+              }
             }
           }
         }

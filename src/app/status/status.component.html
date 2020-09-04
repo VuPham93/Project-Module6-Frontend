@@ -1,4 +1,4 @@
-<div class="central-meta item">
+<div class="central-meta item" *ngIf="post">
   <div class="user-post">
     <div class="friend-info">
       <figure>
@@ -17,8 +17,11 @@
         </div>
         <div class="we-video-info">
           <ul>
-            <li>
+            <li (click)="likeAPost()" *ngIf="!liked">
               <span class="like" data-toggle="tooltip" title="Like"><i class="ti-heart"></i><ins>{{post.postLike}}</ins></span>
+            </li>
+            <li (click)="unLikeAPost()" *ngIf="liked">
+              <span class="like" data-toggle="tooltip" title="UnLike"><i class="ti-heart" style="color: red"></i><ins>{{post.postLike}}</ins></span>
             </li>
             <li>
               <span class="comment" data-toggle="tooltip" title="Comments">

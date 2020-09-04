@@ -6,7 +6,9 @@ import {IPost} from '../model/IPost';
 import {IUser} from '../model/iuser';
 import {IComment} from '../model/IComment';
 import {ActivatedRoute} from '@angular/router';
-import {AngularFireStorage} from '@angular/fire/storage';
+import {LikePostService} from '../service/like-post.service';
+import {ILikePost} from '../model/ILikePost';
+import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 
 @Component({
   selector: 'app-status',
@@ -18,11 +20,13 @@ export class StatusComponent implements OnInit {
   constructor(private userService: UserService,
               private postService: PostService,
               private commentService: CommentService,
-              private actRoute: ActivatedRoute,
-              private storage: AngularFireStorage) { }
+              private likePostService: LikePostService,
+              private tokenStorage: TokenStorageService,
+              private actRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.showPost()
+    this.showPost();
+    this.checkLikedStatus();
   }
 
   @Input() post: IPost;
@@ -65,4 +69,55 @@ export class StatusComponent implements OnInit {
     )
   }
 
+  likePost = {
+    id: null,
+    postId: null,
+    likerId: null,
+  };
+
+  liked: boolean;
+  likeList: ILikePost[];
+
+  likeAPost() {
+    this.likePost.postId = this.post.postId;
+    this.likePost.likerId = this.tokenStorage.getUser().id;
+    this.likePostService.newLikePost(this.likePost).subscribe(
+      res => {
+        this.checkLikedStatus();
+      }
+    );
+  }
+
+  unLikeAPost() {
+    this.likePostService.findAllLikePost().subscribe(
+      res => {
+        this.likeList = <ILikePost[]> res;
+        for (let i = 0; i < this.likeList.length; i++) {
+          if (this.likeList[i].likerId === this.tokenStorage.getUser().id && this.likeList[i].postId === this.post.postId) {
+            this.likePostService.unLikeAPost(this.likeList[i].id).subscribe();
+          }
+        }
+        this.post.postLike--;
+        this.liked = false;
+      }
+    )
+  }
+
+  checkLikedStatus() {
+    this.post.postLike = 0;
+    this.liked = false;
+    this.likePostService.findAllLikePost().subscribe(
+      res => {
+        this.likeList = <ILikePost[]> res;
+        for (let i = 0; i < this.likeList.length; i++) {
+          if (this.likeList[i].postId === this.post.postId) {
+            this.post.postLike++;
+            if (this.likeList[i].likerId === this.tokenStorage.getUser().id) {
+              this.liked = true;
+            }
+          }
+        }
+      }
+    )
+  }
 }

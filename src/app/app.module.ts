@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserInfoComponent } from './user-info/user-info.component';
@@ -29,6 +29,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { CommentListComponent } from './comment-list/comment-list.component';
+import {SocketService} from './service/socket.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -51,18 +53,20 @@ import { CommentListComponent } from './comment-list/comment-list.component';
     MyWallComponent,
     StatusComponent,
     YourPageComponent,
-    CommentListComponent
+    CommentListComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    ToastrModule.forRoot({ timeOut: 3000 }),
   ],
-  providers: [authInterceptorProviders, AngularFirestoreModule, AngularFireStorage],
+  providers: [authInterceptorProviders, AngularFirestoreModule, AngularFireStorage,SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

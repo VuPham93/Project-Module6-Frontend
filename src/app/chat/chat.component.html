@@ -1,62 +1,99 @@
-<div class="chat-box">
-  <div class="chat-head">
-    <span class="status f-online"></span>
-    <h6>Bucky Barnes</h6>
-    <div class="more">
-      <span><i class="ti-more-alt"></i></span>
-      <span class="close-mesage"><i class="ti-close"></i></span>
+<app-header></app-header>
+<app-cover-photo [relatingId]="userLogin.userId" [relatedId]="userLogin.userId"></app-cover-photo>
+<div class="theme-layout">
+  <section>
+    <div class="gap gray-bg">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="row" id="page-contents">
+              <!-- sidebar -->
+              <div class="col-lg-3">
+                <aside class="sidebar static">
+                  <!-- Shortcuts -->
+                  <app-short-cut></app-short-cut>
+                  <div class="widget">
+                    <h4 class="widget-title">Edit information</h4>
+                    <ul class="naves">
+                      <li>
+                        <i class="ti-info-alt"></i>
+                        <a title="" routerLink="/userEdit">Personal info</a>
+                      </li>
+                      <li>
+                        <i class="ti-lock"></i>
+                        <a title="" routerLink="/userEditPass">change password</a>
+                      </li>
+                    </ul>
+                  </div>
+                </aside>
+              </div>
+<!--Chat-->
+              <div class="col-lg-6">
+                <div class="central-meta">
+                  <div class="messages">
+                    <h5 class="f-title"><i class="ti-bell"></i>All Messages <span class="more-options"><i class="fa fa-ellipsis-h"></i></span></h5>
+                    <div class="message-box">
+                      <ul class="peoples">
+
+                        <li *ngFor="let user of users; let i = index">
+                          <figure>
+                            <img style="width: 2vw;height: 2vw;object-fit: cover" src="{{user.userAvatar}}" alt="">
+                            <span class="status f-online"></span>
+                          </figure>
+                          <div class="people-name">
+                            <span (click)="setUserTarget(user.userId)">{{user.userName}}</span>
+                          </div>
+                        </li>
+
+                      </ul>
+                      <div class="peoples-mesg-box">
+                        <div class="conversation-head">
+                          <figure><img style="width: 2vw;height: 2vw;object-fit: cover"  src="{{userTarget.userAvatar}}" alt=""></figure>
+                          <span>{{userTarget.userName}}<i>online</i></span>
+                        </div>
+                        <ul class="chatting-area">
+                          <div *ngFor="let message of messages">
+                            <div *ngIf="userLogin.userId==message.fromId">
+                          <li class="you" >
+                            <figure><img style="width: 2vw;height: 2vw;object-fit: cover" src="{{userLogin.userAvatar}}" alt=""></figure>
+                            <p>{{message.message}}</p>
+                          </li>
+                            </div>
+                            <div *ngIf="userLogin.userId!=message.fromId">
+                              <li class="me" >
+                                <figure><img style="width: 2vw;height: 2vw;object-fit: cover" src="{{userTarget.userAvatar}}" alt=""></figure>
+                                <p>{{message.message}}</p>
+                              </li>
+                            </div>
+                          </div>
+                        </ul>
+                        <div class="message-text-container">
+                          <form method="post" [formGroup]="form" (submit)="sendMessageUsingSocket()">
+                            <textarea formControlName="message" name="message" placeholder="Message"></textarea>
+                            <button title="send" type="submit"><i class="fa fa-paper-plane"></i></button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- centerl meta -->
+
+
+
+              <div class="col-lg-3">
+                <aside class="sidebar static">
+                  <!-- page like widget -->
+                  <app-your-page></app-your-page>
+                  <!-- friends list sidebar -->
+                  <app-friend-list></app-friend-list>
+                </aside>
+              </div><!-- sidebar -->
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="chat-list">
-    <ul>
-      <li class="me">
-        <div class="chat-thumb"><img src="images/resources/chatlist1.jpg" alt=""></div>
-        <div class="notification-event">
-															<span class="chat-message-item">
-																Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks
-															</span>
-          <span class="notification-date"><time datetime="2004-07-24T18:18" class="entry-date updated">Yesterday at 8:10pm</time></span>
-        </div>
-      </li>
-      <li class="you">
-        <div class="chat-thumb"><img src="images/resources/chatlist2.jpg" alt=""></div>
-        <div class="notification-event">
-															<span class="chat-message-item">
-																Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks
-															</span>
-          <span class="notification-date"><time datetime="2004-07-24T18:18" class="entry-date updated">Yesterday at 8:10pm</time></span>
-        </div>
-      </li>
-      <li class="me">
-        <div class="chat-thumb"><img src="images/resources/chatlist1.jpg" alt=""></div>
-        <div class="notification-event">
-															<span class="chat-message-item">
-																Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks
-															</span>
-          <span class="notification-date"><time datetime="2004-07-24T18:18" class="entry-date updated">Yesterday at 8:10pm</time></span>
-        </div>
-      </li>
-    </ul>
-    <form class="text-box">
-      <textarea placeholder="Post enter to post..."></textarea>
-      <div class="add-smiles">
-        <span title="add icon" class="em em-expressionless"></span>
-      </div>
-      <div class="smiles-bunch">
-        <i class="em em---1"></i>
-        <i class="em em-smiley"></i>
-        <i class="em em-anguished"></i>
-        <i class="em em-laughing"></i>
-        <i class="em em-angry"></i>
-        <i class="em em-astonished"></i>
-        <i class="em em-blush"></i>
-        <i class="em em-disappointed"></i>
-        <i class="em em-worried"></i>
-        <i class="em em-kissing_heart"></i>
-        <i class="em em-rage"></i>
-        <i class="em em-stuck_out_tongue"></i>
-      </div>
-      <button type="submit"></button>
-    </form>
-  </div>
+  </section>
 </div>
+<app-footer></app-footer>

@@ -69,25 +69,25 @@
                 <div class="widget stick-widget">
 
                   <div *ngIf="isFriend||idUser===idLogin">
-                  <h4 class="widget-title">Friends</h4>
-                  <ul class="followers">
-                    <li *ngFor="let friend of friendList; let i = index">
-                      <figure><img src="{{friend.userAvatar}}" alt=""></figure>
-                      <div class="friend-meta">
-                        <h4><a [routerLink]="'/userInfor/'+friend.userId" title="">{{friend.userName}}</a></h4>
-                      </div>
-                    </li>
-                  </ul>
-                    <div *ngIf="!isLogin">
-                    <h4 class="widget-title">Mutual Friends</h4>
+                    <h4 class="widget-title">Friends</h4>
                     <ul class="followers">
-                      <li *ngFor="let friend of mutualFriendList; let i = index">
+                      <li *ngFor="let friend of friendList; let i = index">
                         <figure><img src="{{friend.userAvatar}}" alt=""></figure>
                         <div class="friend-meta">
                           <h4><a [routerLink]="'/userInfor/'+friend.userId" title="">{{friend.userName}}</a></h4>
                         </div>
                       </li>
                     </ul>
+                    <div *ngIf="!isLogin">
+                      <h4 class="widget-title">Mutual Friends</h4>
+                      <ul class="followers">
+                        <li *ngFor="let friend of mutualFriendList; let i = index">
+                          <figure><img src="{{friend.userAvatar}}" alt=""></figure>
+                          <div class="friend-meta">
+                            <h4><a [routerLink]="'/userInfor/'+friend.userId" title="">{{friend.userName}}</a></h4>
+                          </div>
+                        </li>
+                      </ul>
                     </div>
                   </div>
 

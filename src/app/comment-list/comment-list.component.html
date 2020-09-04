@@ -1,18 +1,22 @@
-<div class="coment-area">
+<div class="coment-area" *ngIf="commentList">
   <ul class="we-comet">
-    <li *ngFor="let comment of commentList; let i = index">
-      <div class="comet-avatar">
-        <img style="width: 45px; height: 45px" src="{{comment.commenterAvatar}}" alt="">
+    <li class="row" *ngFor="let comment of commentList; let i = index">
+      <div class="comet-avatar col col-lg-2 col-md-2 col-xl-2 col-sm-2">
+        <img style="height: 2.5vw; width: 2.5vw; object-fit: cover" src="{{comment.commenterAvatar}}" alt="">
       </div>
-      <div class="we-comment" style="width: 80%">
-        <div class="coment-head">
+      <div class="we-comment">
+        <div class="coment-head w-100" style="position: relative">
           <h5><a href="#" title="">{{comment.commenterName}}</a></h5>
           <span>{{comment.commentTime}}</span>
-          <a class="btn trigger" data-toggle="modal" data-target="#form"><i class="fa fa-reply" (click)="getIdComment(comment.commentId,i)"></i></a>
+          <p>{{comment.content}}</p>
+            <div style="position: absolute; bottom: -10px; right: 0">
+              <a class="btn like ti-heart" data-toggle="tooltip" title="Like" style="color: green" (click)="likeAComment(i)" *ngIf="!commentLiked"> {{comment.commentLike}}</a>
+              <a class="btn like ti-heart" data-toggle="tooltip" title="Like" style="color: red" (click)="unLikeAComment(i)" *ngIf="commentLiked"> {{comment.commentLike}}</a>
+              <a class="btn fa fa-edit align-self-end" data-toggle="modal" title="Edit" data-target="#form" (click)="getIdComment(comment.commentId,i)"></a>
+              <a class="btn fa fa-trash align-self-end" title="Delete" (click)="deleteComment(comment.commentId)"></a>
+          </div>
         </div>
-        <p>{{comment.content}}</p>
       </div>
-      <button class="d-flex btn btn-danger" (click)="deleteComment(comment.commentId)">x</button>
     </li>
     <li class="post-comment">
       <app-comment [postId]="postId" (newComment)="addNewComment($event)"></app-comment>

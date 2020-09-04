@@ -29,6 +29,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { CommentListComponent } from './comment-list/comment-list.component';
+import { StatusEditComponent } from './status-edit/status-edit.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { CommentListComponent } from './comment-list/comment-list.component';
     MyWallComponent,
     StatusComponent,
     YourPageComponent,
-    CommentListComponent
+    CommentListComponent,
+    StatusEditComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-<div class="theme-layout">
+<div class="theme-layout" *ngIf="user">
   <div class="responsive-header">
     <div class="mh-head first Sticky">
 			<span class="mh-btns-left">
@@ -209,7 +209,7 @@
               </li>
               <li>
                 <a href="#" title="">
-                  <img src="images/resources/thumb-3.jpg" alt="">
+                  <img src="assets/images/resources/thumb-3.jpg" alt="">
                   <div class="mesg-meta">
                     <h6>Andrew</h6>
                     <span>Hi, how r u dear ...?</span>
@@ -251,7 +251,7 @@
             <ul class="drops-menu">
               <li>
                 <a href="notifications.html" title="">
-                  <img src="images/resources/thumb-1.jpg" alt="">
+                  <img src="assets/images/resources/thumb-1.jpg" alt="">
                   <div class="mesg-meta">
                     <h6>sarah Loren</h6>
                     <span>Hi, how r u dear ...?</span>
@@ -313,7 +313,7 @@
         </li>
       </ul>
       <div class="user-img">
-        <img  style="width: 50px; height: 50px" src="{{user.userAvatar}}" alt="" [routerLink]="'/userInfor/'+ user.userId">
+        <img  style="width: 50px; height: 50px; object-fit: cover" src="{{user.userAvatar}}" alt="" [routerLink]="'/userInfor/'+ user.userId">
         <a [routerLink]="'/userInfor/'+ user.userId" title=""><span style="font-family: 'Segoe Ui';font-size: 16px">{{user.userName}} </span></a>
       </div>
     </div>

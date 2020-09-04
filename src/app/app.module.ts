@@ -20,6 +20,17 @@ import { FriendListBigComponent } from './friend-list-big/friend-list-big.compon
 import {LoginAndSignupComponent} from './login/login-and-signup.component';
 import {authInterceptorProviders} from './_helpers/auth.interceptor';
 import { SearchUserComponent } from './search-user/search-user.component';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { environment } from '../environments/environment';
+import {CommentListComponent} from './comment-list/comment-list.component';
+import {YourPageComponent} from './your-page/your-page.component';
+import {StatusComponent} from './status/status.component';
+import {MyWallComponent} from './my-wall/my-wall.component';
+import {CommentComponent} from './comment/comment.component';
+
+
 
 @NgModule({
   declarations: [
@@ -37,17 +48,23 @@ import { SearchUserComponent } from './search-user/search-user.component';
     UserEditInfoComponent,
     UserEditPasswordComponent,
     FriendListBigComponent,
-    SearchUserComponent
-
+    SearchUserComponent,
+    CommentComponent,
+    MyWallComponent,
+    StatusComponent,
+    YourPageComponent,
+    CommentListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders, AngularFirestoreModule, AngularFireStorage],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,7 +4,7 @@
   <ul id="people-list" class="friendz-list">
     <li *ngFor="let friend of friendList">
       <figure>
-        <img src="assets/images/resources/friend-avatar.jpg" alt="">
+        <img src="{{friend.userAvatar}}" alt="">
       </figure>
       <div class="friendz-meta">
         <a href="#">{{friend.userName}}</a>

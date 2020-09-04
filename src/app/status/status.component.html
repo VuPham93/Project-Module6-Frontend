@@ -1,0 +1,68 @@
+<app-header></app-header>
+<div class="central-meta item">
+  <div class="user-post">
+    <div class="friend-info">
+      <figure>
+        <img style="height: 7vw; width: 7vw; object-fit: cover" src="{{post.posterAvatar}}" alt="">
+      </figure>
+      <div class="friend-name">
+        <ins><a href="#" title="">{{post.posterName}}</a></ins>
+        <span>published: {{post.postTime}}</span>
+      </div>
+      <div class="post-meta">
+        <div class="description">
+          <p>{{post.textPost}}</p>
+          <img src="{{post.imagePost}}" alt="">
+        </div>
+        <div class="we-video-info">
+          <ul>
+            <li>
+              <span class="like" data-toggle="tooltip" title="Like"><i class="ti-heart"></i><ins>{{post.postLike}}</ins></span>
+            </li>
+            <li>
+              <span class="dislike" data-toggle="tooltip" title="Dislike"><i class="ti-heart-broken"></i><ins>{{post.postDislike}}</ins></span>
+            </li>
+            <li>
+              <span class="comment" data-toggle="tooltip" title="Comments"><i class="fa fa-comments-o"></i><ins>52</ins></span>
+            </li>
+            <li class="editing-info" data-toggle="tooltip" title="Edit" (click)="getIdPost(post.postId)">
+                <span data-toggle="modal" data-target="#modal"><i class="fa fa-pencil-square-o"></i></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-comment-list [postId]="post.postId" ></app-comment-list>
+</div>
+
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <div class="modal-body">
+          <div class="form-group description">
+            <textarea class="form-control" rows="3" cols="50" id="content" name="textPost" [ngModel]="post.textPost"></textarea>
+            <input class="form-control" type="text" hidden name="imagePost" [ngModel]="post.imagePost">
+            <button *ngIf="post.imagePost != ''" type="button" class="close" aria-label="Close" (click)="deleteImage()"><span aria-hidden="true">&times;</span></button>
+            <label class="fileContainer" *ngIf="post.imagePost === ''">
+              <i class="close fa fa-image"></i>
+              <input type="file" accept="image/*" (change)="uploadFile($event)">
+            </label>
+            <img src="{{post.imagePost}}" alt="">
+          </div>
+        </div>
+        <div class="modal-footer border-top-0 d-flex justify-content-center">
+          <button type="submit" class="btn btn-success btn-block">Edit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

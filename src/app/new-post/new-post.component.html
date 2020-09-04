@@ -1,24 +1,22 @@
 <div class="central-meta">
   <div class="new-postbox">
     <figure>
-      <img src="assets/images/resources/admin2.jpg" alt="">
+      <img style="height: 80px; width: 80px; object-fit: cover" src="{{user.userAvatar}}" alt="">
     </figure>
     <div class="newpst-input">
       <form [formGroup]="creatPostForm" (ngSubmit)="creatPost()">
         <textarea formControlName="textPost" rows="2" placeholder="write something"></textarea>
+        <img src="{{downloadURL}}" alt="">
         <div class="attachments">
           <ul>
-            <li>
+            <li *ngIf="downloadURL === ''">
               <i class="fa fa-image"></i>
               <label class="fileContainer">
-                <input type="file" accept="image/*">
+                <input type="file" accept="image/*" (change)="uploadFile($event)">
               </label>
             </li>
-            <li>
-              <i class="fa fa-video-camera"></i>
-              <label class="fileContainer">
-                <input type="file" accept="video/*">
-              </label>
+            <li *ngIf="downloadURL != ''">
+              <button class="btn-danger" (click)="cancelPostImg()"><i class="fa fa-ban"></i></button>
             </li>
             <li>
               <button type="submit">Post</button>

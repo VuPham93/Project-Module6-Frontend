@@ -32,13 +32,13 @@
               <div class="col-lg-6">
 
                 <!-- add post new box -->
-                <app-new-post></app-new-post>
+                <app-new-post (newPost)="addNewPost($event)"></app-new-post>
                 <div class="loadMore">
-                  <div class="central-meta item" *ngFor="let post of allPost">
+                  <div class="central-meta item" *ngFor="let post of allPost; let i = index">
                     <div class="user-post">
                       <div class="friend-info">
                         <figure>
-                          <img src="assets/images/resources/{{post.posterAvatar}}" alt="">
+                          <img src="{{post.posterAvatar}}" alt="">
                         </figure>
                         <div class="friend-name">
                           <ins><a href="#" title="">{{post.posterName}}</a></ins>
@@ -46,7 +46,8 @@
                         </div>
                         <div class="post-meta">
                           <div class="description">
-                            <p>{{post.textPost}}</p>
+                            <a [routerLink]="'/status/'+post.postId">{{post.textPost}}</a>
+                            <img src="{{post.imagePost}}" alt="">
                           </div>
                           <div class="we-video-info">
                             <ul>
@@ -55,7 +56,7 @@
                               <li><span class="dislike" data-toggle="tooltip" title="dislike"><i class="ti-heart-broken"></i><ins>{{post.postDislike}}</ins></span></li>
                               <li class="social-media">
                                 <div class="menu">
-                                  <div class="btn trigger"><i class="fa fa-share-alt"></i></div>
+                                  <div class="btn trigger" data-toggle="modal" data-target="#form"><i class="fa fa-pencil-square-o" (click)="getIdPost(post.postId,i)"></i></div>
                                 </div>
                               </li>
                             </ul>
@@ -66,30 +67,24 @@
 
                     <div class="coment-area">
                       <ul class="we-comet">
-                        <li>
+                        <li *ngFor="let comment of post.commentList">
                           <div class="comet-avatar">
-                            <img src="images/resources/comet-1.jpg" alt="">
+                            <img style="width: 45px; height: 45px" src="{{comment.commenterAvatar}}" alt="">
                           </div>
                           <div class="we-comment">
                             <div class="coment-head">
-                              <h5><a href="time-line.html" title="">Jason borne</a></h5>
-                              <span>1 year ago</span>
+                              <h5><a href="#" title="">{{comment.commenterName}}</a></h5>
+                              <span>{{comment.commentTime}}</span>
                               <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
                             </div>
-                            <p>we are working for the dance and sing songs. this car is very awesome for the youngster. please vote this car and like our post</p>
+                            <p>{{comment.content}}</p>
                           </div>
                         </li>
+
                         <li class="post-comment">
-                          <div class="comet-avatar">
-                            <img src="images/resources/comet-1.jpg" alt="">
-                          </div>
-                          <div class="post-comt-box">
-                            <form method="post">
-                              <textarea placeholder="Post your comment"></textarea>
-                              <button type="submit"></button>
-                            </form>
-                          </div>
+                          <app-comment [postId]="post.postId" (newComment)="addNewComment($event)"></app-comment>
                         </li>
+
                       </ul>
                     </div>
                   </div>
@@ -98,82 +93,8 @@
 
               <div class="col-lg-3">
                 <aside class="sidebar static">
-                  <div class="widget">
-                    <h4 class="widget-title">Your page</h4>
-                    <div class="your-page">
-                      <figure>
-                        <a href="#" title=""><img src="assets/images/resources/friend-avatar9.jpg" alt=""></a>
-                      </figure>
-                      <div class="page-meta">
-                        <a href="#" title="" class="underline">My page</a>
-                        <span><i class="ti-comment"></i><a href="insight.html" title="">Messages <em>9</em></a></span>
-                        <span><i class="ti-bell"></i><a href="insight.html" title="">Notifications <em>2</em></a></span>
-                      </div>
-                      <div class="page-likes">
-                        <ul class="nav nav-tabs likes-btn">
-                          <li class="nav-item"><a class="active" href="#link1" data-toggle="tab">likes</a></li>
-                          <li class="nav-item"><a class="" href="#link2" data-toggle="tab">views</a></li>
-                        </ul>
-                        <!-- Tab panes -->
-                        <div class="tab-content">
-                          <div class="tab-pane active fade show " id="link1" >
-                            <span><i class="ti-heart"></i>884</span>
-                            <a href="#" title="weekly-likes">35 new likes this week</a>
-                            <div class="users-thumb-list">
-                              <a href="#" title="Anderw" data-toggle="tooltip">
-                                <img src="images/resources/userlist-1.jpg" alt="">
-                              </a>
-                              <a href="#" title="frank" data-toggle="tooltip">
-                                <img src="images/resources/userlist-2.jpg" alt="">
-                              </a>
-                              <a href="#" title="Sara" data-toggle="tooltip">
-                                <img src="images/resources/userlist-3.jpg" alt="">
-                              </a>
-                              <a href="#" title="Amy" data-toggle="tooltip">
-                                <img src="images/resources/userlist-4.jpg" alt="">
-                              </a>
-                              <a href="#" title="Ema" data-toggle="tooltip">
-                                <img src="images/resources/userlist-5.jpg" alt="">
-                              </a>
-                              <a href="#" title="Sophie" data-toggle="tooltip">
-                                <img src="images/resources/userlist-6.jpg" alt="">
-                              </a>
-                              <a href="#" title="Maria" data-toggle="tooltip">
-                                <img src="images/resources/userlist-7.jpg" alt="">
-                              </a>
-                            </div>
-                          </div>
-                          <div class="tab-pane fade" id="link2" >
-                            <span><i class="ti-eye"></i>440</span>
-                            <a href="#" title="weekly-likes">440 new views this week</a>
-                            <div class="users-thumb-list">
-                              <a href="#" title="Anderw" data-toggle="tooltip">
-                                <img src="images/resources/userlist-1.jpg" alt="">
-                              </a>
-                              <a href="#" title="frank" data-toggle="tooltip">
-                                <img src="images/resources/userlist-2.jpg" alt="">
-                              </a>
-                              <a href="#" title="Sara" data-toggle="tooltip">
-                                <img src="images/resources/userlist-3.jpg" alt="">
-                              </a>
-                              <a href="#" title="Amy" data-toggle="tooltip">
-                                <img src="images/resources/userlist-4.jpg" alt="">
-                              </a>
-                              <a href="#" title="Ema" data-toggle="tooltip">
-                                <img src="images/resources/userlist-5.jpg" alt="">
-                              </a>
-                              <a href="#" title="Sophie" data-toggle="tooltip">
-                                <img src="images/resources/userlist-6.jpg" alt="">
-                              </a>
-                              <a href="#" title="Maria" data-toggle="tooltip">
-                                <img src="images/resources/userlist-7.jpg" alt="">
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div><!-- page like widget -->
+                  <!-- page like widget -->
+                  <app-your-page></app-your-page>
                   <!-- friends list sidebar -->
                   <app-friend-list></app-friend-list>
                 </aside>
@@ -184,5 +105,28 @@
       </div>
     </div>
   </section>
+</div>
+<div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <div class="modal-body">
+          <div class="form-group">
+            <textarea class="form-control" rows="4" cols="50" id="content" name="content" placeholder="Enter text" ngModel></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer border-top-0 d-flex justify-content-center">
+          <button type="submit" class="btn btn-success">Edit</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 <app-footer></app-footer>

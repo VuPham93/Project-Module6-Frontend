@@ -8,6 +8,9 @@ import {LoginAndSignupComponent} from './login/login-and-signup.component';
 import {FriendListBigComponent} from './friend-list-big/friend-list-big.component';
 import {SearchUserComponent} from './search-user/search-user.component';
 import {NewPostComponent} from './new-post/new-post.component';
+import {MyWallComponent} from './my-wall/my-wall.component';
+import {StatusComponent} from './status/status.component';
+import {CommentListComponent} from './comment-list/comment-list.component';
 
 const routes: Routes = [
   {
@@ -73,10 +76,31 @@ const routes: Routes = [
       title: 'newFeed'
     }
   },
+  {
+    path: 'myWall/:id',
+    component: MyWallComponent,
+    data: {
+      title: 'myWall'
+    }
+  },
+  {
+    path: 'status/:id',
+    component: StatusComponent,
+    data: {
+      title: 'status'
+    }
+  },
+  {
+    path: 'commentList',
+    component: CommentListComponent,
+    data: {
+      title: 'commentList'
+    }
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

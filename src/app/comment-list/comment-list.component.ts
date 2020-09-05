@@ -5,8 +5,6 @@ import {CommentService} from '../service/comment.service';
 import {IUser} from '../model/iuser';
 import {IComment} from '../model/IComment';
 import {NgForm} from '@angular/forms';
-import {ILikePost} from '../model/ILikePost';
-import {LikePostService} from '../service/like-post.service';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import {LikeCommentService} from '../service/like-comment.service';
 import {ILikeComment} from '../model/ILikeComment';

@@ -121,6 +121,24 @@ export class StatusComponent implements OnInit {
     )
   }
 
+  deletePost(postId: any) {
+    this.commentService.getCommentByPostId(postId).subscribe(
+      commentList => {
+        let comments = <IComment[]> commentList;
+        for (let i = 0; i < comments.length; i++) {
+          this.commentService.deleteComment(comments[i].commentId).subscribe(
+            res => console.log("comment deleted")
+          )
+        }
+      }
+    )
+    this.postService.deletePost(postId).subscribe(
+      res => {
+        window.alert("Post deleted");
+      }
+    )
+  }
+
   addNewComment(value) {
     this.post.commentList.push(value);
   }

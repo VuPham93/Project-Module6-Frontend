@@ -1,4 +1,4 @@
-<div class="central-meta item" *ngIf="post">
+<div class="central-meta item" *ngIf="post && userLogin">
   <div class="user-post">
     <div class="friend-info">
       <figure>
@@ -29,16 +29,17 @@
                 <ins *ngIf="post.commentList">{{post.commentList.length}}</ins>
               </span>
             </li>
-
+            <li data-toggle="tooltip" title="Peoples like this post">
+              <span data-toggle="modal" [attr.data-target]="'#showLikerList' + post.postId"><i class="fa fa-male"></i></span>
+            </li>
             <ng-template [ngIf]="userLogin.userId==post.posterId">
-            <li class="editing-info" data-toggle="tooltip" title="Edit">
-                <span data-toggle="modal" [attr.data-target]="'#modal' + post.postId"><i class="fa fa-pencil-square-o"></i></span>
-            </li>
+              <li data-toggle="tooltip" title="Edit">
+                  <span data-toggle="modal" [attr.data-target]="'#modal' + post.postId"><i class="fa fa-pencil-square-o"></i></span>
+              </li>
+              <li data-toggle="tooltip" title="Delete post">
+                <span><i class="fa fa-trash" (click)="deletePost(post.postId)"></i></span>
+              </li>
             </ng-template>
-            <li>
-              <span data-toggle="modal" [attr.data-target]="'#showLikerList' + post.postId">{{post.postLike}} peoples like this post</span>
-            </li>
-
           </ul>
         </div>
       </div>

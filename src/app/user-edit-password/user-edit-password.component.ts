@@ -3,7 +3,8 @@ import {Router} from '@angular/router';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import {UserService} from '../service/user.service';
-import {IUser} from '../model/iuser';
+import swal from 'sweetalert';
+
 function comparePassword(c: AbstractControl) {
   const v = c.value;
   return (v.newPassword === v.confirmPassword) ? null : {
@@ -47,7 +48,10 @@ export class UserEditPasswordComponent implements OnInit {
   changePassword() {
     this.userService.changePassword(this.tokenStorage.getUser().id, this.changePasswordForm.value.newPassword).subscribe(
       res => {
-        window.alert(res)
+        swal({
+          icon: "success",
+          title: "Your password has changed!"
+        })
       }
     )
   }

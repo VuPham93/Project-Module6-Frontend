@@ -14,6 +14,15 @@
             <a class="btn like ti-heart" data-toggle="tooltip" title="Like" style="color: red" (click)="unLikeAComment(i)" *ngIf="commentLiked"> {{comment.commentLike}}</a>
             <a class="btn fa fa-edit align-self-end" data-toggle="modal" title="Edit" [attr.data-target]="'#editComment' + comment.commentId"></a>
             <a class="btn fa fa-trash align-self-end" title="Delete" (click)="deleteComment(comment.commentId)"></a>
+            <div style="position: absolute; bottom: -10px; right: 0">
+              <a class="btn like ti-heart" data-toggle="tooltip" title="Like" style="color: green" (click)="likeAComment(i)" *ngIf="!commentLiked"> {{comment.commentLike}}</a>
+              <a class="btn like ti-heart" data-toggle="tooltip" title="Like" style="color: red" (click)="unLikeAComment(i)" *ngIf="commentLiked"> {{comment.commentLike}}</a>
+              <ng-template [ngIf]="userLogin.userId==comment.commenterId" >
+              <a class="btn fa fa-edit align-self-end" data-toggle="modal" title="Edit" data-target="#form" (click)="getIdComment(comment.commentId,i)"></a>
+              </ng-template>
+              <ng-template [ngIf]="userLogin.userId==comment.commenterId||userLogin.userId==post.posterId" >
+              <a class="btn fa fa-trash align-self-end" title="Delete" (click)="deleteComment(comment.commentId,i)"></a>
+              </ng-template>
           </div>
         </div>
       </div>

@@ -46,12 +46,19 @@ export class CommentComponent implements OnInit {
 
       this.commentService.addNewComment(comment).subscribe(
         res => {
-          this.newComment.emit(this.addCommentForm.value);
+          this.newComment.emit(comment);
         }
       )
     } else{ alert("You are not friend!");
   }
-    this.addCommentForm.reset();
+    this.addCommentForm.reset({
+      commenterId: this.tokenStorage.getUser().id,
+      postId: this.postId,
+      content: '',
+      commentLike: '',
+      commentDislike: '',
+      commentTime: ''
+    });
   }
 
   getUser() {

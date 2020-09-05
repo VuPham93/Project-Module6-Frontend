@@ -56,7 +56,10 @@ export class ChatComponent implements OnInit {
       response => {this.userTarget = <IUser>response;
       }
     )
-    this.openSocket();
+   if (this.isCustomSocketOpened ==false){
+     this.openSocket();
+   }
+    this.messages=[];
   }
 
   sendMessageUsingSocket() {
@@ -65,15 +68,6 @@ export class ChatComponent implements OnInit {
       this.stompClient.send("/socket-subscriber/send/message", {}, JSON.stringify(message));
       this.form.reset();
   }
-
-  // sendMessageUsingRest() {
-  //   if (this.form.valid) {
-  //     let message: Message = { message: this.form.value.message, fromId: this.userForm.value.fromId, toId: this.userForm.value.toId };
-  //     this.socketService.post(message).subscribe(res => {
-  //       console.log(res);
-  //     })
-  //   }
-  // }
 
   initializeWebSocketConnection() {
     let ws = new SockJS(this.serverUrl);
@@ -103,7 +97,7 @@ export class ChatComponent implements OnInit {
       )
 
     };
-    this.messages=[];
+
   }
 
   handleResult(message){

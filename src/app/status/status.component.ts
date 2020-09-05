@@ -27,10 +27,16 @@ export class StatusComponent implements OnInit {
   ngOnInit(): void {
     this.showPost();
     this.checkLikedStatus();
+    this.userService.getUser().subscribe(
+      res => {this.userLogin= <IUser> res;}
+    )
   }
 
   @Input() post: IPost;
   postList: IPost[];
+  editPost: IPost;
+  editPostId: number;
+  userLogin:IUser;
 
   showPost() {
     let id: number;
@@ -131,5 +137,13 @@ export class StatusComponent implements OnInit {
         window.alert("Post deleted");
       }
     )
+  }
+
+  addNewComment(value) {
+    this.post.commentList.push(value);
+  }
+
+  delComment(value) {
+    this.post.commentList.splice(value,1);
   }
 }

@@ -29,21 +29,28 @@
                 <ins *ngIf="post.commentList">{{post.commentList.length}}</ins>
               </span>
             </li>
+
+            <ng-template [ngIf]="userLogin.userId==post.posterId">
+            <li class="editing-info" data-toggle="tooltip" title="Edit">
             <li data-toggle="tooltip" title="Peoples like this post">
               <span data-toggle="modal" [attr.data-target]="'#showLikerList' + post.postId"><i class="fa fa-male"></i></span>
             </li>
             <li data-toggle="tooltip" title="Edit">
                 <span data-toggle="modal" [attr.data-target]="'#modal' + post.postId"><i class="fa fa-pencil-square-o"></i></span>
             </li>
+            </ng-template>
+            <li>
+              <span data-toggle="modal" [attr.data-target]="'#showLikerList' + post.postId">{{post.postLike}} peoples like this post</span>
             <li data-toggle="tooltip" title="Delete post">
               <span><i class="fa fa-trash" (click)="deletePost(post.postId)"></i></span>
             </li>
+
           </ul>
         </div>
       </div>
     </div>
   </div>
-  <app-comment-list [postId]="post.postId"></app-comment-list>
+  <app-comment-list [postId]="post.postId" (newComment)="addNewComment($event)" (delComment)="delComment($event)"></app-comment-list>
 </div>
 <div class="modal fade" [attr.id]="'modal' + post.postId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="post">
   <app-status-edit [post]="post"></app-status-edit>

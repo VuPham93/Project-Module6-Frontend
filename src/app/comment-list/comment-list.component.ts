@@ -10,6 +10,7 @@ import {LikePostService} from '../service/like-post.service';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import {LikeCommentService} from '../service/like-comment.service';
 import {ILikeComment} from '../model/ILikeComment';
+import {IPost} from '../model/IPost';
 
 @Component({
   selector: 'app-comment-list',
@@ -25,12 +26,25 @@ export class CommentListComponent implements OnInit {
               private commentService: CommentService) { }
 
   ngOnInit(): void {
-    this.getCommentList()
+    this.getCommentList();
+    this.userService.getUser().subscribe(
+      res=>{
+        this.userLogin = <IUser>res;
+      }
+    )
+    this.postService.getPostById(this.postId).subscribe(
+      res=>{
+        this.post = <IPost>res;
+      }
+    )
   }
-
+  @Output() newComment = new EventEmitter();
+  @Output() delComment = new EventEmitter();
   @Input() postId;
   commentList: IComment[];
-  comment: IComment;
+
+  userLogin: IUser;
+  post : IPost;
 
   getCommentList() {
     this.commentService.getCommentByPostId(this.postId).subscribe(
@@ -48,13 +62,44 @@ export class CommentListComponent implements OnInit {
     )
   }
 
-  deleteComment(commentId: number) {
+  deleteComment(commentId: number,index : number) {
     this.commentService.deleteComment(commentId).subscribe(
-      res => this.getCommentList()
+      res => {this.getCommentList();
+        this.delComment.emit(index);
+
+      }
+    )
+  }
+
+  idCommentEdit:number;
+  indexEdit: number;
+  comment: IComment;
+
+  getIdComment(commentId: number, i: number) {
+    this.idCommentEdit= commentId;
+    this.indexEdit=i;
+  }
+
+  onSubmit(form: NgForm) {
+    this.commentService.getCommentById(this.idCommentEdit).subscribe(
+      resPost => {
+        this.comment = <IComment> resPost;
+        this.comment.content = form.value.content;
+        this.commentService.updateComment(this.idCommentEdit,this.comment).subscribe(
+          resPost => {
+            for (let i = 0 ; i<= this.commentList.length; i++){
+              if (i == this.indexEdit){
+                this.commentList[i].content = form.value.content;
+              }
+            }
+          }
+        )
+      }
     )
   }
 
   addNewComment(value) {
+    this.newComment.emit(value);
     this.getCommentList();
   }
 

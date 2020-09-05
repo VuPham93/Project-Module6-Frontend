@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FriendService} from '../service/friend.service';
 import {UserService} from '../service/user.service';
+import {IUser} from '../model/iuser';
 
 @Component({
   selector: 'app-friend-list',
@@ -8,7 +9,7 @@ import {UserService} from '../service/user.service';
   styleUrls: ['./friend-list.component.css']
 })
 export class FriendListComponent implements OnInit {
-
+  userLogin:IUser;
   constructor(private userService: UserService,private friendService: FriendService) { }
 
   ngOnInit(): void {
@@ -19,10 +20,15 @@ export class FriendListComponent implements OnInit {
   friendList:any;
 
   getFriendList() {
-    this.friendService.getFriendList(1).subscribe(
-      response => {this.friendList = response},
-      error => console.error(error)
+    this.userService.getUser().subscribe(
+      res=>{ this.userLogin = <IUser>res;
+        this.friendService.getFriendList(this.userLogin.userId).subscribe(
+          response => {this.friendList = response},
+          error => console.error(error)
+        )
+      }
     )
+
   }
 
 

@@ -22,6 +22,7 @@ export class StatusEditComponent implements OnInit {
               private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
+
   }
 
   @Input() post: IPost;

@@ -1,14 +1,15 @@
-import {Component, Input, OnInit, Output,EventEmitter} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {UserService} from '../service/user.service';
 import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
 import {IPost} from '../model/IPost';
 import {IUser} from '../model/iuser';
 import {IComment} from '../model/IComment';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LikePostService} from '../service/like-post.service';
 import {ILikePost} from '../model/ILikePost';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-status',
@@ -22,7 +23,8 @@ export class StatusComponent implements OnInit {
               private commentService: CommentService,
               private likePostService: LikePostService,
               private tokenStorage: TokenStorageService,
-              private actRoute: ActivatedRoute) { }
+              private actRoute: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.showPost();
@@ -31,7 +33,7 @@ export class StatusComponent implements OnInit {
       res => {this.userLogin= <IUser> res;}
     )
   }
-  @Output() indexDelPost=new EventEmitter();
+  @Output() indexDelPost = new EventEmitter();
   @Input() post: IPost;
   @Input() index:number;
   postList: IPost[];
@@ -96,8 +98,7 @@ export class StatusComponent implements OnInit {
             this.liked = false;
           }
         }
-
-  }
+      }
     )
   }
 
@@ -126,25 +127,40 @@ export class StatusComponent implements OnInit {
   }
 
   deletePost(postId: any) {
-    if (confirm("Are you sure want to delete post?")){
-      this.commentService.getCommentByPostId(postId).subscribe(
-        commentList => {
-          let comments = <IComment[]> commentList;
-          for (let i = 0; i < comments.length; i++) {
-            this.commentService.deleteComment(comments[i].commentId).subscribe(
-              res => {console.log("comment deleted");
+    swal({
+      title: "Are you sure?",
+      text: "Are you sure that you want to delete this post?",
+      icon: "warning",
+      dangerMode: true,
+    })
+      .then(willDelete => {
+        if (willDelete) {
+          this.commentService.getCommentByPostId(postId).subscribe(
+            commentList => {
+              let comments = <IComment[]> commentList;
+              for (let i = 0; i < comments.length; i++) {
+                this.commentService.deleteComment(comments[i].commentId).subscribe(
+                  res => console.log("comment deleted")
+                )
               }
-            )
-          }
-        }
-      )
-      this.postService.deletePost(postId).subscribe(
-        res => {
-          this.indexDelPost.emit(this.index);
-        }
-      )
-    } else {}
+            }
+          )
+          this.postService.deletePost(postId).subscribe(
+            res => {
+              swal({
+                icon: "success",
+                title: "Your post has been deleted!"
+              });
+              this.indexDelPost.emit(this.index);
+              if (this.actRoute.snapshot.params.id != null) {
+                this.router.navigate(['/home']);
+              }
 
+            }
+          )
+        }
+      }
+    );
   }
 
   addNewComment(value) {

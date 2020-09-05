@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {UserService} from '../service/user.service';
 import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
@@ -33,7 +33,7 @@ export class StatusComponent implements OnInit {
       res => {this.userLogin= <IUser> res;}
     )
   }
-  @Output() indexDelPost=new EventEmitter();
+  @Output() indexDelPost = new EventEmitter();
   @Input() post: IPost;
   @Input() index:number;
   postList: IPost[];
@@ -151,9 +151,11 @@ export class StatusComponent implements OnInit {
                 icon: "success",
                 title: "Your post has been deleted!"
               });
+              this.indexDelPost.emit(this.index);
               if (this.actRoute.snapshot.params.id != null) {
                 this.router.navigate(['/home']);
               }
+
             }
           )
         }

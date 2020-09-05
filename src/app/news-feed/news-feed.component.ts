@@ -34,4 +34,8 @@ export class NewsFeedComponent implements OnInit {
   delPost(value) {
     this.allPost.splice(value,1);
   }
+
+  sharePost(value) {
+    this.getAllPost();
+  }
 }

@@ -32,6 +32,7 @@ export class StatusComponent implements OnInit {
     )
   }
   @Output() indexDelPost=new EventEmitter();
+  @Output() sharePostEvent = new EventEmitter();
   @Input() post: IPost;
   @Input() index:number;
   postList: IPost[];
@@ -156,6 +157,20 @@ export class StatusComponent implements OnInit {
   }
 
   sharePost(postId: number) {
-
+    this.postService.creatNewPost({
+      posterId: this.tokenStorage.getUser().id,
+      textPost: 'http://localhost:4200/status/'+postId,
+      imagePost: '',
+      videoPost: '',
+      linkPost: '',
+      postDate: '',
+      postLike: 0,
+      postDislike: 0,
+      status:3
+    }).subscribe(
+      res => {
+        this.sharePostEvent.emit(postId);
+      }
+    )
   }
 }

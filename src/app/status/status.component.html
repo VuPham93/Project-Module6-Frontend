@@ -29,16 +29,16 @@
                 <ins *ngIf="post.commentList">{{post.commentList.length}}</ins>
               </span>
             </li>
+
             <ng-template [ngIf]="userLogin.userId==post.posterId">
-            <li class="editing-info" data-toggle="tooltip" title="Edit" (click)="showEditPost(post.postId)">
-              <span data-toggle="modal" data-target="#modal"><i class="fa fa-pencil-square-o"></i></span>
             <li class="editing-info" data-toggle="tooltip" title="Edit">
                 <span data-toggle="modal" [attr.data-target]="'#modal' + post.postId"><i class="fa fa-pencil-square-o"></i></span>
             </li>
+            </ng-template>
             <li>
               <span data-toggle="modal" [attr.data-target]="'#showLikerList' + post.postId">{{post.postLike}} peoples like this post</span>
             </li>
-          </ng-template>
+
           </ul>
         </div>
       </div>

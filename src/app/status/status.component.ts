@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit, Output,EventEmitter} from '@angular/core';
 import {UserService} from '../service/user.service';
 import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
@@ -38,7 +38,6 @@ export class StatusComponent implements OnInit {
   editPost: IPost;
   editPostId: number;
   userLogin:IUser;
-
 
   showPost() {
     let id: number;

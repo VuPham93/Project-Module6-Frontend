@@ -79,6 +79,7 @@ export class StatusComponent implements OnInit {
     this.likePostService.newLikePost(this.likePost).subscribe(
       res => {
         this.checkLikedStatus();
+        this.post.postLike++;
       }
     );
   }
@@ -90,9 +91,10 @@ export class StatusComponent implements OnInit {
         for (let i = 0; i < this.likeList.length; i++) {
           if (this.likeList[i].likerId === this.tokenStorage.getUser().id && this.likeList[i].postId === this.post.postId) {
             this.likePostService.unLikeAPost(this.likeList[i].id).subscribe();
+            this.post.postLike--;
+            this.liked = false;
           }
         }
-        this.liked = false;
       }
     )
   }

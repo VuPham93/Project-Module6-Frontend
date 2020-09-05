@@ -34,6 +34,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { StatusEditComponent } from './status-edit/status-edit.component';
 import { StatusLikerListComponent } from './status-liker-list/status-liker-list.component';
 import { CommentEditComponent } from './comment-edit/comment-edit.component';
+import { CommentLikeComponent } from './comment-like/comment-like.component';
+import { CommentLikerListComponent } from './comment-liker-list/comment-liker-list.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,9 @@ import { CommentEditComponent } from './comment-edit/comment-edit.component';
     CommentListComponent,
     StatusEditComponent,
     StatusLikerListComponent,
-    CommentEditComponent
+    CommentEditComponent,
+    CommentLikeComponent,
+    CommentLikerListComponent
   ],
   imports: [
     BrowserModule,

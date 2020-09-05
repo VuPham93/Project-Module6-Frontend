@@ -7,7 +7,6 @@ import {IComment} from '../model/IComment';
 import {NgForm} from '@angular/forms';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import {LikeCommentService} from '../service/like-comment.service';
-import {ILikeComment} from '../model/ILikeComment';
 import {IPost} from '../model/IPost';
 
 @Component({
@@ -99,56 +98,5 @@ export class CommentListComponent implements OnInit {
   addNewComment(value) {
     this.newComment.emit(value);
     this.getCommentList();
-  }
-
-  likeComment = {
-    id: null,
-    commentId: null,
-    likerId: null,
-  };
-
-  commentLiked: boolean = false;
-  likedCommentList: ILikeComment[];
-
-  likeAComment(i) {
-    this.likeComment.commentId = this.commentList[i].commentId;
-    this.likeComment.likerId = this.tokenStorage.getUser().id;
-    this.likeCommentService.newLikeComment(this.likeComment).subscribe(
-      res => {
-        this.commentLiked = true;
-        this.checkCommentLikedStatus(i);
-      }
-    );
-  }
-
-  unLikeAComment(j) {
-    this.likeCommentService.findAllLikeComment().subscribe(
-      res => {
-        this.likedCommentList = <ILikeComment[]> res;
-        for (let i = 0; i < this.likedCommentList.length; i++) {
-          if (this.likedCommentList[i].likerId === this.tokenStorage.getUser().id && this.likedCommentList[i].commentId === this.commentList[j].commentId) {
-            this.likeCommentService.unLikeAComment(this.likedCommentList[i].id).subscribe();
-          }
-        }
-      }
-    )
-  }
-
-  checkCommentLikedStatus(i) {
-    // this.commentList[i].commentLike = 0;
-    // this.commentLiked = false;
-    // this.likeCommentService.findAllLikeComment().subscribe(
-    //   res => {
-    //     this.likedCommentList = <ILikeComment[]> res;
-    //     for (let j = 0; j < this.likedCommentList.length; j++) {
-    //       if (this.likedCommentList[j].commentId === this.commentList[i].commentId) {
-    //         this.commentList[i].commentLike++;
-    //         if (this.likedCommentList[j].likerId === this.tokenStorage.getUser().id) {
-    //           this.commentLiked = true;
-    //         }
-    //       }
-    //     }
-    //   }
-    // )
   }
 }

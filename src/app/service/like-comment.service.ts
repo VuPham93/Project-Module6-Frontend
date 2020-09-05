@@ -21,4 +21,12 @@ export class LikeCommentService {
   unLikeAComment(id) {
     return this.http.delete(this.API_URL + 'delete/' + id)
   }
+
+  findAllLikeCommentByCommentId(commentId: number) {
+    return this.http.get(this.API_URL + 'finByCommentId/' + commentId)
+  }
+
+  findLikerByCommentId(commentId: any) {
+    return this.http.get(this.API_URL + 'findLikerByCommentId/' + commentId)
+  }
 }

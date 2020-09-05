@@ -154,4 +154,8 @@ export class StatusComponent implements OnInit {
   delComment(value) {
     this.post.commentList.splice(value,1);
   }
+
+  sharePost(postId: number) {
+
+  }
 }

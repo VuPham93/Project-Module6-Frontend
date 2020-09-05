@@ -40,6 +40,9 @@
                 <span><i class="fa fa-trash" (click)="deletePost(post.postId)"></i></span>
               </li>
             </ng-template>
+            <li data-toggle="tooltip" title="Share post">
+              <span><i class="fa fa-share" (click)="sharePost(post.postId)"></i></span>
+            </li>
           </ul>
         </div>
       </div>

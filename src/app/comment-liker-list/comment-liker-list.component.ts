@@ -4,25 +4,26 @@ import {UserService} from '../service/user.service';
 import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
 import {LikePostService} from '../service/like-post.service';
+import {LikeCommentService} from '../service/like-comment.service';
 
 @Component({
-  selector: 'app-status-liker-list',
-  templateUrl: './status-liker-list.component.html',
-  styleUrls: ['./status-liker-list.component.css']
+  selector: 'app-comment-liker-list',
+  templateUrl: './comment-liker-list.component.html',
+  styleUrls: ['./comment-liker-list.component.css']
 })
-export class StatusLikerListComponent implements OnInit {
+export class CommentLikerListComponent implements OnInit {
 
-  constructor(private likePostService: LikePostService) { }
+  constructor(private likeCommentService: LikeCommentService) { }
 
   ngOnInit(): void {
     this.getLikerList();
   }
 
-  @Input() postId;
+  @Input() commentId;
   likerList: IUser[];
 
   getLikerList() {
-    this.likePostService.findLikerByPostId(this.postId).subscribe(
+    this.likeCommentService.findLikerByCommentId(this.commentId).subscribe(
       res => {
         this.likerList = <IUser[]> res;
       }

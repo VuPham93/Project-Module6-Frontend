@@ -30,7 +30,7 @@
               <div class="col-lg-6">
                 <app-new-post (newPost)="addNewPost($event)"></app-new-post>
                 <div class="loadMore" *ngFor="let post of allPost; let i = index">
-                  <app-status [post]="post"></app-status>
+                  <app-status [post]="post" [index]="i" (indexDelPost)="delPost($event)"></app-status>
                 </div>
               </div>
 

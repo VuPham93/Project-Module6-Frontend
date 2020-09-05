@@ -17,7 +17,7 @@
         </div>
         <div class="we-video-info">
           <ul>
-            <li (click)="likeAPost()" *ngIf="!liked">
+            <li (click)="likeAPost()" *ngIf="!liked" >
               <span class="like" data-toggle="tooltip" title="Like"><i class="ti-heart"></i><ins>{{post.postLike}}</ins></span>
             </li>
             <li (click)="unLikeAPost()" *ngIf="liked">
@@ -40,6 +40,9 @@
                 <span><i class="fa fa-trash" (click)="deletePost(post.postId)"></i></span>
               </li>
             </ng-template>
+            <li data-toggle="tooltip" title="Share post">
+              <span><i class="fa fa-share" (click)="sharePost(post.postId)"></i></span>
+            </li>
           </ul>
         </div>
       </div>
@@ -52,5 +55,5 @@
 </div>
 
 <div class="modal fade" [attr.id]="'showLikerList' + post.postId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <app-status-liker-list [postId] = post.postId></app-status-liker-list>
+  <app-status-liker-list [postId] = post.postId ></app-status-liker-list>
 </div>

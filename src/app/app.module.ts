@@ -33,6 +33,7 @@ import {SocketService} from './service/socket.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { StatusEditComponent } from './status-edit/status-edit.component';
 import { StatusLikerListComponent } from './status-liker-list/status-liker-list.component';
+import { CommentEditComponent } from './comment-edit/comment-edit.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { StatusLikerListComponent } from './status-liker-list/status-liker-list.
     YourPageComponent,
     CommentListComponent,
     StatusEditComponent,
-    StatusLikerListComponent
+    StatusLikerListComponent,
+    CommentEditComponent
   ],
   imports: [
     BrowserModule,

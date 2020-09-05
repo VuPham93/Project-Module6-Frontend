@@ -30,6 +30,7 @@ export class CommentListComponent implements OnInit {
 
   @Input() postId;
   commentList: IComment[];
+  comment: IComment;
 
   getCommentList() {
     this.commentService.getCommentByPostId(this.postId).subscribe(
@@ -50,33 +51,6 @@ export class CommentListComponent implements OnInit {
   deleteComment(commentId: number) {
     this.commentService.deleteComment(commentId).subscribe(
       res => this.getCommentList()
-    )
-  }
-
-  idCommentEdit:number;
-  indexEdit: number;
-  comment: IComment;
-
-  getIdComment(commentId: number, i: number) {
-    this.idCommentEdit= commentId;
-    this.indexEdit=i;
-  }
-
-  onSubmit(form: NgForm) {
-    this.commentService.getCommentById(this.idCommentEdit).subscribe(
-      resPost => {
-        this.comment = <IComment> resPost;
-        this.comment.content = form.value.content;
-        this.commentService.updateComment(this.idCommentEdit,this.comment).subscribe(
-          resPost => {
-            for (let i = 0 ; i<= this.commentList.length; i++){
-              if (i == this.indexEdit){
-                this.commentList[i].content = form.value.content;
-              }
-            }
-          }
-        )
-      }
     )
   }
 

@@ -29,11 +29,14 @@
                 <ins *ngIf="post.commentList">{{post.commentList.length}}</ins>
               </span>
             </li>
-            <li class="editing-info" data-toggle="tooltip" title="Edit">
+            <li data-toggle="tooltip" title="Peoples like this post">
+              <span data-toggle="modal" [attr.data-target]="'#showLikerList' + post.postId"><i class="fa fa-male"></i></span>
+            </li>
+            <li data-toggle="tooltip" title="Edit">
                 <span data-toggle="modal" [attr.data-target]="'#modal' + post.postId"><i class="fa fa-pencil-square-o"></i></span>
             </li>
-            <li>
-              <span data-toggle="modal" [attr.data-target]="'#showLikerList' + post.postId">{{post.postLike}} peoples like this post</span>
+            <li data-toggle="tooltip" title="Delete post">
+              <span><i class="fa fa-trash" (click)="deletePost(post.postId)"></i></span>
             </li>
           </ul>
         </div>

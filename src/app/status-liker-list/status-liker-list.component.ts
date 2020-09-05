@@ -21,8 +21,8 @@ export class StatusLikerListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLikerList();
-  }
 
+  }
   @Input() postId;
   likerList: IUser[];
 

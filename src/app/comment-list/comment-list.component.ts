@@ -61,12 +61,15 @@ export class CommentListComponent implements OnInit {
   }
 
   deleteComment(commentId: number,index : number) {
-    this.commentService.deleteComment(commentId).subscribe(
-      res => {this.getCommentList();
-        this.delComment.emit(index);
+    if (confirm("Are you sure want to delete comment?")){
+      this.commentService.deleteComment(commentId).subscribe(
+        res => {this.getCommentList();
+          this.delComment.emit(index);
 
-      }
-    )
+        }
+      )
+    }
+
   }
 
   idCommentEdit:number;

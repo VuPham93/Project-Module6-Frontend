@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UserService} from '../service/user.service';
 import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
@@ -31,12 +31,14 @@ export class StatusComponent implements OnInit {
       res => {this.userLogin= <IUser> res;}
     )
   }
-
+  @Output() indexDelPost=new EventEmitter();
   @Input() post: IPost;
+  @Input() index:number;
   postList: IPost[];
   editPost: IPost;
   editPostId: number;
   userLogin:IUser;
+
 
   showPost() {
     let id: number;
@@ -79,6 +81,7 @@ export class StatusComponent implements OnInit {
     this.likePostService.newLikePost(this.likePost).subscribe(
       res => {
         this.checkLikedStatus();
+        this.post.postLike++;
       }
     );
   }
@@ -90,10 +93,12 @@ export class StatusComponent implements OnInit {
         for (let i = 0; i < this.likeList.length; i++) {
           if (this.likeList[i].likerId === this.tokenStorage.getUser().id && this.likeList[i].postId === this.post.postId) {
             this.likePostService.unLikeAPost(this.likeList[i].id).subscribe();
+            this.post.postLike--;
+            this.liked = false;
           }
         }
-        this.liked = false;
-      }
+
+  }
     )
   }
 
@@ -122,21 +127,25 @@ export class StatusComponent implements OnInit {
   }
 
   deletePost(postId: any) {
-    this.commentService.getCommentByPostId(postId).subscribe(
-      commentList => {
-        let comments = <IComment[]> commentList;
-        for (let i = 0; i < comments.length; i++) {
-          this.commentService.deleteComment(comments[i].commentId).subscribe(
-            res => console.log("comment deleted")
-          )
+    if (confirm("Are you sure want to delete post?")){
+      this.commentService.getCommentByPostId(postId).subscribe(
+        commentList => {
+          let comments = <IComment[]> commentList;
+          for (let i = 0; i < comments.length; i++) {
+            this.commentService.deleteComment(comments[i].commentId).subscribe(
+              res => {console.log("comment deleted");
+              }
+            )
+          }
         }
-      }
-    )
-    this.postService.deletePost(postId).subscribe(
-      res => {
-        window.alert("Post deleted");
-      }
-    )
+      )
+      this.postService.deletePost(postId).subscribe(
+        res => {
+          this.indexDelPost.emit(this.index);
+        }
+      )
+    } else {}
+
   }
 
   addNewComment(value) {

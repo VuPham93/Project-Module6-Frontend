@@ -30,4 +30,8 @@ export class NewsFeedComponent implements OnInit {
   addNewComment(value) {
     this.getAllPost()
   }
+
+  delPost(value) {
+    this.allPost.splice(value,1);
+  }
 }

@@ -53,8 +53,8 @@ export class FriendListBigComponent implements OnInit {
       },
       error => console.error(error)
     );
-
   }
+
   getUser(){
     this.userService.getUser().subscribe(
       response => { this.user = <IUser> response;
@@ -63,6 +63,7 @@ export class FriendListBigComponent implements OnInit {
       error => console.error(error)
     )
   }
+
   unFriend(relatingId:number,statusId:number,index:number){
     this.userService.findUserById(relatingId).subscribe(
       response => {
@@ -89,16 +90,12 @@ export class FriendListBigComponent implements OnInit {
                }
              },
              error => console.error(error)
-
            )
          },
          error => console.error(error)
        )
-
-
       },
       error => console.error(error)
-
     )
   }
   acceptInviteFriend(relatingId:number,statusId:number,index:number){
@@ -129,24 +126,15 @@ export class FriendListBigComponent implements OnInit {
                   this.friendList.push(this.user);
                   this.sumListPending = this.sumListPending-1;
                   this.sumListFriend=this.sumListFriend+1;
-
                 }
               },
               error => console.error(error)
-
             )
           },
           error => console.error(error)
         )
-
-
       },
       error => console.error(error)
-
     )
-
   }
-
-
-
 }

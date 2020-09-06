@@ -114,4 +114,14 @@ export class CommentListComponent implements OnInit {
     this.newComment.emit(value);
     this.getCommentList();
   }
+
+  isExpanded = false;
+
+  expandItems() {
+      this.isExpanded = true;
+  }
+
+    hideItems() {
+        this.isExpanded = false;
+    }
 }

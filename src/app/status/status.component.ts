@@ -173,19 +173,34 @@ export class StatusComponent implements OnInit {
   }
 
   sharePost(postId: number) {
-    this.postService.creatNewPost({
-      posterId: this.tokenStorage.getUser().id,
-      textPost: 'http://localhost:4200/status/'+postId,
-      imagePost: '',
-      videoPost: '',
-      linkPost: '',
-      postDate: '',
-      postLike: 0,
-      postDislike: 0,
-      status:3
-    }).subscribe(
-      res => {
-        this.sharePostEvent.emit(postId);
+    swal({
+      title: "Are you sure?",
+      text: "Do you want to share this post?",
+      icon: "info",
+      dangerMode: false,
+    })
+      .then(share => {
+        if (share) {
+          this.postService.creatNewPost({
+            posterId: this.tokenStorage.getUser().id,
+            textPost: 'http://localhost:4200/status/'+postId,
+            imagePost: '',
+            videoPost: '',
+            linkPost: '',
+            postDate: '',
+            postLike: 0,
+            postDislike: 0,
+            status:3
+          }).subscribe(
+            res => {
+              this.sharePostEvent.emit(postId);
+            }
+          );
+          swal({
+            icon: "success",
+            title: "This post has been shared!"
+          });
+        }
       }
     )
   }

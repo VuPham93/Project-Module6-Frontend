@@ -1,4 +1,4 @@
-<section>
+<section *ngIf="user && userLogin">
   <div class="feature-photo">
     <figure>
       <img style="max-height: 400px; object-fit: cover" src="{{user.userCoverPhoto}}" alt="">

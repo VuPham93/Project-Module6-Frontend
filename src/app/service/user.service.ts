@@ -53,4 +53,8 @@ export class UserService {
       catchError(err => of([]))
     )
   }
+
+  checkEmailExist(email: string) {
+    return this.http.post(this.userUrl+ '/exists', email)
+  }
 }

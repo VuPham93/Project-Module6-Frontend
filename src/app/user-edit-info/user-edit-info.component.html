@@ -1,6 +1,6 @@
-<app-header></app-header>
-<app-cover-photo [relatingId]="user.userId" [relatedId]="user.userId"></app-cover-photo>
-<div class="theme-layout">
+<app-header *ngIf="user"></app-header>
+<app-cover-photo *ngIf="user" [relatingId]="user.userId" [relatedId]="user.userId"></app-cover-photo>
+<div class="theme-layout" *ngIf="user">
   <section>
     <div class="gap gray-bg">
       <div class="container-fluid">
@@ -34,36 +34,68 @@
                     <h5 class="f-title"><i class="ti-info-alt"></i> Edit Basic Information</h5>
                     <form [formGroup]="userEditForm" (ngSubmit)="editUser()">
                       <div class="form-group half">
-                        <input type="text" id="input" formControlName="userName" value="{{user.userName}}" required="required"/>
+                        <input type="text" id="input" formControlName="userName" value="{{user.userName}}"/>
                         <label class="control-label" for="input">User Name</label><i class="mtrl-select"></i>
+                        <div class="alert-danger" *ngIf="userName.invalid && (userName.touched || userName.dirty)">
+                          <div *ngIf="userName.errors.required">Username is required</div>
+                          <div *ngIf="userName.errors.minlength">Username must be at least 2 characters</div>
+                          <div *ngIf="userName.errors.maxlength">Username must be at most 20 characters</div>
+                        </div>
                       </div>
                       <div class="form-group half">
-                        <input type="text" formControlName="userPhoneNumber" value="{{user.userPhoneNumber}}" required="required"/>
+                        <input type="text" formControlName="userPhoneNumber" value="{{user.userPhoneNumber}}"/>
                         <label class="control-label" for="input">Phone No.</label><i class="mtrl-select"></i>
                       </div>
+
                       <div class="form-group">
-                        <input type="text" formControlName="userEmail" value="{{user.userEmail}}" required="required"/>
+                        <input type="email" formControlName="userEmail" value="{{user.userEmail}}" required="required" [pattern]="emailPattern" (ngModelChange)="checkEmailExist()"/>
                         <label class="control-label" for="input">Email</label><i class="mtrl-select"></i>
+                        <div class="alert-danger" *ngIf="userEmail.invalid && (userEmail.touched || userEmail.dirty)">
+                          <div *ngIf="userEmail.errors.required">Email is required</div>
+                          <div *ngIf="userEmail.errors.pattern">Email must be a valid email address</div>
+                        </div>
+                        <div class="alert-danger" *ngIf="emailExist">This email already use!</div>
+                      </div>
+
+                      <div class="dob">
+                        <div class="form-group">
+                          <label for="month" style="color: #0f7fe2; font-size: 12px">Month</label>
+                          <select class="form-control dropdown" id="month" [(ngModel)]="dateOfBirth[1]" [ngModelOptions]="{standalone: true}">
+                            <option *ngFor="let month of months" [ngValue]="month" [selected]="month == user.dateOfBirth.slice(3,5)">{{month}}</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="date" style="color: #0f7fe2; font-size: 12px">Date</label>
+                          <select class="form-control dropdown" id="date" [(ngModel)]="dateOfBirth[0]" [ngModelOptions]="{standalone: true}">
+                            <option *ngFor="let date of dates" [ngValue]="date" [selected]="date === user.dateOfBirth.slice(0,2)">{{date}}</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="year" style="color: #0f7fe2; font-size: 12px">Year</label>
+                          <select class="form-control dropdown" id="year"  [(ngModel)]="dateOfBirth[2]" [ngModelOptions]="{standalone: true}">
+                            <option *ngFor="let year of years" [ngValue]="year" [selected]="year === user.dateOfBirth.slice(6,10)">{{year}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-radio">
+                        <div class="radio" *ngFor="let sex of gender">
+                          <label>
+                            <input formControlName="userSex" type="radio" name="userSex" [value]="sex" [checked]="sex === user.userSex"><i class="check-box"></i>{{sex}}
+                          </label>
+                        </div>
                       </div>
                       <div class="form-group">
-                        <input type="text" formControlName="dateOfBirth" value="{{user.dateOfBirth}}" required="required"/>
-                        <label class="control-label" for="input">Date of birth</label><i class="mtrl-select"></i>
+                        <label for="country" style="color: #0f7fe2; font-size: 12px">Country</label>
+                        <select class="form-control dropdown" id="country" formControlName="userAddress">
+                          <option *ngFor="let country of address" [ngValue]="country" [selected]="country === user.userAddress">{{country}}</option>
+                        </select>
                       </div>
                       <div class="form-group">
-                        <input type="text" formControlName="userSex" value="{{user.userSex}}" required="required"/>
-                        <label class="control-label" for="input">Date of birth</label><i class="mtrl-select"></i>
-                      </div>
-                      <div class="form-group">
-                        <input type="text" formControlName="userAddress" value="{{user.userAddress}}" required="required"/>
-                        <label class="control-label" for="input">Address</label><i class="mtrl-select"></i>
-                      </div>
-                      <div class="form-group">
-                        <textarea rows="4" id="textarea" formControlName="about" value="{{user.about}}" required="required"></textarea>
+                        <textarea rows="4" id="textarea" formControlName="about" value="{{user.about}}"></textarea>
                         <label class="control-label" for="textarea">About Me</label><i class="mtrl-select"></i>
                       </div>
                       <div class="submit-btns">
-                        <button class="mtr-btn mr-1"><span>Update</span></button>
-                        <button class="mtr-btn"><span>Cancel</span></button>
+                        <button class="mtr-btn mr-1" [disabled]="userEditForm.invalid || emailExist"><span>Update</span></button>
                       </div>
                     </form>
                   </div>

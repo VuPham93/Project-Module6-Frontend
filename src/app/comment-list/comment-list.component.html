@@ -1,6 +1,6 @@
 <div class="coment-area" *ngIf="commentList && userLogin && post">
   <ul class="we-comet">
-    <li class="row" *ngFor="let comment of commentList; let i = index">
+    <li class="row" *ngFor="let comment of commentList | slice:0:2; let i = index">
       <div class="comet-avatar col col-lg-2 col-md-2 col-xl-2 col-sm-2">
         <img style="height: 2.5vw; width: 2.5vw; object-fit: cover" src="{{comment.commenterAvatar}}" alt="">
       </div>
@@ -27,6 +27,44 @@
       <div class="modal fade" [attr.id]="'showCommentLikerList' + comment.commentId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <app-comment-liker-list [commentId]="comment.commentId"></app-comment-liker-list>
       </div>
+    </li>
+    <ng-container *ngIf="isExpanded">
+      <ng-container *ngFor="let comment of commentList; let i = index">
+        <li class="row" *ngIf="i >= 2">
+          <div class="comet-avatar col col-lg-2 col-md-2 col-xl-2 col-sm-2">
+            <img style="height: 2.5vw; width: 2.5vw; object-fit: cover" src="{{comment.commenterAvatar}}" alt="">
+          </div>
+          <div class="we-comment">
+            <div class="coment-head w-100" style="position: relative">
+              <h5><a href="#" title="">{{comment.commenterName}}</a></h5>
+              <span>{{comment.commentTime}}</span>
+              <p>{{comment.content}}</p>
+              <div style="position: absolute; bottom: -10px; right: 0">
+                <app-comment-like [comment] = comment></app-comment-like>
+                <a class="btn fa fa-male" data-toggle="modal" title="Peoples like this post" [attr.data-target]="'#showCommentLikerList' + comment.commentId"></a>
+                <ng-template [ngIf]="userLogin.userId==comment.commenterId" >
+                  <a class="btn fa fa-edit align-self-end" data-toggle="modal" title="Edit" [attr.data-target]="'#editComment' + comment.commentId"></a>
+                </ng-template>
+                <ng-template [ngIf]="userLogin.userId==comment.commenterId||userLogin.userId==post.posterId" >
+                  <a class="btn fa fa-trash align-self-end" title="Delete" (click)="deleteComment(comment.commentId, i)"></a>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" [attr.id]="'editComment' + comment.commentId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <app-comment-edit [comment]="comment"></app-comment-edit>
+          </div>
+          <div class="modal fade" [attr.id]="'showCommentLikerList' + comment.commentId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <app-comment-liker-list [commentId]="comment.commentId"></app-comment-liker-list>
+          </div>
+        </li>
+      </ng-container>
+    </ng-container>
+    <li *ngIf="commentList.length > 2 && !isExpanded">
+      <button class="btn btn-link btn-block m-0 p-0" (click)="expandItems()">Show all</button>
+    </li>
+    <li *ngIf="commentList.length > 2 && isExpanded">
+      <button class="btn btn-link btn-block m-0 p-0" (click)="hideItems()">Show less</button>
     </li>
     <li class="post-comment">
       <app-comment [postId]="postId" (newComment)="addNewComment($event)"></app-comment>

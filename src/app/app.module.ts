@@ -36,6 +36,8 @@ import { StatusLikerListComponent } from './status-liker-list/status-liker-list.
 import { CommentEditComponent } from './comment-edit/comment-edit.component';
 import { CommentLikeComponent } from './comment-like/comment-like.component';
 import { CommentLikerListComponent } from './comment-liker-list/comment-liker-list.component';
+import { AdsComponent } from './ads/ads.component';
+import { StatusDetailComponent } from './status-detail/status-detail.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { CommentLikerListComponent } from './comment-liker-list/comment-liker-li
     StatusLikerListComponent,
     CommentEditComponent,
     CommentLikeComponent,
-    CommentLikerListComponent
+    CommentLikerListComponent,
+    AdsComponent,
+    StatusDetailComponent
   ],
   imports: [
     BrowserModule,

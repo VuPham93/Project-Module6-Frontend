@@ -1,9 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {IUser} from '../model/iuser';
-import {UserService} from '../service/user.service';
-import {PostService} from '../service/post.service';
-import {CommentService} from '../service/comment.service';
-import {LikePostService} from '../service/like-post.service';
 import {LikeCommentService} from '../service/like-comment.service';
 
 @Component({

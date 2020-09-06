@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit {
   RefreshToken = {
     token: ''
   };
+  show: boolean = false;
 
   constructor(private userService: UserService,private authService: AuthService, private tokenStorageService: TokenStorageService, private router: Router) { }
 
@@ -45,5 +46,9 @@ export class HeaderComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  showMenu() {
+    this.show = !this.show;
   }
 }

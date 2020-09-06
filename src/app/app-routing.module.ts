@@ -9,9 +9,9 @@ import {FriendListBigComponent} from './friend-list-big/friend-list-big.componen
 import {SearchUserComponent} from './search-user/search-user.component';
 import {NewPostComponent} from './new-post/new-post.component';
 import {MyWallComponent} from './my-wall/my-wall.component';
-import {StatusComponent} from './status/status.component';
 import {CommentListComponent} from './comment-list/comment-list.component';
 import {ChatComponent} from './chat/chat.component';
+import {StatusDetailComponent} from './status-detail/status-detail.component';
 
 const routes: Routes = [
   {
@@ -86,7 +86,7 @@ const routes: Routes = [
   },
   {
     path: 'status/:id',
-    component: StatusComponent,
+    component: StatusDetailComponent,
     data: {
       title: 'status'
     }

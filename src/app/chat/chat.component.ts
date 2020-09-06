@@ -37,8 +37,12 @@ export class ChatComponent implements OnInit {
       this.userTarget =<IUser>response;
       }
     )
-    this.userService.findAllUser().subscribe(
-      response => {this.users = <IUser[]>response
+    this.userService.getUser().subscribe(
+      res=>{ this.userLogin = <IUser>res;
+        this.friendService.getFriendList(this.userLogin.userId).subscribe(
+          response => {this.users = <IUser[]>response},
+          error => console.error(error)
+        )
       }
     )
     this.form = new FormGroup({
@@ -95,9 +99,7 @@ export class ChatComponent implements OnInit {
           });
         }
       )
-
-    };
-
+    }
   }
 
   handleResult(message){
@@ -110,5 +112,4 @@ export class ChatComponent implements OnInit {
       });
     }
   }
-
 }

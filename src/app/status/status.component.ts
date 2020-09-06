@@ -180,28 +180,28 @@ export class StatusComponent implements OnInit {
       dangerMode: false,
     })
       .then(share => {
-        if (share) {
-          this.postService.creatNewPost({
-            posterId: this.tokenStorage.getUser().id,
-            textPost: 'http://localhost:4200/status/'+postId,
-            imagePost: '',
-            videoPost: '',
-            linkPost: '',
-            postDate: '',
-            postLike: 0,
-            postDislike: 0,
-            status:3
-          }).subscribe(
-            res => {
-              this.sharePostEvent.emit(postId);
-            }
-          );
-          swal({
-            icon: "success",
-            title: "This post has been shared!"
-          });
+          if (share) {
+            this.postService.creatNewPost({
+              posterId: this.tokenStorage.getUser().id,
+              textPost: '/status/'+postId,
+              imagePost: '',
+              videoPost: '',
+              linkPost: '',
+              postDate: '',
+              postLike: 0,
+              postDislike: 0,
+              status:3
+            }).subscribe(
+              res => {
+                this.sharePostEvent.emit(postId);
+              }
+            );
+            swal({
+              icon: "success",
+              title: "This post has been shared!"
+            });
+          }
         }
-      }
-    )
+      )
   }
 }

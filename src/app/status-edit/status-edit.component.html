@@ -17,6 +17,13 @@
             <input type="file" accept="image/*" (change)="uploadFile($event)">
           </label>
           <img src="{{post.imagePost}}" alt="">
+          <h6>Select privacy</h6>
+          <select  (change)="selectStatus($event.target.value)">
+            <option  value="3">--default--</option>
+            <option  value="1">private</option>
+            <option  value="2">friend</option>
+            <option  value="3">public</option>
+          </select>
         </div>
       </div>
       <div class="modal-footer border-top-0 d-flex justify-content-center">

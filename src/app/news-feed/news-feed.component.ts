@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {PostService} from '../service/post.service';
 import {IPost} from '../model/IPost';
+import {IUser} from '../model/iuser';
+import {UserService} from '../service/user.service';
+import {FriendService} from '../service/friend.service';
 
 @Component({
   selector: 'app-news-feed',
@@ -8,11 +11,18 @@ import {IPost} from '../model/IPost';
   styleUrls: ['./news-feed.component.css']
 })
 export class NewsFeedComponent implements OnInit {
-
-  constructor(private postService: PostService) { }
+userLogin: IUser;
+  constructor(private postService: PostService,
+              private userService: UserService,
+              private friendService: FriendService) { }
 
   ngOnInit(): void {
     this.getAllPost();
+    this.userService.getUser().subscribe(
+      res=>{
+        this.userLogin = <IUser> res;
+      }
+    )
   }
 
   allPost:IPost[] ;
@@ -38,4 +48,6 @@ export class NewsFeedComponent implements OnInit {
   sharePost(value) {
     this.getAllPost();
   }
+
+
 }

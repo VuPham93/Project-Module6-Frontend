@@ -49,4 +49,9 @@ export class StatusEditComponent implements OnInit {
     )
       .subscribe();
   }
+
+  selectStatus(event) {
+    this.post.status = event;
+    console.log(this.post.status);
+  }
 }

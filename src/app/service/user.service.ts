@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {catchError, tap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {TokenStorageService} from './signin-signup/token-storage.service';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class UserService {
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) { }
 
-  private userUrl = 'http://localhost:8080/user';
+  private userUrl = environment.URL + 'user';
 
   getUser() {
     return this.findUserById(this.tokenStorage.getUser().id);

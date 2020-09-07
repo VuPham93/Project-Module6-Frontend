@@ -35,10 +35,8 @@ export class HeaderComponent implements OnInit {
 
   logout(): void{
     this.RefreshToken.token = String(this.tokenStorageService.getToken());
-    console.log(this.RefreshToken);
     this.authService.logOut(this.RefreshToken).subscribe(
       res => {
-        console.log(res);
         this.tokenStorageService.signOut();
         this.router.navigateByUrl('/');
       },

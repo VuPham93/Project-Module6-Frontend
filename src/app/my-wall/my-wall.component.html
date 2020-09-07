@@ -1,5 +1,5 @@
 <app-header></app-header>
-<app-cover-photo *ngIf="userLogin" [relatingId]="userLogin.userId" [relatedId]="userLogin.userId"></app-cover-photo>
+<app-cover-photo *ngIf="userLogin" [relatingId]="userLogin.userId" [relatedId]="idUser" ></app-cover-photo>
 <div class="theme-layout">
   <section>
     <div class="gap gray-bg">
@@ -20,7 +20,7 @@
                     <button class="btn btn-outline-primary" type="submit">Search</button>
                   </div>
                 </form>
-                <app-new-post></app-new-post>
+                <app-new-post (newPost)="addNewPost($event)"></app-new-post>
                 <div class="loadMore">
                   <div *ngFor="let post of allPost; let i = index">
                     <div *ngIf="(post.status===1&&idUser===userLogin.userId)||(post.status===2&&isFriend)||(post.status===2&&idUser===userLogin.userId)||(post.status===3)">
@@ -32,7 +32,7 @@
               <div class="col-lg-3">
                 <aside class="sidebar static">
                   <app-ads></app-ads>
-                  <app-friend-list></app-friend-list>
+                  <app-friend-list [idUser]="idUser"></app-friend-list>
                 </aside>
               </div>
             </div>

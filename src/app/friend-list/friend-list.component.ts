@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FriendService} from '../service/friend.service';
 import {UserService} from '../service/user.service';
 import {IUser} from '../model/iuser';
@@ -9,6 +9,7 @@ import {IUser} from '../model/iuser';
   styleUrls: ['./friend-list.component.css']
 })
 export class FriendListComponent implements OnInit {
+  @Input() idUser;
   userLogin:IUser;
   constructor(private userService: UserService,private friendService: FriendService) { }
 
@@ -20,13 +21,9 @@ export class FriendListComponent implements OnInit {
   friendList:any;
 
   getFriendList() {
-    this.userService.getUser().subscribe(
-      res=>{ this.userLogin = <IUser>res;
-        this.friendService.getFriendList(this.userLogin.userId).subscribe(
+        this.friendService.getFriendList(this.idUser).subscribe(
           response => {this.friendList = response},
           error => console.error(error)
         )
-      }
-    )
   }
 }

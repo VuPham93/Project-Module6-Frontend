@@ -20,6 +20,7 @@ export class CoverPhotoComponent implements OnInit {
   @Input() relatingId:number;
   @Input() relatedId:number;
 
+
   constructor(private uploadService: UploadFileService,
               private userService: UserService,
               private router: Router,

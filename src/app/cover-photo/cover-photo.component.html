@@ -48,11 +48,11 @@
                 <h5 style = "text-transform:capitalize">{{user.userName}}</h5>
               </li>
               <li>
-                <a class="" [routerLink]="'/myWall/'+relatedId" title="" data-ripple="">time line</a>
-                <a class="" href="#" title="" data-ripple="">Photos</a>
+                <a class="" [routerLink]="'/myWall/'+ relatedId" title="" data-ripple="">time line</a>
+                <a class="" [routerLink]="'/photo/'+ relatedId" data-ripple="">Photos</a>
                 <a class="" [routerLink]="'/listFriend'" title="" data-ripple="">Friends</a>
                 <a class="" [routerLink]="'/chat'" title="" data-ripple="">Chat</a>
-                <a class="" [routerLink]="'/userInfor/'+userLogin.userId" title="" data-ripple="">about</a>
+                <a class="" [routerLink]="'/userInfor/'+ relatedId" title="" data-ripple="">about</a>
               </li>
             </ul>
           </div>

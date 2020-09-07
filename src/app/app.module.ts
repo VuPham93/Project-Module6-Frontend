@@ -38,6 +38,7 @@ import { CommentLikeComponent } from './comment-like/comment-like.component';
 import { CommentLikerListComponent } from './comment-liker-list/comment-liker-list.component';
 import { AdsComponent } from './ads/ads.component';
 import { StatusDetailComponent } from './status-detail/status-detail.component';
+import { MyPhotoComponent } from './my-photo/my-photo.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { StatusDetailComponent } from './status-detail/status-detail.component';
     CommentLikeComponent,
     CommentLikerListComponent,
     AdsComponent,
-    StatusDetailComponent
+    StatusDetailComponent,
+    MyPhotoComponent
   ],
   imports: [
     BrowserModule,

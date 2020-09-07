@@ -2,12 +2,12 @@
   <h4 class="widget-title">Friends</h4>
   <div id="searchDir"></div>
   <ul id="people-list" class="friendz-list">
-    <li *ngFor="let friend of friendList">
+    <li *ngFor="let friend of friendList" [routerLink]="'/userInfor/' + friend.userId">
       <figure>
-        <img src="assets/images/resources/friend-avatar.jpg" alt="">
+        <img src="{{friend.userAvatar}}" alt="" style="width: 2.4vw; height: 2.4vw; object-fit: cover">
       </figure>
       <div class="friendz-meta">
-        <a href="#">{{friend.userName}}</a>
+        <a >{{friend.userName}}</a>
       </div>
     </li>
   </ul>

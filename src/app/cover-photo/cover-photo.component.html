@@ -1,31 +1,41 @@
-<section>
+<section *ngIf="user && userLogin">
   <div class="feature-photo">
-    <figure><img src="assets/images/resources/timeline-1.jpg" alt=""></figure>
+    <figure>
+      <img style="max-height: 400px; object-fit: cover" src="{{user.userCoverPhoto}}" alt="">
+    </figure>
     <div *ngIf="relatedId===relatingId; else noTitle">
     </div>
     <ng-template #noTitle>
-      <div class="add-btn">
-        <button class="mtr-btn" (click)="addFriend()"><span>Add Friend</span></button>
+
+      <div *ngIf="isFriend; else notFriend">
+        <div class="add-btn">
+          <button class="mtr-btn" (click)="unFriend(relatedId,3)"><span>Unfriend</span></button>
+        </div>
       </div>
+      <ng-template #notFriend>
+        <div class="add-btn">
+          <button class="mtr-btn" (click)="addFriend()"><span>Add Friend</span></button>
+        </div>
+      </ng-template>
     </ng-template>
-    <form class="edit-phto">
+    <form class="edit-phto" *ngIf="relatedId===userLogin.userId">
       <i class="fa fa-camera-retro"></i>
       <label class="fileContainer">
         Edit Cover Photo
-        <input type="file" id="coverPhoto" (change)="onFileSelected($event)"/>
+        <input type="file" id="coverPhoto" (change)="uploadFile($event, 1)"/>
       </label>
     </form>
     <div class="container-fluid">
       <div class="row merged">
         <div class="col-lg-2 col-sm-3">
-          <div class="user-avatar">
+          <div class="user-avatar boxed" style="width: 16vw">
             <figure>
-              <img src="assets/images/resources/{{user.userAvatar}}" alt="">
-              <form class="edit-phto">
+              <img style="height: 15vw; object-fit: cover" src="{{user.userAvatar}}" alt="">
+              <form class="edit-phto" *ngIf="relatedId===userLogin.userId">
                 <i class="fa fa-camera-retro"></i>
                 <label class="fileContainer">
                   Edit Display Photo
-                  <input type="file"/>
+                  <input type="file" (change)="uploadFile($event, 2)"/>
                 </label>
               </form>
             </figure>
@@ -35,15 +45,14 @@
           <div class="timeline-info">
             <ul>
               <li class="admin-name">
-                <h5>{{user.userName}}</h5>
+                <h5 style = "text-transform:capitalize">{{user.userName}}</h5>
               </li>
               <li>
-                <a class="" routerLink="/myWall" title="" data-ripple="">time line</a>
-                <a class="" href="#" title="" data-ripple="">Photos</a>
-                <a class="" href="#" title="" data-ripple="">Videos</a>
-                <a class="" routerLink="/listFriend" title="" data-ripple="">Friends</a>
-                <a class="" href="#" title="" data-ripple="">Groups</a>
-                <a class="active" href="#" title="" data-ripple="">about</a>
+                <a class="" [routerLink]="'/myWall/'+ relatedId" title="" data-ripple="">time line</a>
+                <a class="" [routerLink]="'/photo/'+ relatedId" data-ripple="">Photos</a>
+                <a class="" [routerLink]="'/listFriend'" title="" data-ripple="">Friends</a>
+                <a class="" [routerLink]="'/chat'" title="" data-ripple="">Chat</a>
+                <a class="" [routerLink]="'/userInfor/'+ relatedId" title="" data-ripple="">about</a>
               </li>
             </ul>
           </div>
@@ -52,3 +61,4 @@
     </div>
   </div>
 </section><!-- top area -->
+

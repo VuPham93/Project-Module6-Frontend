@@ -1,10 +1,12 @@
 import {Component, OnInit, Output,EventEmitter} from '@angular/core';
-import { FormControlName, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { PostService } from '../service/post.service';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
-import {IUser} from '../model/iuser';
+import {IUser} from '../model/IUser';
 import {UserService} from '../service/user.service';
 import {IPost} from '../model/IPost';
+import {finalize} from 'rxjs/operators';
+import {AngularFireStorage} from '@angular/fire/storage';
 
 @Component({
   selector: 'app-new-post',
@@ -17,7 +19,11 @@ export class NewPostComponent implements OnInit {
   user: IUser;
   post : IPost;
 
-  constructor(private postService: PostService,private fb:FormBuilder, private tokenStorage: TokenStorageService, private userService: UserService) { }
+  constructor(private postService: PostService,
+              private fb:FormBuilder,
+              private tokenStorage: TokenStorageService,
+              private userService: UserService,
+              private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
     this.getUser();
@@ -29,7 +35,8 @@ export class NewPostComponent implements OnInit {
       linkPost: '',
       postDate: '',
       postLike: 0,
-      postDislike: 0
+      postDislike: 0,
+      status:3
     })
   }
 
@@ -41,22 +48,48 @@ export class NewPostComponent implements OnInit {
 
   creatPost(){
     this.post = this.creatPostForm.value;
+    this.post.imagePost = this.downloadURL;
     this.postService.creatNewPost(this.post).subscribe(
       res => {
-        // window.alert("Posted successfully")
         this.newPost.emit(this.post);
         this.creatPostForm.reset(
-          { posterId: this.tokenStorage.getUser().id,
+          {
+            posterId: this.tokenStorage.getUser().id,
             textPost: '',
             imagePost: '',
             videoPost: '',
             linkPost: '',
             postDate: '',
             postLike: 0,
-            postDislike: 0}
+            postDislike: 0,
+            status:3
+          }
         );
-        // this.creatPostForm.value.posterId=this.tokenStorage.getUser().id;
+        this.downloadURL = '';
       }
     )
+  }
+
+  downloadURL: string = '';
+
+  uploadFile(event) {
+    let file = event.target.files[0];
+    let filePath = file.name;
+    let fileRef = this.storage.ref(filePath);
+    let task = this.storage.upload(filePath, file);
+
+    task.snapshotChanges().pipe(
+      finalize(() => fileRef.getDownloadURL().subscribe(
+        url => {
+          this.downloadURL = url;
+          this.creatPostForm.value.imagePost = url;
+        }))
+    )
+      .subscribe();
+  }
+
+  cancelPostImg() {
+    this.creatPostForm.value.imagePost = '';
+    this.downloadURL = '';
   }
 }

@@ -11,6 +11,7 @@ export interface IPost {
   linkPost: string,
   postTime: string,
   postLike: number,
-  postDislike: number
+  postDislike: number,
+  status:number,
   commentList: IComment[]
 }

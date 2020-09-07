@@ -1,12 +1,13 @@
  import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+ import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
 
-  private API_URL = 'http://localhost:8080/post/'
+  private API_URL = environment.URL + 'post/'
 
   constructor(private http: HttpClient) { }
 
@@ -32,5 +33,13 @@ export class PostService {
 
   updatePost(postId: number,post) {
     return this.http.put(this.API_URL + 'update/' + postId,post)
+  }
+
+  searchPostByIdAndTextPost(userId: number, textPost:string) {
+    return this.http.get(this.API_URL + 'searchPost/' + userId +"/"+textPost)
+  }
+
+  getAllImageByUserId(userId: number) {
+    return this.http.get(this.API_URL + 'findImageByPosterId/' + userId)
   }
 }

@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, Output,EventEmitter} from '@angular/core';
 import {UserService} from '../service/user.service';
 import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
 import {IPost} from '../model/IPost';
-import {IUser} from '../model/iuser';
+import {IUser} from '../model/IUser';
 import {IComment} from '../model/IComment';
-import {ActivatedRoute} from '@angular/router';
-import {NgForm} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {LikePostService} from '../service/like-post.service';
+import {ILikePost} from '../model/ILikePost';
+import {TokenStorageService} from '../service/signin-signup/token-storage.service';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-status',
@@ -14,75 +17,205 @@ import {NgForm} from '@angular/forms';
   styleUrls: ['./status.component.css']
 })
 export class StatusComponent implements OnInit {
-  idCommentEdit:number;
-  indexEdit: number;
-  comment: IComment;
-  comments;
-  constructor(private userService: UserService, private postService: PostService, private commentService: CommentService, private actRoute: ActivatedRoute) { }
+
+  constructor(private userService: UserService,
+              private postService: PostService,
+              private commentService: CommentService,
+              private likePostService: LikePostService,
+              private tokenStorage: TokenStorageService,
+              private actRoute: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
-    this.showPost()
+    this.showPost();
+    this.checkLikedStatus();
+    this.userService.getUser().subscribe(
+      res => {this.userLogin= <IUser> res;}
+    )
   }
-
-  post: IPost;
+  @Output() indexDelPost=new EventEmitter();
+  @Output() sharePostEvent = new EventEmitter();
+  @Input() post: IPost;
+  @Input() index:number;
+  postList: IPost[];
+  editPost: IPost;
+  editPostId: number;
+  userLogin:IUser;
+  sharedPost: IPost;
 
   showPost() {
-    this.postService.getPostById(parseInt(this.actRoute.snapshot.params.id)).subscribe(
+    let id: number;
+    if (this.actRoute.snapshot.params.id == null || !window.location.href.includes('status')) {
+      id = this.post.postId;
+    } else {
+      id = parseInt(this.actRoute.snapshot.params.id);
+    }
+    this.postService.getPostById(id).subscribe(
       post => {
         this.post = <IPost> post
         this.userService.findUserById(this.post.posterId).subscribe(
           res => {
             let user = <IUser> res;
-            console.log(user)
             this.post.posterName = user.userName;
             this.post.posterAvatar = user.userAvatar;
             this.commentService.getCommentByPostId(this.post.postId).subscribe(
               commentList => {
                 this.post.commentList = <IComment[]> commentList;
-                this.comments = <IComment[]> commentList;
-                for (let j = 0; j < this.post.commentList.length; j++) {
-                  this.userService.findUserById(this.post.commentList[j].commenterId).subscribe(
-                    res => {
-                      let commenter = <IUser> res;
-                      this.post.commentList[j].commenterName = commenter.userName;
-                      this.post.commentList[j].commenterAvatar = commenter.userAvatar;
-                    })
-                }
               }
             )
-          })
+          }
+        );
+        if (this.post.linkPost != "") {
+          this.postService.getPostById(parseInt(this.post.linkPost)).subscribe(
+            sharedPost => {
+              this.sharedPost = <IPost> sharedPost;
+              this.userService.findUserById(this.sharedPost.posterId).subscribe(
+                res => {
+                  let user = <IUser> res;
+                  this.sharedPost.posterName = user.userName;
+                  this.sharedPost.posterAvatar = user.userAvatar;
+                }
+              );
+            }
+          )
+        }
       }
     )
   }
 
-  deleteComment(commentId: number) {
-    this.commentService.deleteComment(commentId).subscribe(
-      res => this.showPost()
+  likePost = {
+    id: null,
+    postId: null,
+    likerId: null,
+  };
+
+  liked: boolean;
+  likeList: ILikePost[];
+
+  likeAPost() {
+    this.likePost.postId = this.post.postId;
+    this.likePost.likerId = this.tokenStorage.getUser().id;
+    this.likePostService.newLikePost(this.likePost).subscribe(
+      res => {
+        this.checkLikedStatus();
+        this.post.postLike++;
+      }
+    );
+  }
+
+  unLikeAPost() {
+    this.likePostService.findAllLikePost().subscribe(
+      res => {
+        this.likeList = <ILikePost[]> res;
+        for (let i = 0; i < this.likeList.length; i++) {
+          if (this.likeList[i].likerId === this.tokenStorage.getUser().id && this.likeList[i].postId === this.post.postId) {
+            this.likePostService.unLikeAPost(this.likeList[i].id).subscribe();
+            this.post.postLike--;
+            this.liked = false;
+          }
+        }
+      }
     )
   }
 
-  onSubmit(form: NgForm) {
-    this.commentService.getCommentById(this.idCommentEdit).subscribe(
-      resPost => {
-        this.comment = <IComment> resPost;
-        this.comment.content=form.value.content;
-        this.commentService.updateComment(this.idCommentEdit,this.comment).subscribe(
-          resPost => {
-            for (let i = 0 ; i<= this.comments.length;i++){
-              if (i == this.indexEdit){
-                this.comments[i].content = form.value.content;
+  checkLikedStatus() {
+    this.liked = false;
+    this.likePostService.findAllLikePost().subscribe(
+      res => {
+        this.likeList = <ILikePost[]> res;
+        for (let i = 0; i < this.likeList.length; i++) {
+          if (this.actRoute.snapshot.params.id == null || !window.location.href.includes('status')) {
+            if (this.likeList[i].postId === this.post.postId) {
+              if (this.likeList[i].likerId === this.tokenStorage.getUser().id) {
+                this.liked = true;
               }
             }
-
-
+          } else {
+            if (this.likeList[i].postId === parseInt(this.actRoute.snapshot.params.id)) {
+              if (this.likeList[i].likerId === this.tokenStorage.getUser().id) {
+                this.liked = true;
+              }
+            }
           }
-        )
+        }
       }
     )
   }
 
-  getIdComment(commentId: number, i: number) {
-    this.idCommentEdit= commentId;
-    this.indexEdit=i;
+  deletePost(postId: any) {
+    swal({
+      title: "Are you sure?",
+      text: "Are you sure that you want to delete this post?",
+      icon: "warning",
+      dangerMode: true,
+    })
+      .then(willDelete => {
+        if (willDelete) {
+          this.commentService.getCommentByPostId(postId).subscribe(
+            commentList => {
+              let comments = <IComment[]> commentList;
+              for (let i = 0; i < comments.length; i++) {
+                this.commentService.deleteComment(comments[i].commentId).subscribe(
+                  res => console.log("comment deleted")
+                )
+              }
+            }
+          )
+          this.postService.deletePost(postId).subscribe(
+            res => {
+              swal({
+                icon: "success",
+                title: "Your post has been deleted!"
+              });
+              this.indexDelPost.emit(this.index);
+              if (this.actRoute.snapshot.params.id != null) {
+                this.router.navigate(['/home']);
+              }
+            }
+          )
+        }
+      }
+    );
+  }
+
+  addNewComment(value) {
+    this.post.commentList.push(value);
+  }
+
+  delComment(value) {
+    this.post.commentList.splice(value,1);
+  }
+
+  sharePost(postId: number) {
+    swal({
+      title: "Are you sure?",
+      text: "Do you want to share this post?",
+      icon: "info",
+      dangerMode: false,
+    })
+      .then(share => {
+          if (share) {
+            this.postService.creatNewPost({
+              posterId: this.tokenStorage.getUser().id,
+              textPost: '',
+              imagePost: '',
+              videoPost: '',
+              linkPost: postId,
+              postDate: '',
+              postLike: 0,
+              postDislike: 0,
+              status:3
+            }).subscribe(
+              res => {
+                this.sharePostEvent.emit(postId);
+              }
+            );
+            swal({
+              icon: "success",
+              title: "This post has been shared!"
+            });
+          }
+        }
+      )
   }
 }

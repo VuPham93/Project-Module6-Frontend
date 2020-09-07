@@ -1,80 +1,81 @@
-<app-header></app-header>
-<div class="central-meta item">
+<div class="central-meta item" *ngIf="post && userLogin">
   <div class="user-post">
     <div class="friend-info">
       <figure>
-        <img src="assets/images/resources/{{post.posterAvatar}}" alt="">
+        <a [routerLink]="'/userInfor/'+ post.posterId"><img style="height: 3.5vw; width: 3.5vw; object-fit: cover" src="{{post.posterAvatar}}"></a>
       </figure>
       <div class="friend-name">
-        <ins><a href="#" title="">{{post.posterName}}</a></ins>
+        <ins style = "text-transform:capitalize"><a [routerLink]="'/userInfor/'+ post.posterId" title="">{{post.posterName}}</a></ins>
         <span>published: {{post.postTime}}</span>
       </div>
       <div class="post-meta">
         <div class="description">
-          <p>{{post.textPost}}</p>
-        </div>
+          <a [routerLink]="'/status/'+ post.postId">
+            <p>{{post.textPost}}</p>
+            <img src="{{post.imagePost}}" alt="">
+          </a>
+          <div class="post-meta" *ngIf="sharedPost" [routerLink]="'/status/'+ sharedPost.postId">
+            <div class="user-post">
+              <div class="friend-info">
+                <div class="post-meta">
+                  <div class="linked-image align-left" *ngIf="sharedPost.imagePost">
+                    <img alt="" src="{{sharedPost.imagePost}}">
+                  </div>
+                  <div class="detail">
+                    <div class="friend-info">
+                      <figure>
+                        <img style="height: 2.3vw; width: 2.3vw; object-fit: cover" src="{{sharedPost.posterAvatar}}">
+                      </figure>
+                      <div class="friend-name">
+                        <ins style = "text-transform:capitalize"><a href="#" title="">{{sharedPost.posterName}}</a></ins>
+                        <span>published: {{sharedPost.postTime}}</span>
+                      </div>
+                    </div>
+                    <h5 class="m-3">{{sharedPost.textPost}}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+         </div>
         <div class="we-video-info">
           <ul>
-            <li><span class="comment" data-toggle="tooltip" title="Comments"><i class="fa fa-comments-o"></i><ins>52</ins></span></li>
-            <li><span class="like" data-toggle="tooltip" title="like"><i class="ti-heart"></i><ins>{{post.postLike}}</ins></span></li>
-            <li><span class="dislike" data-toggle="tooltip" title="dislike"><i class="ti-heart-broken"></i><ins>{{post.postDislike}}</ins></span></li>
-            <li class="social-media">
-              <div class="menu">
-                <div class="btn trigger"><i class="fa fa-share-alt"></i></div>
-              </div>
+            <li (click)="likeAPost()" *ngIf="!liked" >
+              <span class="like" data-toggle="tooltip" title="Like"><i class="ti-heart"></i><ins>{{post.postLike}}</ins></span>
+            </li>
+            <li (click)="unLikeAPost()" *ngIf="liked">
+              <span class="like" data-toggle="tooltip" title="UnLike"><i class="ti-heart" style="color: red"></i><ins>{{post.postLike}}</ins></span>
+            </li>
+            <li>
+              <span class="comment" data-toggle="tooltip" title="Comments">
+                <i class="fa fa-comments-o"></i>
+                <ins *ngIf="post.commentList">{{post.commentList.length}}</ins>
+              </span>
+            </li>
+            <li data-toggle="tooltip" title="Peoples like this post">
+              <span data-toggle="modal" [attr.data-target]="'#showLikerList' + post.postId"><i class="fa fa-male"></i></span>
+            </li>
+            <ng-template [ngIf]="userLogin.userId==post.posterId">
+              <li data-toggle="tooltip" title="Edit">
+                  <span data-toggle="modal" [attr.data-target]="'#modal' + post.postId"><i class="fa fa-pencil-square-o"></i></span>
+              </li>
+              <li data-toggle="tooltip" title="Delete post">
+                <span><i class="fa fa-trash" (click)="deletePost(post.postId)"></i></span>
+              </li>
+            </ng-template>
+            <li data-toggle="tooltip" title="Share post">
+              <span><i class="fa fa-share" (click)="sharePost(post.postId)"></i></span>
             </li>
           </ul>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="coment-area">
-    <ul class="we-comet">
-      <li *ngFor="let comment of post.commentList; let i = index">
-        <div class="comet-avatar">
-          <img style="width: 45px; height: 45px" src="assets/images/resources/{{comment.commenterAvatar}}" alt="">
-        </div>
-        <div class="we-comment">
-          <div class="coment-head">
-            <h5><a href="#" title="">{{comment.commenterName}}</a></h5>
-            <span>{{comment.commentTime}}</span>
-            <a class="btn trigger" data-toggle="modal" data-target="#form"><i class="fa fa-reply" (click)="getIdComment(comment.commentId,i)"></i></a>
-          </div>
-          <p>{{comment.content}}</p>
-        </div>
-        <button class="d-flex btn btn-danger" (click)="deleteComment(comment.commentId)">x</button>
-      </li>
-
-      <li class="post-comment">
-        <app-comment [postId]="post.postId"></app-comment>
-      </li>
-    </ul>
-  </div>
+  <app-comment-list [postId]="post.postId" (newComment)="addNewComment($event)" (delComment)="delComment($event)"></app-comment-list>
 </div>
-<div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header border-bottom-0">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Comment</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-        <div class="modal-body">
-          <div class="form-group">
-            <textarea class="form-control" rows="4" cols="50" id="content" name="content" placeholder="Enter text" ngModel></textarea>
-          </div>
-          <!--          <div class="form-group">-->
-          <!--            <input type=”hidden” class="form-control" rows="4" cols="50" id="postId" name="postId" [value]="post.postId" >-->
-          <!--          </div>-->
-        </div>
-        <div class="modal-footer border-top-0 d-flex justify-content-center">
-          <button type="submit" class="btn btn-success" >Edit</button>
-        </div>
-      </form>
-    </div>
-  </div>
+<div class="modal fade" [attr.id]="'modal' + post.postId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="post">
+  <app-status-edit [post]="post"></app-status-edit>
 </div>
-<app-footer></app-footer>
+
+<div class="modal fade" [attr.id]="'showLikerList' + post.postId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <app-status-liker-list [postId] = post.postId ></app-status-liker-list>
+</div>

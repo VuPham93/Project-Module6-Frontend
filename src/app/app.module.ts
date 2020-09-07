@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserInfoComponent } from './user-info/user-info.component';
@@ -24,6 +24,21 @@ import { CommentComponent } from './comment/comment.component';
 import { MyWallComponent } from './my-wall/my-wall.component';
 import { StatusComponent } from './status/status.component';
 import { YourPageComponent } from './your-page/your-page.component';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { environment } from '../environments/environment';
+import { CommentListComponent } from './comment-list/comment-list.component';
+import {SocketService} from './service/socket.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { StatusEditComponent } from './status-edit/status-edit.component';
+import { StatusLikerListComponent } from './status-liker-list/status-liker-list.component';
+import { CommentEditComponent } from './comment-edit/comment-edit.component';
+import { CommentLikeComponent } from './comment-like/comment-like.component';
+import { CommentLikerListComponent } from './comment-liker-list/comment-liker-list.component';
+import { AdsComponent } from './ads/ads.component';
+import { StatusDetailComponent } from './status-detail/status-detail.component';
+import { MyPhotoComponent } from './my-photo/my-photo.component';
 
 @NgModule({
   declarations: [
@@ -45,16 +60,29 @@ import { YourPageComponent } from './your-page/your-page.component';
     CommentComponent,
     MyWallComponent,
     StatusComponent,
-    YourPageComponent
+    YourPageComponent,
+    CommentListComponent,
+    StatusEditComponent,
+    StatusLikerListComponent,
+    CommentEditComponent,
+    CommentLikeComponent,
+    CommentLikerListComponent,
+    AdsComponent,
+    StatusDetailComponent,
+    MyPhotoComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    ToastrModule.forRoot({ timeOut: 3000 }),
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders, AngularFirestoreModule, AngularFireStorage,SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

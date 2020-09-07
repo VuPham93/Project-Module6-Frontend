@@ -7,10 +7,11 @@ import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Message } from '../model/message';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class SocketService {
-  url: string = "http://localhost:8080/api/socket";
+  url: string = environment.URL + "api/socket";
 
   constructor(private http: HttpClient) { }
 

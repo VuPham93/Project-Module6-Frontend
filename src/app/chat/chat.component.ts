@@ -99,9 +99,7 @@ export class ChatComponent implements OnInit {
           });
         }
       )
-
-    };
-
+    }
   }
 
   handleResult(message){
@@ -114,5 +112,4 @@ export class ChatComponent implements OnInit {
       });
     }
   }
-
 }

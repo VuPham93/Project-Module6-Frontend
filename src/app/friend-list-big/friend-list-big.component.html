@@ -26,7 +26,7 @@
                           <li *ngFor="let friend of friendList; let i = index">
                             <div class="nearly-pepls">
                               <figure>
-                                <a [routerLink]="'/userInfor/'+friend.userId"><img src="{{friend.userAvatar}}" alt="" style="width: 3vw; height: 3vw"></a>
+                                <a [routerLink]="'/userInfor/'+friend.userId"><img src="{{friend.userAvatar}}" alt="" style="width: 3vw; height: 3vw; object-fit: cover"></a>
                               </figure>
                               <div class="pepl-info pl-4">
                                 <h4><a [routerLink]="'/userInfor/'+friend.userId" title="">{{friend.userName}}</a></h4>
@@ -42,7 +42,7 @@
                           <li *ngFor="let friend of pendingList; let i = index">
                             <div class="nearly-pepls">
                               <figure>
-                                <a [routerLink]="'/userInfor/'+friend.userId" title=""><img src="{{friend.userAvatar}}" alt="" style="width: 3vw; height: 3vw"></a>
+                                <a [routerLink]="'/userInfor/'+friend.userId" title=""><img src="{{friend.userAvatar}}" alt="" style="width: 3vw; height: 3vw; object-fit: cover"></a>
                               </figure>
                               <div class="pepl-info">
                                 <h4><a [routerLink]="'/userInfor/'+friend.userId" title=""> {{friend.userName}}</a></h4>

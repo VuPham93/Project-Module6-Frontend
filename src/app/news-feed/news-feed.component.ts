@@ -3,7 +3,6 @@ import {PostService} from '../service/post.service';
 import {IPost} from '../model/IPost';
 import {IUser} from '../model/iuser';
 import {UserService} from '../service/user.service';
-import {FriendService} from '../service/friend.service';
 
 @Component({
   selector: 'app-news-feed',
@@ -13,8 +12,7 @@ import {FriendService} from '../service/friend.service';
 export class NewsFeedComponent implements OnInit {
 userLogin: IUser;
   constructor(private postService: PostService,
-              private userService: UserService,
-              private friendService: FriendService) { }
+              private userService: UserService) { }
 
   ngOnInit(): void {
     this.getAllPost();
@@ -48,6 +46,4 @@ userLogin: IUser;
   sharePost(value) {
     this.getAllPost();
   }
-
-
 }

@@ -4,7 +4,6 @@ import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
 import {IPost} from '../model/IPost';
 import {IUser} from '../model/iuser';
-import {IComment} from '../model/IComment';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import {ActivatedRoute} from '@angular/router';
 import {FriendService} from '../service/friend.service';
@@ -29,64 +28,12 @@ export class MyWallComponent implements OnInit {
   }
   idUser:number;
   userLogin: IUser;
-  post: IPost;
-  allPost;
+  allPost:IPost[];
   isFriend:boolean;
 
   getAllPost() {
     this.postService.getAllPostByUserId(this.idUser).subscribe(
-      postList => {
-        this.allPost = <IPost[]> postList;
-        for (let i = 0; i < this.allPost.length; i++) {
-          this.userService.findUserById(this.allPost[i].posterId).subscribe(
-            res => {
-              let user = <IUser> res;
-              this.allPost[i].posterName = user.userName;
-              this.allPost[i].posterAvatar = user.userAvatar;
-
-              this.allPost[i].commentList = this.commentService.getCommentByPostId(this.allPost[i].postId).subscribe(
-                commentList => {
-                  this.allPost[i].commentList = <IComment[]> commentList;
-                  for (let j = 0; j < this.allPost[i].commentList.length; j++) {
-                    this.userService.findUserById(this.allPost[i].commentList[j].commenterId).subscribe(
-                      res => {
-                        let commenter = <IUser> res;
-                        this.allPost[i].commentList[j].commenterName = commenter.userName;
-                        this.allPost[i].commentList[j].commenterAvatar = commenter.userAvatar;
-                      })
-                  }
-                }
-              )
-            })
-        }
-      }
-    )
-  }
-
-  like(id: number) {
-    this.postService.getPostById(id).subscribe(
-      resPost => {
-        this.post = <IPost> resPost;
-        this.post.postLike++;
-      }
-    )
-  }
-
-  deletePost(postId: any) {
-    this.commentService.getCommentByPostId(postId).subscribe(
-      commentList => {
-           let comments = <IComment[]> commentList;
-               for (let i = 0; i < comments.length; i++) {
-          this.commentService.deleteComment(comments[i].commentId).subscribe(
-            res => console.log("comment deleted")
-          )
-        }
-      }
-    )
-    this.postService.deletePost(postId).subscribe(
-      res => {
-        window.alert("Post deleted");
-      }
+      postList => this.allPost = <IPost[]> postList
     )
   }
 
@@ -109,15 +56,13 @@ export class MyWallComponent implements OnInit {
               case 3:
                 this.isFriend = false;
                 break;
-            };
+            }
           },
           error => console.log(error)
         )
       },
       error => console.error(error)
     );
-
-
   }
 
   searchPost(form: NgForm) {
@@ -127,36 +72,29 @@ export class MyWallComponent implements OnInit {
       this.postService.searchPostByIdAndTextPost(this.idUser,form.value.postname).subscribe(
         postList => {
           this.allPost = <IPost[]> postList;
-          for (let i = 0; i < this.allPost.length; i++) {
-            this.userService.findUserById(this.allPost[i].posterId).subscribe(
-              res => {
-                let user = <IUser> res;
-                this.allPost[i].posterName = user.userName;
-                this.allPost[i].posterAvatar = user.userAvatar;
-
-                this.allPost[i].commentList = this.commentService.getCommentByPostId(this.allPost[i].postId).subscribe(
-                  commentList => {
-                    this.allPost[i].commentList = <IComment[]> commentList;
-                    for (let j = 0; j < this.allPost[i].commentList.length; j++) {
-                      this.userService.findUserById(this.allPost[i].commentList[j].commenterId).subscribe(
-                        res => {
-                          let commenter = <IUser> res;
-                          this.allPost[i].commentList[j].commenterName = commenter.userName;
-                          this.allPost[i].commentList[j].commenterAvatar = commenter.userAvatar;
-                        })
-                    }
-                  }
-                )
-              })
-          }
         }
       )
-
     }
     form.reset(
       {
         postname:""
       }
     );
+  }
+
+  addNewPost(value) {
+    this.getAllPost()
+  }
+
+  addNewComment(value) {
+    this.getAllPost()
+  }
+
+  delPost(value) {
+    this.allPost.splice(value,1);
+  }
+
+  sharePost(value) {
+    this.getAllPost();
   }
 }

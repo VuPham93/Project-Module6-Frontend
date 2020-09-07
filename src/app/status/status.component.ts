@@ -41,6 +41,7 @@ export class StatusComponent implements OnInit {
   editPost: IPost;
   editPostId: number;
   userLogin:IUser;
+  sharedPost: IPost;
 
   showPost() {
     let id: number;
@@ -63,7 +64,21 @@ export class StatusComponent implements OnInit {
               }
             )
           }
-        )
+        );
+        if (this.post.linkPost != "") {
+          this.postService.getPostById(parseInt(this.post.linkPost)).subscribe(
+            sharedPost => {
+              this.sharedPost = <IPost> sharedPost;
+              this.userService.findUserById(this.sharedPost.posterId).subscribe(
+                res => {
+                  let user = <IUser> res;
+                  this.sharedPost.posterName = user.userName;
+                  this.sharedPost.posterAvatar = user.userAvatar;
+                }
+              );
+            }
+          )
+        }
       }
     )
   }
@@ -182,10 +197,10 @@ export class StatusComponent implements OnInit {
           if (share) {
             this.postService.creatNewPost({
               posterId: this.tokenStorage.getUser().id,
-              textPost: '/status/'+postId,
+              textPost: '',
               imagePost: '',
               videoPost: '',
-              linkPost: '',
+              linkPost: postId,
               postDate: '',
               postLike: 0,
               postDislike: 0,

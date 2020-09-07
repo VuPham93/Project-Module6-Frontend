@@ -10,18 +10,33 @@
       </div>
       <div class="post-meta">
         <div class="description">
-          <div *ngIf="post.textPost.includes('/status/'); else notHttp">
-            <a [routerLink]="post.textPost">
-              <p>{{post.textPost}}</p>
-            </a>
-          </div>
-          <ng-template #notHttp>
           <a [routerLink]="'/status/'+ post.postId">
             <p>{{post.textPost}}</p>
             <img src="{{post.imagePost}}" alt="">
           </a>
-          </ng-template>
-        </div>
+          <div class="post-meta" *ngIf="sharedPost" [routerLink]="'/status/'+ sharedPost.postId">
+            <div class="user-post">
+              <div class="friend-info">
+                <div class="post-meta">
+                  <div class="linked-image align-left" *ngIf="sharedPost.imagePost">
+                    <img alt="" src="{{sharedPost.imagePost}}">
+                  </div>
+                  <div class="detail">
+                    <div class="friend-info">
+                      <figure>
+                        <img style="height: 2.3vw; width: 2.3vw; object-fit: cover" src="{{sharedPost.posterAvatar}}">
+                      </figure>
+                      <div class="friend-name">
+                        <ins style = "text-transform:capitalize"><a href="#" title="">{{sharedPost.posterName}}</a></ins>
+                        <span>published: {{sharedPost.postTime}}</span>
+                      </div>
+                    </div>
+                    <h5 class="m-3">{{sharedPost.textPost}}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+         </div>
         <div class="we-video-info">
           <ul>
             <li (click)="likeAPost()" *ngIf="!liked" >

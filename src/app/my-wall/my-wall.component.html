@@ -1,5 +1,5 @@
 <app-header></app-header>
-<app-cover-photo></app-cover-photo>
+<app-cover-photo *ngIf="userLogin" [relatingId]="userLogin.userId" [relatedId]="userLogin.userId"></app-cover-photo>
 <div class="theme-layout">
   <section>
     <div class="gap gray-bg">
@@ -7,136 +7,34 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="row" id="page-contents">
-              <!-- sidebar -->
               <div class="col-lg-3">
                 <aside class="sidebar static">
-                  <!-- Shortcuts -->
+                  <app-your-page></app-your-page>
                   <app-short-cut></app-short-cut>
-                  <div class="widget">
-                    <div class="banner medium-opacity bluesh">
-                      <div class="bg-image"
-                           style="background-image: url(assets/images/resources/baner-widgetbg.jpg)"></div>
-                      <div class="baner-top">
-                        <span><img alt="" src="assets/images/book-icon.png"></span>
-                        <i class="fa fa-ellipsis-h"></i>
-                      </div>
-                      <div class="banermeta">
-                        <p>
-                          create your own favourit page.
-                        </p>
-                        <span>like them all</span>
-                        <a data-ripple="" title="" href="#">start now!</a>
-                      </div>
-                    </div>
-                  </div>
                 </aside>
               </div>
               <div class="col-lg-6">
-
-                <!-- add post new box -->
-
                 <form class="input-group mb-3" style="top: 10px" #f="ngForm" (ngSubmit)="searchPost(f)">
                   <input type="text" class="form-control" placeholder="Search Post" aria-label="Recipient's username" aria-describedby="basic-addon2" name="postname" ngModel>
                   <div class="input-group-append">
                     <button class="btn btn-outline-primary" type="submit">Search</button>
                   </div>
                 </form>
-
                 <app-new-post></app-new-post>
-
-
                 <div class="loadMore">
-                  <div *ngFor="let post of allPost">
-
+                  <div *ngFor="let post of allPost; let i = index">
                     <div *ngIf="(post.status===1&&idUser===userLogin.userId)||(post.status===2&&isFriend)||(post.status===2&&idUser===userLogin.userId)||(post.status===3)">
-                     <app-status [post]="post" ></app-status>
-                  </div>
+                      <app-status [post]="post" [index]="i" (indexDelPost)="delPost($event)" (sharePostEvent)="sharePost($event)"></app-status>
+                    </div>
                   </div>
                 </div>
-              </div><!-- centerl meta -->
-
+              </div>
               <div class="col-lg-3">
                 <aside class="sidebar static">
-                  <div class="widget">
-                    <h4 class="widget-title">Your page</h4>
-                    <div class="your-page">
-                      <figure>
-                        <a href="#" title=""><img src="assets/images/resources/friend-avatar9.jpg" alt=""></a>
-                      </figure>
-                      <div class="page-meta">
-                        <a href="#" title="" class="underline">My page</a>
-                        <span><i class="ti-comment"></i><a href="insight.html" title="">Messages <em>9</em></a></span>
-                        <span><i class="ti-bell"></i><a href="insight.html" title="">Notifications <em>2</em></a></span>
-                      </div>
-                      <div class="page-likes">
-                        <ul class="nav nav-tabs likes-btn">
-                          <li class="nav-item"><a class="active" href="#link1" data-toggle="tab">likes</a></li>
-                          <li class="nav-item"><a class="" href="#link2" data-toggle="tab">views</a></li>
-                        </ul>
-                        <!-- Tab panes -->
-                        <div class="tab-content">
-                          <div class="tab-pane active fade show " id="link1">
-                            <span><i class="ti-heart"></i>884</span>
-                            <a href="#" title="weekly-likes">35 new likes this week</a>
-                            <div class="users-thumb-list">
-                              <a href="#" title="Anderw" data-toggle="tooltip">
-                                <img src="images/resources/userlist-1.jpg" alt="">
-                              </a>
-                              <a href="#" title="frank" data-toggle="tooltip">
-                                <img src="images/resources/userlist-2.jpg" alt="">
-                              </a>
-                              <a href="#" title="Sara" data-toggle="tooltip">
-                                <img src="images/resources/userlist-3.jpg" alt="">
-                              </a>
-                              <a href="#" title="Amy" data-toggle="tooltip">
-                                <img src="images/resources/userlist-4.jpg" alt="">
-                              </a>
-                              <a href="#" title="Ema" data-toggle="tooltip">
-                                <img src="images/resources/userlist-5.jpg" alt="">
-                              </a>
-                              <a href="#" title="Sophie" data-toggle="tooltip">
-                                <img src="images/resources/userlist-6.jpg" alt="">
-                              </a>
-                              <a href="#" title="Maria" data-toggle="tooltip">
-                                <img src="images/resources/userlist-7.jpg" alt="">
-                              </a>
-                            </div>
-                          </div>
-                          <div class="tab-pane fade" id="link2">
-                            <span><i class="ti-eye"></i>440</span>
-                            <a href="#" title="weekly-likes">440 new views this week</a>
-                            <div class="users-thumb-list">
-                              <a href="#" title="Anderw" data-toggle="tooltip">
-                                <img src="images/resources/userlist-1.jpg" alt="">
-                              </a>
-                              <a href="#" title="frank" data-toggle="tooltip">
-                                <img src="images/resources/userlist-2.jpg" alt="">
-                              </a>
-                              <a href="#" title="Sara" data-toggle="tooltip">
-                                <img src="images/resources/userlist-3.jpg" alt="">
-                              </a>
-                              <a href="#" title="Amy" data-toggle="tooltip">
-                                <img src="images/resources/userlist-4.jpg" alt="">
-                              </a>
-                              <a href="#" title="Ema" data-toggle="tooltip">
-                                <img src="images/resources/userlist-5.jpg" alt="">
-                              </a>
-                              <a href="#" title="Sophie" data-toggle="tooltip">
-                                <img src="images/resources/userlist-6.jpg" alt="">
-                              </a>
-                              <a href="#" title="Maria" data-toggle="tooltip">
-                                <img src="images/resources/userlist-7.jpg" alt="">
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div><!-- page like widget -->
-                  <!-- friends list sidebar -->
+                  <app-ads></app-ads>
                   <app-friend-list></app-friend-list>
                 </aside>
-              </div><!-- sidebar -->
+              </div>
             </div>
           </div>
         </div>

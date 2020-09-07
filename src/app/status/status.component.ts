@@ -44,11 +44,11 @@ export class StatusComponent implements OnInit {
 
   showPost() {
     let id: number;
-    if (this.actRoute.snapshot.params.id == null) {
+    if (this.actRoute.snapshot.params.id == null || !window.location.href.includes('status')) {
       id = this.post.postId;
-    } else
+    } else {
       id = parseInt(this.actRoute.snapshot.params.id);
-
+    }
     this.postService.getPostById(id).subscribe(
       post => {
         this.post = <IPost> post
@@ -109,7 +109,7 @@ export class StatusComponent implements OnInit {
       res => {
         this.likeList = <ILikePost[]> res;
         for (let i = 0; i < this.likeList.length; i++) {
-          if (this.actRoute.snapshot.params.id == null) {
+          if (this.actRoute.snapshot.params.id == null || !window.location.href.includes('status')) {
             if (this.likeList[i].postId === this.post.postId) {
               if (this.likeList[i].likerId === this.tokenStorage.getUser().id) {
                 this.liked = true;
@@ -156,7 +156,6 @@ export class StatusComponent implements OnInit {
               if (this.actRoute.snapshot.params.id != null) {
                 this.router.navigate(['/home']);
               }
-
             }
           )
         }

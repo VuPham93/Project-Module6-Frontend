@@ -9,7 +9,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LikePostService} from '../service/like-post.service';
 import {ILikePost} from '../model/ILikePost';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-status',
@@ -143,13 +143,11 @@ export class StatusComponent implements OnInit {
   }
 
   deletePost(postId: any) {
-    swal({
+    Swal.fire({
       title: "Are you sure?",
       text: "Are you sure that you want to delete this post?",
       icon: "warning",
-      dangerMode: true,
-    })
-      .then(willDelete => {
+    }).then(willDelete => {
         if (willDelete) {
           this.commentService.getCommentByPostId(postId).subscribe(
             commentList => {
@@ -163,10 +161,11 @@ export class StatusComponent implements OnInit {
           )
           this.postService.deletePost(postId).subscribe(
             res => {
-              swal({
-                icon: "success",
-                title: "Your post has been deleted!"
-              });
+              Swal.fire(
+                'Deleted!',
+                'Your post has been deleted.',
+                'success'
+              );
               this.indexDelPost.emit(this.index);
               if (this.actRoute.snapshot.params.id != null) {
                 this.router.navigate(['/home']);
@@ -187,11 +186,10 @@ export class StatusComponent implements OnInit {
   }
 
   sharePost(postId: number) {
-    swal({
+    Swal.fire({
       title: "Are you sure?",
       text: "Do you want to share this post?",
-      icon: "info",
-      dangerMode: false,
+      icon: "info"
     })
       .then(share => {
           if (share) {
@@ -210,7 +208,7 @@ export class StatusComponent implements OnInit {
                 this.sharePostEvent.emit(postId);
               }
             );
-            swal({
+            Swal.fire({
               icon: "success",
               title: "This post has been shared!"
             });

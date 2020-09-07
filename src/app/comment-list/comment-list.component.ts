@@ -8,7 +8,7 @@ import {NgForm} from '@angular/forms';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import {LikeCommentService} from '../service/like-comment.service';
 import {IPost} from '../model/IPost';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-comment-list',
@@ -61,15 +61,14 @@ export class CommentListComponent implements OnInit {
   }
 
   deleteComment(commentId: number,index : number) {
-    swal({
+    Swal.fire({
       title: "Are you sure?",
       text: "Are you sure that you want to delete this comment?",
-      icon: "warning",
-      dangerMode: true,
+      icon: "warning"
     })
       .then(willDelete => {
         if (willDelete) {
-          swal({
+          Swal.fire({
             icon: "success",
             title: "This comment has been deleted!"
           });

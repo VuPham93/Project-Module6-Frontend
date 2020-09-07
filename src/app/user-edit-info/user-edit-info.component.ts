@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IUser} from '../model/IUser';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-user-edit-info',
@@ -59,7 +59,7 @@ export class UserEditInfoComponent implements OnInit {
     let data = this.userEditForm.value;
     this.userService.editUser(this.tokenStorage.getUser().id, data).subscribe(
       res => {
-        swal({
+        Swal.fire({
           icon: "success",
           title: "Your information has changed!"
         })

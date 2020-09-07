@@ -19,11 +19,13 @@
                     <div class="message-box">
                       <ul class="peoples">
                         <li *ngFor="let user of users; let i = index">
-                          <figure>
-                            <img style="width: 2.3vw;height: 2.3vw;object-fit: cover" src="{{user.userAvatar}}" alt="">
-                          </figure>
-                          <div class="people-name">
-                            <span (click)="setUserTarget(user.userId)">{{user.userName}}</span>
+                          <div (click)="setUserTarget(user.userId)">
+                            <figure>
+                              <img style="width: 2.3vw;height: 2.3vw;object-fit: cover" src="{{user.userAvatar}}" alt="">
+                            </figure>
+                            <div class="people-name">
+                              <span>{{user.userName}}</span>
+                            </div>
                           </div>
                         </li>
                       </ul>

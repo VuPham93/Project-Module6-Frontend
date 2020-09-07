@@ -8,7 +8,7 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import {UserService} from '../service/user.service';
 import {FriendService} from '../service/friend.service';
-import {IUser} from '../model/iuser';
+import {IUser} from '../model/IUser';
 
 
 @Component({

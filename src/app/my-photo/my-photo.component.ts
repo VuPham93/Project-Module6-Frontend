@@ -5,7 +5,7 @@ import {CommentService} from '../service/comment.service';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import {ActivatedRoute} from '@angular/router';
 import {FriendService} from '../service/friend.service';
-import {IUser} from '../model/iuser';
+import {IUser} from '../model/IUser';
 
 @Component({
   selector: 'app-my-photo',

@@ -3,7 +3,7 @@ import {UploadFileService} from '../service/upload-file.service';
 import {UserService} from '../service/user.service';
 import {Router} from '@angular/router';
 import {FriendService} from '../service/friend.service';
-import {IUser} from '../model/iuser';
+import {IUser} from '../model/IUser';
 import { AngularFireStorage } from '@angular/fire/storage';
 import {finalize} from 'rxjs/operators';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';

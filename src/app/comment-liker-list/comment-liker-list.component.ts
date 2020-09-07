@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IUser} from '../model/iuser';
+import {IUser} from '../model/IUser';
 import {LikeCommentService} from '../service/like-comment.service';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {PostService} from '../service/post.service';
 import {IPost} from '../model/IPost';
-import {IUser} from '../model/iuser';
+import {IUser} from '../model/IUser';
 import {UserService} from '../service/user.service';
 
 @Component({

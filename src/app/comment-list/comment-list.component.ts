@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UserService} from '../service/user.service';
 import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
-import {IUser} from '../model/iuser';
+import {IUser} from '../model/IUser';
 import {IComment} from '../model/IComment';
 import {NgForm} from '@angular/forms';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';

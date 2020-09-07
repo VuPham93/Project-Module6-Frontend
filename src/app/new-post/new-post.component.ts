@@ -2,7 +2,7 @@ import {Component, OnInit, Output,EventEmitter} from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PostService } from '../service/post.service';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
-import {IUser} from '../model/iuser';
+import {IUser} from '../model/IUser';
 import {UserService} from '../service/user.service';
 import {IPost} from '../model/IPost';
 import {finalize} from 'rxjs/operators';

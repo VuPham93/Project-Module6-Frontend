@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from '../service/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FriendService} from '../service/friend.service';
-import {IUser} from '../model/iuser';
+import {IUser} from '../model/IUser';
 
 @Component({
   selector: 'app-user-info',

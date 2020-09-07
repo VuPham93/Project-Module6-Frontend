@@ -3,7 +3,7 @@ import {UserService} from '../service/user.service';
 import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
 import {IPost} from '../model/IPost';
-import {IUser} from '../model/iuser';
+import {IUser} from '../model/IUser';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import {ActivatedRoute} from '@angular/router';
 import {FriendService} from '../service/friend.service';

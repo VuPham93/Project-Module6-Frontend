@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from '../service/user.service';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {IUser} from '../model/iuser';
+import {IUser} from '../model/IUser';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import swal from 'sweetalert';
 

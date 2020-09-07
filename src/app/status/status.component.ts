@@ -3,7 +3,7 @@ import {UserService} from '../service/user.service';
 import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
 import {IPost} from '../model/IPost';
-import {IUser} from '../model/iuser';
+import {IUser} from '../model/IUser';
 import {IComment} from '../model/IComment';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LikePostService} from '../service/like-post.service';

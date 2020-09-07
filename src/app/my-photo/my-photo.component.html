@@ -1,0 +1,40 @@
+<app-header></app-header>
+<app-cover-photo *ngIf="idUser" [relatingId]="idUser" [relatedId]="idUser"></app-cover-photo>
+<div class="theme-layout">
+  <section>
+    <div class="gap gray-bg">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="row" id="page-contents">
+              <div class="col-lg-3">
+                <aside class="sidebar static">
+                  <app-your-page></app-your-page>
+                  <app-short-cut></app-short-cut>
+                </aside>
+              </div>
+              <div class="col-lg-6">
+                <div class="central-meta">
+                  <ul class="photos">
+                    <li *ngFor="let image of allImage">
+                      <a class="strip" href="{{image}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
+                      <img src="{{image}}" alt="" style="height: 15vw;object-fit: cover"></a>
+                    </li>
+                  </ul>
+                  <div class="lodmore"><button class="btn-view btn-load-more"></button></div>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <aside class="sidebar static">
+                  <app-ads></app-ads>
+                  <app-friend-list></app-friend-list>
+                </aside>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<app-footer></app-footer>

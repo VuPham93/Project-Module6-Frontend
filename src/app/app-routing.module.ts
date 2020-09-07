@@ -12,6 +12,7 @@ import {MyWallComponent} from './my-wall/my-wall.component';
 import {CommentListComponent} from './comment-list/comment-list.component';
 import {ChatComponent} from './chat/chat.component';
 import {StatusDetailComponent} from './status-detail/status-detail.component';
+import {MyPhotoComponent} from './my-photo/my-photo.component';
 
 const routes: Routes = [
   {
@@ -98,12 +99,18 @@ const routes: Routes = [
       title: 'commentList'
     }
   },
-
   {
     path: 'chat',
     component: ChatComponent,
     data: {
       title: 'chat'
+    }
+  },
+  {
+    path: 'photo/:id',
+    component: MyPhotoComponent,
+    data: {
+      title: 'photo'
     }
   },
 ];

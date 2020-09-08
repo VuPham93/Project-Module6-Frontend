@@ -9,7 +9,7 @@
     <form #g="ngForm" (ngSubmit)="editComment(g)">
       <div class="modal-body">
         <div class="form-group">
-          <textarea class="form-control" rows="4" cols="50" id="content" name="content" [ngModel]="comment.content"></textarea>
+          <textarea class="form-control" rows="4" cols="50" name="content" [ngModel]="comment.content"></textarea>
         </div>
       </div>
       <div class="modal-footer border-top-0 d-flex justify-content-center">

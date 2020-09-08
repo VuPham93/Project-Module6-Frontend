@@ -10,6 +10,7 @@ import {LikePostService} from '../service/like-post.service';
 import {ILikePost} from '../model/ILikePost';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import Swal from 'sweetalert2'
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-status',
@@ -24,7 +25,8 @@ export class StatusComponent implements OnInit {
               private likePostService: LikePostService,
               private tokenStorage: TokenStorageService,
               private actRoute: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              public sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.showPost();
@@ -32,6 +34,7 @@ export class StatusComponent implements OnInit {
     this.userService.getUser().subscribe(
       res => {this.userLogin= <IUser> res;}
     )
+    console.log(this.post.videoPost)
   }
   @Output() indexDelPost=new EventEmitter();
   @Output() sharePostEvent = new EventEmitter();
@@ -144,11 +147,15 @@ export class StatusComponent implements OnInit {
 
   deletePost(postId: any) {
     Swal.fire({
-      title: "Are you sure?",
-      text: "Are you sure that you want to delete this post?",
-      icon: "warning",
-    }).then(willDelete => {
-        if (willDelete) {
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
           this.commentService.getCommentByPostId(postId).subscribe(
             commentList => {
               let comments = <IComment[]> commentList;
@@ -189,10 +196,14 @@ export class StatusComponent implements OnInit {
     Swal.fire({
       title: "Are you sure?",
       text: "Do you want to share this post?",
-      icon: "info"
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: '#22a032',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes'
     })
-      .then(share => {
-          if (share) {
+      .then((result) => {
+        if (result.value) {
             this.postService.creatNewPost({
               posterId: this.tokenStorage.getUser().id,
               textPost: '',
@@ -208,10 +219,11 @@ export class StatusComponent implements OnInit {
                 this.sharePostEvent.emit(postId);
               }
             );
-            Swal.fire({
-              icon: "success",
-              title: "This post has been shared!"
-            });
+            Swal.fire(
+              'Done!',
+              'his post has been shared!',
+              'success'
+            )
           }
         }
       )

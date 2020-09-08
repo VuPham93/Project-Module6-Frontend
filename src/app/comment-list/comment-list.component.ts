@@ -62,16 +62,21 @@ export class CommentListComponent implements OnInit {
 
   deleteComment(commentId: number,index : number) {
     Swal.fire({
-      title: "Are you sure?",
-      text: "Are you sure that you want to delete this comment?",
-      icon: "warning"
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
     })
-      .then(willDelete => {
-        if (willDelete) {
-          Swal.fire({
-            icon: "success",
-            title: "This comment has been deleted!"
-          });
+      .then((result) => {
+        if (result.value) {
+          Swal.fire(
+            'Deleted!',
+            'That comment has been deleted.',
+            'success'
+          );
           this.commentService.deleteComment(commentId).subscribe(
             res => {this.getCommentList();
               this.delComment.emit(index);
@@ -120,7 +125,7 @@ export class CommentListComponent implements OnInit {
       this.isExpanded = true;
   }
 
-    hideItems() {
-        this.isExpanded = false;
-    }
+  hideItems() {
+      this.isExpanded = false;
+  }
 }

@@ -7,6 +7,7 @@ import {UserService} from '../service/user.service';
 import {PostService} from '../service/post.service';
 import {IPost} from '../model/IPost';
 import {FriendService} from '../service/friend.service';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-comment',
@@ -49,7 +50,13 @@ export class CommentComponent implements OnInit {
           this.newComment.emit(comment);
         }
       )
-    } else{ alert("You are not friend!");
+    } else{
+      Swal.fire(
+        'You are not friend!!',
+        'must be friend to comment',
+        'warning'
+      )
+
   }
     this.addCommentForm.reset({
       commenterId: this.tokenStorage.getUser().id,

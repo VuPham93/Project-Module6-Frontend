@@ -13,12 +13,14 @@ import Swal from 'sweetalert2'
 })
 
 export class UserEditInfoComponent implements OnInit {
+  idLogin: number;
 
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
   constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
+    this.idLogin= this.tokenStorage.getUser().id;
     this.userEditForm = this.formBuilder.group({
       userId: [''],
       userName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],

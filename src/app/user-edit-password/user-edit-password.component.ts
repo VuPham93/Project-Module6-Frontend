@@ -18,10 +18,12 @@ function comparePassword(c: AbstractControl) {
   styleUrls: ['./user-edit-password.component.css']
 })
 export class UserEditPasswordComponent implements OnInit {
+  idLogin: number;
 
   constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
+    this.idLogin = this.tokenStorage.getUser().id;
     this.changePasswordForm = this.formBuilder.group({
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]

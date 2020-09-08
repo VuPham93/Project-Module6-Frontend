@@ -76,6 +76,7 @@ export class MyWallComponent implements OnInit {
     if (form.value.postname==""){
       this.getAllPost();
     } else {
+      this.allPost= [];
       this.postService.searchPostByIdAndTextPost(this.idUser,form.value.postname).subscribe(
         postList => {
           this.allPost = <IPost[]> postList;

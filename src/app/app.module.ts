@@ -39,6 +39,7 @@ import { CommentLikerListComponent } from './comment-liker-list/comment-liker-li
 import { AdsComponent } from './ads/ads.component';
 import { StatusDetailComponent } from './status-detail/status-detail.component';
 import { MyPhotoComponent } from './my-photo/my-photo.component';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -71,17 +72,18 @@ import { MyPhotoComponent } from './my-photo/my-photo.component';
     StatusDetailComponent,
     MyPhotoComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    FormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    ToastrModule.forRoot({ timeOut: 3000 }),
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        FormsModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFirestoreModule,
+        ToastrModule.forRoot({timeOut: 3000}),
+        InfiniteScrollModule,
+    ],
   providers: [authInterceptorProviders, AngularFirestoreModule, AngularFireStorage,SocketService],
   bootstrap: [AppComponent]
 })

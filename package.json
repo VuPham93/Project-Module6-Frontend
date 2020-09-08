@@ -25,6 +25,7 @@
     "firebase": "^7.19.1",
     "jquery": "^3.5.1",
     "net": "^1.0.2",
+    "ngx-infinite-scroll": "^9.0.0",
     "ngx-toastr": "^13.0.0",
     "rxjs": "^6.6.3",
     "rxjs-compat": "^6.6.3",

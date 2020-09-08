@@ -9,7 +9,7 @@
         <img src="{{downloadURL}}" alt="">
         <div class="attachments">
           <ul>
-            <li class="mr-1">
+            <li class="mr-1" *ngIf="!downloadURL" >
               <label *ngIf="videoLink" class="mr-2 fileContainer">
                 <input type="text" formControlName="videoPost">
               </label>

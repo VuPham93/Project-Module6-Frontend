@@ -32,7 +32,7 @@ export class StatusEditComponent implements OnInit {
     this.post.textPost = form.value.textPost;
     this.post.imagePost = form.value.imagePost;
     this.post.videoPost = form.value.videoPost;
-    if (!this.post.videoPost.includes("embed")) {
+    if (this.post.videoPost.includes("https://www.youtube.com/watch")) {
       this.post.videoPost = this.getEmblemCode(form.value.videoPost);
     }
     this.postService.updatePost(this.post.postId, this.post).subscribe();

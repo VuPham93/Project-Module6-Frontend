@@ -23,7 +23,8 @@ export class MyWallComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllPost();
+    this.fromIndex = 0;
+    this.getLimitedPost();
     this.checkFriend();
   }
   idUser:number;
@@ -33,6 +34,12 @@ export class MyWallComponent implements OnInit {
 
   getAllPost() {
     this.postService.getAllPostByUserId(this.idUser).subscribe(
+      postList => this.allPost = <IPost[]> postList
+    )
+  }
+
+  getLimitedPost() {
+    this.postService.getAllPostByUserIdLimited(this.idUser, this.fromIndex).subscribe(
       postList => this.allPost = <IPost[]> postList
     )
   }
@@ -96,5 +103,19 @@ export class MyWallComponent implements OnInit {
 
   sharePost(value) {
     this.getAllPost();
+  }
+
+  fromIndex: number;
+
+  loadMore() {
+    this.fromIndex = this.fromIndex + 5;
+    this.postService.getAllPostByUserIdLimited(this.idUser, this.fromIndex).subscribe(
+      postList => {
+        let newPosts = <IPost[]> postList;
+        for (let i = 0; i < newPosts.length; i++) {
+          this.allPost.push(newPosts[i]);
+        }
+      }
+    )
   }
 }

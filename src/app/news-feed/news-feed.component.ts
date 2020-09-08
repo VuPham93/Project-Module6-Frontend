@@ -15,6 +15,7 @@ userLogin: IUser;
               private userService: UserService) { }
 
   ngOnInit(): void {
+    this.fromIndex = 0;
     this.getAllPost();
     this.userService.getUser().subscribe(
       res=>{
@@ -24,9 +25,10 @@ userLogin: IUser;
   }
 
   allPost:IPost[] ;
+  fromIndex: number;
 
   getAllPost() {
-    this.postService.getAllPost().subscribe(
+    this.postService.getPostLimited(this.fromIndex).subscribe(
       postList => this.allPost = <IPost[]> postList
     )
   }
@@ -45,5 +47,17 @@ userLogin: IUser;
 
   sharePost(value) {
     this.getAllPost();
+  }
+
+  loadMore() {
+    this.fromIndex = this.fromIndex + 5;
+    this.postService.getPostLimited(this.fromIndex).subscribe(
+      postList => {
+        let newPosts = <IPost[]> postList;
+        for (let i = 0; i < newPosts.length; i++) {
+          this.allPost.push(newPosts[i]);
+        }
+      }
+    )
   }
 }

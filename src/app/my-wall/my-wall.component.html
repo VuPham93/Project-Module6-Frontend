@@ -28,6 +28,14 @@
                     </div>
                   </div>
                 </div>
+                <div
+                  class="search-results"
+                  infiniteScroll
+                  [infiniteScrollDistance]="2"
+                  [infiniteScrollUpDistance]="1.5"
+                  [infiniteScrollThrottle]="50"
+                  (scrolled)="loadMore()"
+                ></div>
               </div>
               <div class="col-lg-3">
                 <aside class="sidebar static">

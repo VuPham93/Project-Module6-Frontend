@@ -48,7 +48,9 @@ export class NewPostComponent implements OnInit {
 
   creatPost(){
     this.post = this.creatPostForm.value;
-    this.post.videoPost = this.getEmblemCode(this.creatPostForm.value.videoPost);
+    if (this.post.videoPost.includes("https://www.youtube.com/watch")) {
+      this.post.videoPost = this.getEmblemCode(this.creatPostForm.value.videoPost);
+    }
     this.imageLink = false;
     this.videoLink = false;
     if (this.downloadURL) {

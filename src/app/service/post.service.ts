@@ -42,4 +42,12 @@ export class PostService {
   getAllImageByUserId(userId: number) {
     return this.http.get(this.API_URL + 'findImageByPosterId/' + userId)
   }
+
+  getPostLimited(fromIndex: number) {
+    return this.http.get(this.API_URL + 'getPostLimited/' + fromIndex)
+  }
+
+  getAllPostByUserIdLimited(idUser: number, fromIndex: number) {
+    return this.http.get(this.API_URL + 'findImageByPosterIdLimited/' + idUser + '/' + fromIndex)
+  }
 }

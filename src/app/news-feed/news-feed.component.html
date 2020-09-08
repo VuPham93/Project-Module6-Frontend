@@ -15,7 +15,9 @@
               <div class="col-lg-6">
                 <app-new-post (newPost)="addNewPost($event)"></app-new-post>
                 <div class="loadMore" *ngFor="let post of allPost; let i = index">
+                  <div *ngIf="(post.status===1&&post.posterId===userLogin.userId)||(post.status===2&&post.posterId===userLogin.userId)||(post.status===3)">
                   <app-status [post]="post" [index]="i" (indexDelPost)="delPost($event)" (sharePostEvent)="sharePost($event)"></app-status>
+                  </div>
                 </div>
               </div>
               <div class="col-lg-3">

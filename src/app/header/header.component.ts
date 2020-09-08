@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 
 import { AuthService } from '../service/signin-signup/auth.service';
 import { TokenStorageService } from '../service/signin-signup/token-storage.service';
+import {FriendService} from '../service/friend.service';
 
 
 @Component({
@@ -14,16 +15,19 @@ import { TokenStorageService } from '../service/signin-signup/token-storage.serv
 })
 export class HeaderComponent implements OnInit {
   user: IUser;
+  pendingList: IUser[];
 
   RefreshToken = {
     token: ''
   };
   show: boolean = false;
 
-  constructor(private userService: UserService,private authService: AuthService, private tokenStorageService: TokenStorageService, private router: Router) { }
+  constructor(private userService: UserService,private authService: AuthService, private tokenStorageService: TokenStorageService, private router: Router,
+              private friendService:FriendService) { }
 
   ngOnInit(): void {
     this.setUser();
+    this.getPendingList();
   }
   setUser() {
     this.userService.getUser().subscribe(
@@ -50,5 +54,13 @@ export class HeaderComponent implements OnInit {
 
   showMenu() {
     this.show = !this.show;
+  }
+
+  getPendingList() {
+        this.friendService.getPengdingList(this.tokenStorageService.getUser().id).subscribe(
+          response => {this.pendingList = <IUser[]>response
+            },
+          error => console.error(error)
+        )
   }
 }

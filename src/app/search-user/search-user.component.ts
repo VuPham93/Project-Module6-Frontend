@@ -3,6 +3,7 @@ import {FormGroup, NgForm} from '@angular/forms';
 import {IUser} from '../model/IUser';
 import {UserService} from '../service/user.service';
 import {FriendService} from '../service/friend.service';
+import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 
 @Component({
   selector: 'app-search-user',
@@ -12,10 +13,13 @@ import {FriendService} from '../service/friend.service';
 export class SearchUserComponent implements OnInit {
   users:IUser[];
   sumUsers:number=0;
+  idLogin: number;
 
-  constructor(private userService: UserService,private friendService: FriendService) { }
+  constructor(private userService: UserService,private friendService: FriendService,
+              private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
+    this.idLogin = this.tokenStorageService.getUser().id;
   }
   onSubmit(form:NgForm){
 

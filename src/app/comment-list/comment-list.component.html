@@ -15,6 +15,9 @@
             <ng-template [ngIf]="userLogin.userId==comment.commenterId" >
               <a class="btn fa fa-edit align-self-end" data-toggle="modal" title="Edit" [attr.data-target]="'#editComment' + comment.commentId"></a>
             </ng-template>
+            <ng-template [ngIf]="comment.edited === 1" >
+              <a class="btn fa fa-history" data-toggle="modal" title="Edit log" [attr.data-target]="'#showEditLog' + comment.commentId"></a>
+            </ng-template>
             <ng-template [ngIf]="userLogin.userId==comment.commenterId||userLogin.userId==post.posterId" >
               <a class="btn fa fa-trash align-self-end" title="Delete" (click)="deleteComment(comment.commentId, i)"></a>
             </ng-template>
@@ -26,6 +29,9 @@
       </div>
       <div class="modal fade" [attr.id]="'showCommentLikerList' + comment.commentId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <app-comment-liker-list [commentId]="comment.commentId"></app-comment-liker-list>
+      </div>
+      <div class="modal fade" [attr.id]="'showEditLog' + comment.commentId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <app-comment-log [commentId]="comment.commentId"></app-comment-log>
       </div>
     </li>
     <ng-container *ngIf="isExpanded">
@@ -45,6 +51,9 @@
                 <ng-template [ngIf]="userLogin.userId==comment.commenterId" >
                   <a class="btn fa fa-edit align-self-end" data-toggle="modal" title="Edit" [attr.data-target]="'#editComment' + comment.commentId"></a>
                 </ng-template>
+                <ng-template [ngIf]="comment.edited === 1" >
+                  <a class="btn fa fa-history" data-toggle="modal" title="Edit log" [attr.data-target]="'#showEditLog' + comment.commentId"></a>
+                </ng-template>
                 <ng-template [ngIf]="userLogin.userId==comment.commenterId||userLogin.userId==post.posterId" >
                   <a class="btn fa fa-trash align-self-end" title="Delete" (click)="deleteComment(comment.commentId, i)"></a>
                 </ng-template>
@@ -56,6 +65,9 @@
           </div>
           <div class="modal fade" [attr.id]="'showCommentLikerList' + comment.commentId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <app-comment-liker-list [commentId]="comment.commentId"></app-comment-liker-list>
+          </div>
+          <div class="modal fade" [attr.id]="'showEditLog' + comment.commentId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <app-comment-log [commentId]="comment.commentId"></app-comment-log>
           </div>
         </li>
       </ng-container>

@@ -34,7 +34,6 @@ export class StatusComponent implements OnInit {
     this.userService.getUser().subscribe(
       res => {this.userLogin= <IUser> res;}
     )
-    console.log(this.post.videoPost)
   }
   @Output() indexDelPost=new EventEmitter();
   @Output() sharePostEvent = new EventEmitter();

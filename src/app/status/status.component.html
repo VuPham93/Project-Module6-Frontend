@@ -84,6 +84,6 @@
   <app-status-edit [post]="post"></app-status-edit>
 </div>
 
-<div class="modal fade" [attr.id]="'showLikerList' + post.postId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" [attr.id]="'showLikerList' + post.postId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="post">
   <app-status-liker-list [postId] = post.postId ></app-status-liker-list>
 </div>

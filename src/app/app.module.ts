@@ -40,6 +40,7 @@ import { AdsComponent } from './ads/ads.component';
 import { StatusDetailComponent } from './status-detail/status-detail.component';
 import { MyPhotoComponent } from './my-photo/my-photo.component';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import { CommentLogComponent } from './comment-log/comment-log.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import {InfiniteScrollModule} from 'ngx-infinite-scroll';
     CommentLikerListComponent,
     AdsComponent,
     StatusDetailComponent,
-    MyPhotoComponent
+    MyPhotoComponent,
+    CommentLogComponent
   ],
     imports: [
         BrowserModule,

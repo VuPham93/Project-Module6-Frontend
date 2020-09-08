@@ -9,7 +9,7 @@
     <form #f="ngForm" (ngSubmit)="onSubmit(f)">
       <div class="modal-body">
         <div class="form-group description">
-          <textarea class="form-control mb-2" rows="3" cols="50" id="content" name="textPost" [ngModel]="post.textPost" placeholder="Write something!"></textarea>
+          <textarea class="form-control mb-2" rows="3" cols="50" name="textPost" [ngModel]="post.textPost" placeholder="Write something!"></textarea>
           <h5>Image</h5>
           <button *ngIf="post.imagePost" type="button" class="close mb-1" (click)="deleteImage()"><span aria-hidden="true" class="fa fa-trash"></span></button>
           <label class="fileContainer" *ngIf="!post.imagePost">

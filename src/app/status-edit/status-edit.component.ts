@@ -7,6 +7,7 @@ import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
 import {ActivatedRoute} from '@angular/router';
 import {AngularFireStorage} from '@angular/fire/storage';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-status-edit',
@@ -30,7 +31,16 @@ export class StatusEditComponent implements OnInit {
   onSubmit(form:NgForm){
     this.post.textPost = form.value.textPost;
     this.post.imagePost = form.value.imagePost;
-    this.postService.updatePost(this.post.postId, this.post).subscribe()
+    this.post.videoPost = form.value.videoPost;
+    if (!this.post.videoPost.includes("embed")) {
+      this.post.videoPost = this.getEmblemCode(form.value.videoPost);
+    }
+    this.postService.updatePost(this.post.postId, this.post).subscribe();
+    Swal.fire(
+      'Done!',
+      'Your post has been saved!',
+      'success'
+    )
   }
 
   deleteImage() {
@@ -52,6 +62,10 @@ export class StatusEditComponent implements OnInit {
 
   selectStatus(event) {
     this.post.status = event;
-    console.log(this.post.status);
+  }
+
+  getEmblemCode(link: string) {
+    let videoId = link.slice(32);
+    return 'https://www.youtube.com/embed/' + videoId;
   }
 }

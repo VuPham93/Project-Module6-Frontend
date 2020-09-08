@@ -48,7 +48,12 @@ export class NewPostComponent implements OnInit {
 
   creatPost(){
     this.post = this.creatPostForm.value;
-    this.post.imagePost = this.downloadURL;
+    this.post.videoPost = this.getEmblemCode(this.creatPostForm.value.videoPost);
+    this.imageLink = false;
+    this.videoLink = false;
+    if (this.downloadURL) {
+      this.post.imagePost = this.downloadURL;
+    }
     this.postService.creatNewPost(this.post).subscribe(
       res => {
         this.newPost.emit(this.post);
@@ -91,5 +96,22 @@ export class NewPostComponent implements OnInit {
   cancelPostImg() {
     this.creatPostForm.value.imagePost = '';
     this.downloadURL = '';
+  }
+
+  imageLink: boolean = false;
+
+  insertImageLink() {
+    this.imageLink = !this.imageLink;
+  }
+
+  videoLink: boolean = false;
+
+  getEmblemCode(link: string) {
+    let videoId = link.slice(32);
+    return 'https://www.youtube.com/embed/' + videoId;
+  }
+
+  insertVideoLink() {
+    this.videoLink = !this.videoLink;
   }
 }

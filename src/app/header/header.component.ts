@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IUser} from '../model/iuser';
+import {IUser} from '../model/IUser';
 import {UserService} from '../service/user.service';
 import {Router} from '@angular/router';
 
@@ -39,10 +39,8 @@ export class HeaderComponent implements OnInit {
 
   logout(): void{
     this.RefreshToken.token = String(this.tokenStorageService.getToken());
-    console.log(this.RefreshToken);
     this.authService.logOut(this.RefreshToken).subscribe(
       res => {
-        console.log(res);
         this.tokenStorageService.signOut();
         this.router.navigateByUrl('/');
       },

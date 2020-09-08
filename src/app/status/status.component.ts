@@ -3,13 +3,14 @@ import {UserService} from '../service/user.service';
 import {PostService} from '../service/post.service';
 import {CommentService} from '../service/comment.service';
 import {IPost} from '../model/IPost';
-import {IUser} from '../model/iuser';
+import {IUser} from '../model/IUser';
 import {IComment} from '../model/IComment';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LikePostService} from '../service/like-post.service';
 import {ILikePost} from '../model/ILikePost';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2'
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-status',
@@ -24,7 +25,8 @@ export class StatusComponent implements OnInit {
               private likePostService: LikePostService,
               private tokenStorage: TokenStorageService,
               private actRoute: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              public sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.showPost();
@@ -32,6 +34,7 @@ export class StatusComponent implements OnInit {
     this.userService.getUser().subscribe(
       res => {this.userLogin= <IUser> res;}
     )
+    console.log(this.post.videoPost)
   }
   @Output() indexDelPost=new EventEmitter();
   @Output() sharePostEvent = new EventEmitter();
@@ -143,14 +146,16 @@ export class StatusComponent implements OnInit {
   }
 
   deletePost(postId: any) {
-    swal({
-      title: "Are you sure?",
-      text: "Are you sure that you want to delete this post?",
-      icon: "warning",
-      dangerMode: true,
-    })
-      .then(willDelete => {
-        if (willDelete) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
           this.commentService.getCommentByPostId(postId).subscribe(
             commentList => {
               let comments = <IComment[]> commentList;
@@ -163,10 +168,11 @@ export class StatusComponent implements OnInit {
           )
           this.postService.deletePost(postId).subscribe(
             res => {
-              swal({
-                icon: "success",
-                title: "Your post has been deleted!"
-              });
+              Swal.fire(
+                'Deleted!',
+                'Your post has been deleted.',
+                'success'
+              );
               this.indexDelPost.emit(this.index);
               if (this.actRoute.snapshot.params.id != null) {
                 this.router.navigate(['/home']);
@@ -187,14 +193,17 @@ export class StatusComponent implements OnInit {
   }
 
   sharePost(postId: number) {
-    swal({
+    Swal.fire({
       title: "Are you sure?",
       text: "Do you want to share this post?",
       icon: "info",
-      dangerMode: false,
+      showCancelButton: true,
+      confirmButtonColor: '#22a032',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes'
     })
-      .then(share => {
-          if (share) {
+      .then((result) => {
+        if (result.value) {
             this.postService.creatNewPost({
               posterId: this.tokenStorage.getUser().id,
               textPost: '',
@@ -210,10 +219,11 @@ export class StatusComponent implements OnInit {
                 this.sharePostEvent.emit(postId);
               }
             );
-            swal({
-              icon: "success",
-              title: "This post has been shared!"
-            });
+            Swal.fire(
+              'Done!',
+              'his post has been shared!',
+              'success'
+            )
           }
         }
       )

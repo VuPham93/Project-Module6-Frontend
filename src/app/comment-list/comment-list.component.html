@@ -1,8 +1,8 @@
 <div class="coment-area" *ngIf="commentList && userLogin && post">
   <ul class="we-comet">
     <li class="row" *ngFor="let comment of commentList | slice:0:2; let i = index">
-      <div class="comet-avatar col col-lg-2 col-md-2 col-xl-2 col-sm-2">
-        <a [routerLink]="'/userInfor/'+ comment.commenterId"><img style="height: 2.5vw; width: 2.5vw; object-fit: cover" src="{{comment.commenterAvatar}}" alt=""></a>
+      <div class="comet-avatar col col-lg-2 col-md-2 col-xl-2 col-sm-2" [routerLink]="'/userInfor/'+ comment.commenterId">
+        <img style="height: 2.5vw; width: 2.5vw; object-fit: cover" src="{{comment.commenterAvatar}}" alt="">
       </div>
       <div class="we-comment">
         <div class="coment-head w-100" style="position: relative">
@@ -31,7 +31,7 @@
     <ng-container *ngIf="isExpanded">
       <ng-container *ngFor="let comment of commentList; let i = index">
         <li class="row" *ngIf="i >= 2">
-          <div class="comet-avatar col col-lg-2 col-md-2 col-xl-2 col-sm-2">
+          <div class="comet-avatar col col-lg-2 col-md-2 col-xl-2 col-sm-2" [routerLink]="'/userInfor/'+ comment.commenterId">
             <img style="height: 2.5vw; width: 2.5vw; object-fit: cover" src="{{comment.commenterAvatar}}" alt="">
           </div>
           <div class="we-comment">

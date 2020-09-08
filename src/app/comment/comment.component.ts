@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import {CommentService} from '../service/comment.service';
-import {IUser} from '../model/iuser';
+import {IUser} from '../model/IUser';
 import {UserService} from '../service/user.service';
 import {PostService} from '../service/post.service';
 import {IPost} from '../model/IPost';

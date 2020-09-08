@@ -21,6 +21,10 @@
                   <div class="linked-image align-left" *ngIf="sharedPost.imagePost">
                     <img alt="" src="{{sharedPost.imagePost}}">
                   </div>
+                  <div class="linked-image align-left" *ngIf="sharedPost.videoPost && !sharedPost.imagePost">
+                    <iframe frameborder="0" border="0" cellspacing="0" webkitallowfullscreen mozallowfullscreen allowfullscreen
+                            style="border-style: none; width: 100%; height: 200px;" [src]="sanitizer.bypassSecurityTrustResourceUrl(sharedPost.videoPost)"></iframe>
+                  </div>
                   <div class="detail">
                     <div class="friend-info">
                       <figure>
@@ -37,41 +41,45 @@
               </div>
             </div>
          </div>
-        <div class="we-video-info">
-          <ul>
-            <li (click)="likeAPost()" *ngIf="!liked" >
-              <span class="like" data-toggle="tooltip" title="Like"><i class="ti-heart"></i><ins>{{post.postLike}}</ins></span>
-            </li>
-            <li (click)="unLikeAPost()" *ngIf="liked">
-              <span class="like" data-toggle="tooltip" title="UnLike"><i class="ti-heart" style="color: red"></i><ins>{{post.postLike}}</ins></span>
-            </li>
-            <li>
-              <span class="comment" data-toggle="tooltip" title="Comments">
-                <i class="fa fa-comments-o"></i>
-                <ins *ngIf="post.commentList">{{post.commentList.length}}</ins>
-              </span>
-            </li>
-            <li data-toggle="tooltip" title="Peoples like this post">
-              <span data-toggle="modal" [attr.data-target]="'#showLikerList' + post.postId"><i class="fa fa-male"></i></span>
-            </li>
-            <ng-template [ngIf]="userLogin.userId==post.posterId">
-              <li data-toggle="tooltip" title="Edit">
-                  <span data-toggle="modal" [attr.data-target]="'#modal' + post.postId"><i class="fa fa-pencil-square-o"></i></span>
+          <iframe frameborder="0" border="0" cellspacing="0" webkitallowfullscreen mozallowfullscreen allowfullscreen
+                   style="border-style: none; width: 100%; height: 480px;" [src]="sanitizer.bypassSecurityTrustResourceUrl(post.videoPost)" *ngIf="post.videoPost"></iframe>
+          <div class="we-video-info">
+            <ul>
+              <li (click)="likeAPost()" *ngIf="!liked" >
+                <span class="like" data-toggle="tooltip" title="Like"><i class="ti-heart"></i><ins>{{post.postLike}}</ins></span>
               </li>
-              <li data-toggle="tooltip" title="Delete post">
-                <span><i class="fa fa-trash" (click)="deletePost(post.postId)"></i></span>
+              <li (click)="unLikeAPost()" *ngIf="liked">
+                <span class="like" data-toggle="tooltip" title="UnLike"><i class="ti-heart" style="color: red"></i><ins>{{post.postLike}}</ins></span>
               </li>
-            </ng-template>
-            <li data-toggle="tooltip" title="Share post">
-              <span><i class="fa fa-share" (click)="sharePost(post.postId)"></i></span>
-            </li>
-          </ul>
+              <li>
+                <span class="comment" data-toggle="tooltip" title="Comments">
+                  <i class="fa fa-comments-o"></i>
+                  <ins *ngIf="post.commentList">{{post.commentList.length}}</ins>
+                </span>
+              </li>
+              <li data-toggle="tooltip" title="Peoples like this post">
+                <span data-toggle="modal" [attr.data-target]="'#showLikerList' + post.postId"><i class="fa fa-male"></i></span>
+              </li>
+              <ng-template [ngIf]="userLogin.userId == post.posterId">
+                <li data-toggle="tooltip" title="Edit">
+                    <span data-toggle="modal" [attr.data-target]="'#modal' + post.postId"><i class="fa fa-pencil-square-o"></i></span>
+                </li>
+                <li data-toggle="tooltip" title="Delete post">
+                  <span><i class="fa fa-trash" (click)="deletePost(post.postId)"></i></span>
+                </li>
+              </ng-template>
+              <li data-toggle="tooltip" title="Share post">
+                <span><i class="fa fa-share" (click)="sharePost(post.postId)"></i></span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <app-comment-list [postId]="post.postId" (newComment)="addNewComment($event)" (delComment)="delComment($event)"></app-comment-list>
 </div>
+
 <div class="modal fade" [attr.id]="'modal' + post.postId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="post">
   <app-status-edit [post]="post"></app-status-edit>
 </div>

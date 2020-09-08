@@ -1,7 +1,7 @@
-/<div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal-dialog modal-dialog-centered" role="document">
   <div class="modal-content">
     <div class="modal-header border-bottom-0">
-      <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+      <h4 class="modal-title" id="exampleModalLabel">Edit Post</h4>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -9,15 +9,18 @@
     <form #f="ngForm" (ngSubmit)="onSubmit(f)">
       <div class="modal-body">
         <div class="form-group description">
-          <textarea class="form-control" rows="3" cols="50" id="content" name="textPost" [ngModel]="post.textPost"></textarea>
-          <input class="form-control" type="text" hidden name="imagePost" [ngModel]="post.imagePost">
-          <button *ngIf="post.imagePost != ''" type="button" class="close mb-1" aria-label="Close" (click)="deleteImage()"><span aria-hidden="true" class="fa fa-trash"></span></button>
-          <label class="fileContainer" *ngIf="post.imagePost === ''">
+          <textarea class="form-control mb-2" rows="3" cols="50" id="content" name="textPost" [ngModel]="post.textPost" placeholder="Write something!"></textarea>
+          <h5>Image</h5>
+          <button *ngIf="post.imagePost" type="button" class="close mb-1" (click)="deleteImage()"><span aria-hidden="true" class="fa fa-trash"></span></button>
+          <label class="fileContainer" *ngIf="!post.imagePost">
             <i class="close fa fa-image"></i>
             <input type="file" accept="image/*" (change)="uploadFile($event)">
           </label>
-          <img src="{{post.imagePost}}" alt="">
-          <h6 class="m-3">Select privacy</h6>
+          <img class="mb-2 mt-2" src="{{post.imagePost}}" alt="">
+          <input class="form-control mb-3" type="text" name="imagePost" [ngModel]="post.imagePost" placeholder="Paste image link here!">
+          <h5>Youtube</h5>
+          <input class="form-control" type="text" name="videoPost" [ngModel]="post.videoPost" placeholder="Paste youtube link here!">
+          <h5 class="mt-3">Select privacy</h5>
           <select (change)="selectStatus($event.target.value)">
             <option value="3">--default--</option>
             <option value="1">private</option>

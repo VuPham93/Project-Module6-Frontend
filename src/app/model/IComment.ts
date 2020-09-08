@@ -7,5 +7,6 @@ export interface IComment{
   commentDislike: number,
   commentTime: string,
   commenterName: string,
-  commenterAvatar: string
+  commenterAvatar: string,
+  edited: number
 }

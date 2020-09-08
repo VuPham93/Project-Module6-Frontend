@@ -7,6 +7,7 @@ import {LikeCommentService} from '../service/like-comment.service';
 import {TokenStorageService} from '../service/signin-signup/token-storage.service';
 import {CommentService} from '../service/comment.service';
 import Swal from "sweetalert2";
+import {LogCommentService} from '../service/log-comment.service';
 
 @Component({
   selector: 'app-comment-edit',
@@ -19,7 +20,8 @@ export class CommentEditComponent implements OnInit {
               private postService: PostService,
               private likeCommentService: LikeCommentService,
               private tokenStorage: TokenStorageService,
-              private commentService: CommentService) { }
+              private commentService: CommentService,
+              private logCommentService: LogCommentService) { }
 
   ngOnInit(): void {
   }
@@ -27,7 +29,9 @@ export class CommentEditComponent implements OnInit {
   @Input() comment: IComment
 
   editComment(form: NgForm) {
+    this.logCommentService.addNewLogComment(this.comment).subscribe();
     this.comment.content = form.value.content;
+    this.comment.edited = 1;
     this.commentService.updateComment(this.comment.commentId, this.comment).subscribe();
     Swal.fire(
       'Done!',
